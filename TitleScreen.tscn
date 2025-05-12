@@ -1,0 +1,205 @@
+[gd_scene load_steps=9 format=3 uid="uid://gucp17ayg2os"]
+
+[ext_resource type="Texture2D" uid="uid://bv2cw4p5kijyn" path="res://markimoo.png" id="1_yrjqd"]
+[ext_resource type="Script" path="res://new_game.gd" id="2_q85oq"]
+[ext_resource type="Script" path="res://continue.gd" id="3_7s8ja"]
+[ext_resource type="Texture2D" uid="uid://c5djvkv1logtu" path="res://fred_ad.png" id="4_ks1rp"]
+
+[sub_resource type="Theme" id="Theme_i8g6h"]
+
+[sub_resource type="Animation" id="Animation_eknnv"]
+resource_name = "GOOD EMPLOYMENT"
+length = 8.0
+loop_mode = 2
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Freddy_Ad:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Freddy_Ad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8wfrb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Freddy_Ad:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Freddy_Ad:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_85eim"]
+_data = {
+"GOOD EMPLOYMENT": SubResource("Animation_eknnv"),
+"RESET": SubResource("Animation_8wfrb")
+}
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_yrjqd")
+
+[node name="Version" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -55.0
+offset_right = 215.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "v 0.01"
+vertical_alignment = 2
+
+[node name="Credit" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -322.0
+offset_top = -233.0
+offset_right = -24.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "[c] Hugh Mungus"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Title" type="Label" parent="Background"]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 39.0
+offset_right = 295.0
+offset_bottom = 268.0
+theme_override_font_sizes/font_size = 40
+text = "Freddy 
+Nightcaps
+Are
+Fazbulous"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 402.0
+offset_right = 291.0
+offset_bottom = 506.0
+
+[node name="New Game" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_i8g6h")
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = "New Game"
+alignment = 0
+text_direction = 1
+script = ExtResource("2_q85oq")
+
+[node name="Indic" type="Label" parent="VBoxContainer/New Game"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -30.0
+offset_right = -4.0
+offset_bottom = 25.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = ">>"
+
+[node name="Continue" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = "Continue"
+alignment = 0
+script = ExtResource("3_7s8ja")
+
+[node name="Indic" type="Label" parent="VBoxContainer/Continue"]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -30.0
+offset_right = -4.0
+offset_bottom = 25.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = ">>"
+
+[node name="Freddy_Ad" type="TextureRect" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ks1rp")
+expand_mode = 1
+
+[node name="NewspaperTransition" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_85eim")
+}
+
+[connection signal="mouse_entered" from="VBoxContainer/New Game" to="VBoxContainer/New Game" method="_on_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/New Game" to="VBoxContainer/New Game" method="_on_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Continue" to="VBoxContainer/Continue" method="_on_mouse_entered"]
+[connection signal="animation_finished" from="NewspaperTransition" to="VBoxContainer/New Game" method="_on_animation_player_animation_finished"]

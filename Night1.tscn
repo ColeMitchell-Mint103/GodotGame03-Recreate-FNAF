@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c21a7vjre5bi7"]
+
+[ext_resource type="Texture2D" uid="uid://bv2cw4p5kijyn" path="res://markimoo.png" id="1_qi5r3"]
+
+[node name="TextureRect" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qi5r3")
+flip_v = true
+
+[node name="Node2D" type="Node2D" parent="."]
