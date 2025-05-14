@@ -1,8 +1,92 @@
-[gd_scene load_steps=2 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=11 format=3 uid="uid://c21a7vjre5bi7"]
 
+[ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://bv2cw4p5kijyn" path="res://markimoo.png" id="1_qi5r3"]
+[ext_resource type="Script" path="res://camera_node.gd" id="3_kmeu0"]
 
-[node name="TextureRect" type="TextureRect"]
+[sub_resource type="Animation" id="Animation_jmj1j"]
+resource_name = "Fadeout"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_58e4a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c40tf"]
+_data = {
+"Fadeout": SubResource("Animation_jmj1j"),
+"RESET": SubResource("Animation_58e4a")
+}
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xjqxg"]
+size = Vector2(40, 40)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q7agr"]
+size = Vector2(40, 40)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hfwjh"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1rg4c"]
+load_path = "res://.godot/imported/CamBarText.png-5f8c0c593d93da3d804f3f39263d9640.ctex"
+
+[node name="ColorRect" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_p28f0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../NightIntroText")
+libraries = {
+"": SubResource("AnimationLibrary_c40tf")
+}
+
+[node name="NightIntroText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = -84.0
+offset_right = 66.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "12:00 AM
+1st Night"
+
+[node name="GameScreen_Base" type="TextureRect" parent="."]
+self_modulate = Color(0.176471, 1, 1, 1)
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,4 +95,201 @@ grow_vertical = 2
 texture = ExtResource("1_qi5r3")
 flip_v = true
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="LeftControls" type="VBoxContainer" parent="GameScreen_Base"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 38.0
+offset_top = -48.0
+offset_right = 86.0
+offset_bottom = 52.0
+grow_vertical = 2
+
+[node name="LeftDoor" type="Button" parent="GameScreen_Base/LeftControls"]
+layout_mode = 2
+toggle_mode = true
+icon = SubResource("PlaceholderTexture2D_xjqxg")
+
+[node name="LeftLight" type="Button" parent="GameScreen_Base/LeftControls"]
+layout_mode = 2
+toggle_mode = true
+icon = SubResource("PlaceholderTexture2D_q7agr")
+
+[node name="RightControls" type="VBoxContainer" parent="GameScreen_Base"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -50.0
+offset_right = -42.0
+offset_bottom = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="RightDoor" type="Button" parent="GameScreen_Base/RightControls"]
+layout_mode = 2
+toggle_mode = true
+icon = SubResource("PlaceholderTexture2D_xjqxg")
+
+[node name="RightLight" type="Button" parent="GameScreen_Base/RightControls"]
+layout_mode = 2
+toggle_mode = true
+icon = SubResource("PlaceholderTexture2D_q7agr")
+
+[node name="Light_temp" type="ColorRect" parent="GameScreen_Base"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+color = Color(0.747294, 0.640136, 0.2159, 1)
+
+[node name="Poster_temp" type="TextureRect" parent="GameScreen_Base"]
+layout_mode = 0
+offset_left = 204.0
+offset_top = 55.0
+offset_right = 370.0
+offset_bottom = 226.0
+texture = SubResource("PlaceholderTexture2D_hfwjh")
+
+[node name="FredNose" type="Button" parent="GameScreen_Base/Poster_temp"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 35.0
+offset_right = 102.0
+offset_bottom = 66.0
+text = "Nose"
+
+[node name="Honk" type="AudioStreamPlayer2D" parent="GameScreen_Base/Poster_temp/FredNose"]
+
+[node name="GameTick" type="Timer" parent="."]
+
+[node name="CameraNode" type="Node2D" parent="."]
+position = Vector2(130, 0)
+script = ExtResource("3_kmeu0")
+
+[node name="Camera2D" type="Camera2D" parent="CameraNode"]
+anchor_mode = 0
+zoom = Vector2(1.3, 1)
+limit_left = 0
+limit_top = 0
+limit_right = 1150
+limit_bottom = 645
+drag_horizontal_enabled = true
+drag_right_margin = 0.85
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="HUD" type="CanvasLayer" parent="CameraNode/Camera2D"]
+
+[node name="Box_TimeInfo" type="VBoxContainer" parent="CameraNode/Camera2D/HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -56.0
+offset_bottom = 50.0
+grow_horizontal = 0
+
+[node name="Time" type="Label" parent="CameraNode/Camera2D/HUD/Box_TimeInfo"]
+layout_mode = 2
+text = "12 AM"
+
+[node name="Day" type="Label" parent="CameraNode/Camera2D/HUD/Box_TimeInfo"]
+layout_mode = 2
+text = "Night 1"
+
+[node name="Time_PowerInfo" type="VBoxContainer" parent="CameraNode/Camera2D/HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 14.865
+offset_top = -66.015
+offset_right = 162.865
+offset_bottom = -16.015
+grow_vertical = 0
+
+[node name="Power" type="Label" parent="CameraNode/Camera2D/HUD/Time_PowerInfo"]
+layout_mode = 2
+text = "Power left: 100%"
+
+[node name="Meter" type="HBoxContainer" parent="CameraNode/Camera2D/HUD/Time_PowerInfo"]
+layout_mode = 2
+
+[node name="Usage" type="Label" parent="CameraNode/Camera2D/HUD/Time_PowerInfo/Meter"]
+layout_mode = 2
+text = "Usage:"
+
+[node name="Low" type="ColorRect" parent="CameraNode/Camera2D/HUD/Time_PowerInfo/Meter"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(0.0980392, 0.913725, 0.262745, 1)
+
+[node name="Medium" type="ColorRect" parent="CameraNode/Camera2D/HUD/Time_PowerInfo/Meter"]
+visible = false
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(0.0980392, 0.913725, 0.262745, 1)
+
+[node name="High" type="ColorRect" parent="CameraNode/Camera2D/HUD/Time_PowerInfo/Meter"]
+visible = false
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(0.939144, 0.761337, 0.245191, 1)
+
+[node name="Veryhigh" type="ColorRect" parent="CameraNode/Camera2D/HUD/Time_PowerInfo/Meter"]
+visible = false
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(0.7239, 0.111697, 0.19563, 1)
+
+[node name="CamAccess" type="TextureRect" parent="CameraNode/Camera2D/HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -392.0
+offset_top = -56.0
+offset_right = 60.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("CompressedTexture2D_1rg4c")
+expand_mode = 2
+
+[node name="Left Camera Pan" type="Control" parent="CameraNode"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 150.0
+offset_bottom = 700.0
+
+[node name="Right Camera Pan" type="Control" parent="CameraNode"]
+custom_minimum_size = Vector2(5.2, 22.195)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 735.285
+offset_right = 885.285
+offset_bottom = 700.0
+grow_horizontal = 0
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="toggled" from="GameScreen_Base/LeftControls/LeftDoor" to="." method="_on_left_door_toggled"]
+[connection signal="toggled" from="GameScreen_Base/LeftControls/LeftLight" to="." method="_on_left_light_toggled"]
+[connection signal="toggled" from="GameScreen_Base/RightControls/RightDoor" to="." method="_on_right_door_toggled"]
+[connection signal="toggled" from="GameScreen_Base/RightControls/RightLight" to="." method="_on_right_light_toggled"]
+[connection signal="button_down" from="GameScreen_Base/Poster_temp/FredNose" to="." method="_on_fred_nose_button_down"]
+[connection signal="timeout" from="GameTick" to="." method="_on_game_tick_timeout"]
+[connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]
+[connection signal="mouse_entered" from="CameraNode/Left Camera Pan" to="CameraNode" method="_on_left_camera_pan_mouse_entered"]
+[connection signal="mouse_exited" from="CameraNode/Left Camera Pan" to="CameraNode" method="_on_left_camera_pan_mouse_exited"]
+[connection signal="mouse_entered" from="CameraNode/Right Camera Pan" to="CameraNode" method="_on_right_camera_pan_mouse_entered"]
+[connection signal="mouse_exited" from="CameraNode/Right Camera Pan" to="CameraNode" method="_on_right_camera_pan_mouse_exited"]
