@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://gucp17ayg2os"]
 
-[ext_resource type="Texture2D" uid="uid://bv2cw4p5kijyn" path="res://markimoo.png" id="1_yrjqd"]
+[ext_resource type="Texture2D" uid="uid://bv2cw4p5kijyn" path="res://Textures/markimoo.png" id="1_yrjqd"]
 [ext_resource type="Script" path="res://new_game.gd" id="2_q85oq"]
 [ext_resource type="Script" path="res://continue.gd" id="3_7s8ja"]
-[ext_resource type="Texture2D" uid="uid://c5djvkv1logtu" path="res://fred_ad.png" id="4_ks1rp"]
+[ext_resource type="Texture2D" uid="uid://c5djvkv1logtu" path="res://Textures/fred_ad.png" id="4_ks1rp"]
 
 [sub_resource type="Theme" id="Theme_i8g6h"]
 

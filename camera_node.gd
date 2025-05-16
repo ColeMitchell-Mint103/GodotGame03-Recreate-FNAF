@@ -15,10 +15,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	global_position.x += moving * movespeed
 	global_position.x = clamp(global_position.x, minPos, maxPos)
-	print(global_position.x)
-
-
-
 
 func _on_right_camera_pan_mouse_entered() -> void:
 	moving = 1

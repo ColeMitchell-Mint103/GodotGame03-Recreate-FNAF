@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bv2cw4p5kijyn"
-path="res://.godot/imported/markimoo.png-07a602b998576e20a16b79c63fdb4e08.ctex"
+path="res://.godot/imported/markimoo.png-16dcde46c7fba3d1d852726f04793a19.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://markimoo.png"
-dest_files=["res://.godot/imported/markimoo.png-07a602b998576e20a16b79c63fdb4e08.ctex"]
+source_file="res://Textures/markimoo.png"
+dest_files=["res://.godot/imported/markimoo.png-16dcde46c7fba3d1d852726f04793a19.ctex"]
 
 [params]
 

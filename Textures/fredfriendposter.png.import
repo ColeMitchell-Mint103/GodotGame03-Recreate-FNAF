@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5djvkv1logtu"
-path="res://.godot/imported/fred_ad.png-affc717b8754016a2e03f59f8bbe7c36.ctex"
+uid="uid://dkatk7x33j4jx"
+path="res://.godot/imported/fredfriendposter.png-8d94dddd1b09276f523034f3f255ba31.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fred_ad.png"
-dest_files=["res://.godot/imported/fred_ad.png-affc717b8754016a2e03f59f8bbe7c36.ctex"]
+source_file="res://Textures/fredfriendposter.png"
+dest_files=["res://.godot/imported/fredfriendposter.png-8d94dddd1b09276f523034f3f255ba31.ctex"]
 
 [params]
 
