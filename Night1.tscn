@@ -1,11 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=17 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
-[ext_resource type="Texture2D" uid="uid://bv2cw4p5kijyn" path="res://Textures/markimoo.png" id="1_qi5r3"]
+[ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
 [ext_resource type="AudioStream" uid="uid://dflpv3yx7jmxv" path="res://SFX/Defaultsound.wav" id="3_fhdu7"]
-[ext_resource type="Texture2D" uid="uid://dkatk7x33j4jx" path="res://Textures/fredfriendposter.png" id="3_fosju"]
 [ext_resource type="Script" path="res://camera_node.gd" id="3_kmeu0"]
+[ext_resource type="Texture2D" uid="uid://b3cuhg0txemdr" path="res://Textures/Office_Base.png" id="5_0q6wr"]
+[ext_resource type="Texture2D" uid="uid://bmhec3bm753dr" path="res://Textures/RoomFiles/Showstage_Base.png" id="5_2vqj7"]
 [ext_resource type="AudioStream" uid="uid://bh6s4dsom6whb" path="res://SFX/freddyhonk.wav" id="5_fdwq8"]
+[ext_resource type="Texture2D" uid="uid://b8v4ho8gloks4" path="res://CameraMap.png" id="6_hvn0r"]
+[ext_resource type="StyleBox" uid="uid://b16wsk8eq3fc0" path="res://CamButtonStyle.tres" id="7_51kmr"]
+[ext_resource type="Script" path="res://camera_screen_display.gd" id="7_dw0s4"]
 
 [sub_resource type="Animation" id="Animation_jmj1j"]
 resource_name = "Fadeout"
@@ -53,8 +57,6 @@ size = Vector2(40, 40)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q7agr"]
 size = Vector2(40, 40)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p6g4t"]
-
 [node name="ColorRect" type="ColorRect"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -90,6 +92,25 @@ text = "12:00 AM
 [node name="CameraNode" type="Node2D" parent="."]
 position = Vector2(130, 0)
 script = ExtResource("3_kmeu0")
+
+[node name="Left Camera Pan" type="Control" parent="CameraNode"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 150.0
+offset_bottom = 700.0
+mouse_filter = 1
+
+[node name="Right Camera Pan" type="Control" parent="CameraNode"]
+custom_minimum_size = Vector2(5.2, 22.195)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 735.285
+offset_right = 885.285
+offset_bottom = 700.0
+grow_horizontal = 0
+mouse_filter = 1
 
 [node name="Camera2D" type="Camera2D" parent="CameraNode"]
 anchor_mode = 0
@@ -177,30 +198,185 @@ offset_right = 60.0
 offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(1.236, 1.26328)
 texture = SubResource("CompressedTexture2D_1rg4c")
 expand_mode = 2
 
-[node name="Left Camera Pan" type="Control" parent="CameraNode"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 150.0
-offset_bottom = 700.0
-mouse_filter = 1
-
-[node name="Right Camera Pan" type="Control" parent="CameraNode"]
-custom_minimum_size = Vector2(5.2, 22.195)
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
+[node name="CameraScreenDisplay" type="TextureRect" parent="CameraNode"]
+visible = false
+z_index = 3
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = 735.285
-offset_right = 885.285
-offset_bottom = 700.0
-grow_horizontal = 0
-mouse_filter = 1
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_right = 1021.0
+offset_bottom = 647.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_5i1vo")
+script = ExtResource("7_dw0s4")
+
+[node name="RoomView" type="TextureRect" parent="CameraNode/CameraScreenDisplay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_2vqj7")
+
+[node name="todoStaticLayer" type="TextureRect" parent="CameraNode/CameraScreenDisplay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MapUI" type="TextureRect" parent="CameraNode/CameraScreenDisplay"]
+layout_mode = 0
+offset_left = 741.5
+offset_top = 284.5
+offset_right = 1124.5
+offset_bottom = 589.5
+texture = ExtResource("6_hvn0r")
+
+[node name="CameraDetail" type="Label" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 2.5
+offset_top = -31.5
+offset_right = 143.5
+offset_bottom = -8.5
+text = "Show Stage"
+
+[node name="Cam1A" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 85.5
+offset_top = 0.5
+offset_right = 123.5
+offset_bottom = 29.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+1A"
+alignment = 0
+
+[node name="Cam1B" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 72.5
+offset_top = 70.5
+offset_right = 110.5
+offset_bottom = 99.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+1B"
+alignment = 0
+
+[node name="Cam1C" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 39.5
+offset_top = 165.5
+offset_right = 77.5
+offset_bottom = 194.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+1C"
+alignment = 0
+
+[node name="Cam2A" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 83.5
+offset_top = 225.5
+offset_right = 121.5
+offset_bottom = 254.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+2A"
+alignment = 0
+
+[node name="Cam2B" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 48.5
+offset_top = 285.5
+offset_right = 86.5
+offset_bottom = 314.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+2B"
+alignment = 0
+
+[node name="Cam3" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 13.5
+offset_top = 240.5
+offset_right = 51.5
+offset_bottom = 269.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+3"
+alignment = 0
+
+[node name="Cam4A" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 150.5
+offset_top = 224.5
+offset_right = 188.5
+offset_bottom = 253.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+4A"
+alignment = 0
+
+[node name="Cam4B" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 148.5
+offset_top = 287.5
+offset_right = 186.5
+offset_bottom = 316.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+4B"
+alignment = 0
+
+[node name="Cam5" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = -21.5
+offset_top = 71.5
+offset_right = 16.5
+offset_bottom = 100.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+5"
+alignment = 0
+
+[node name="Cam6" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 236.5
+offset_top = 228.5
+offset_right = 274.5
+offset_bottom = 257.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+6"
+alignment = 0
+
+[node name="Cam7" type="Button" parent="CameraNode/CameraScreenDisplay/MapUI"]
+layout_mode = 0
+offset_left = 313.5
+offset_top = 92.5
+offset_right = 351.5
+offset_bottom = 121.5
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = ExtResource("7_51kmr")
+text = "CAM
+7"
+alignment = 0
 
 [node name="GameScreen_Base" type="TextureRect" parent="."]
-self_modulate = Color(0.176471, 1, 1, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -208,18 +384,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("1_qi5r3")
-flip_v = true
+texture = ExtResource("5_0q6wr")
 
 [node name="LeftControls" type="VBoxContainer" parent="GameScreen_Base"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 38.0
-offset_top = -48.0
-offset_right = 86.0
-offset_bottom = 52.0
+offset_left = 7.0
+offset_top = 32.0
+offset_right = 98.0
+offset_bottom = 132.0
 grow_vertical = 2
 
 [node name="LeftDoor" type="Button" parent="GameScreen_Base/LeftControls"]
@@ -251,16 +426,17 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -90.0
-offset_top = -50.0
-offset_right = -42.0
-offset_bottom = 50.0
+offset_left = -152.0
+offset_top = 36.0
+offset_right = -104.0
+offset_bottom = 136.0
 grow_horizontal = 0
 grow_vertical = 2
 
 [node name="RightDoor" type="Button" parent="GameScreen_Base/RightControls"]
 layout_mode = 2
 toggle_mode = true
+text = "Door"
 icon = SubResource("PlaceholderTexture2D_xjqxg")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightControls/RightDoor"]
@@ -270,39 +446,21 @@ pitch_scale = 0.71
 [node name="RightLight" type="Button" parent="GameScreen_Base/RightControls"]
 layout_mode = 2
 toggle_mode = true
+text = "Light"
 icon = SubResource("PlaceholderTexture2D_q7agr")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightControls/RightLight"]
 stream = ExtResource("3_fhdu7")
 
-[node name="Light_temp" type="ColorRect" parent="GameScreen_Base"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
-grow_horizontal = 2
-color = Color(0.747294, 0.640136, 0.2159, 1)
-
-[node name="Poster_temp" type="TextureRect" parent="GameScreen_Base"]
+[node name="FredNose" type="Button" parent="GameScreen_Base"]
 layout_mode = 0
-offset_left = 204.0
-offset_top = 55.0
-offset_right = 370.0
-offset_bottom = 226.0
-texture = ExtResource("3_fosju")
-
-[node name="FredNose" type="Button" parent="GameScreen_Base/Poster_temp"]
-layout_mode = 0
-offset_left = 148.0
-offset_top = 91.0
-offset_right = 156.0
-offset_bottom = 99.0
+offset_left = 511.0
+offset_top = 229.0
+offset_right = 519.0
+offset_bottom = 237.0
 flat = true
 
-[node name="Honk" type="AudioStreamPlayer2D" parent="GameScreen_Base/Poster_temp/FredNose"]
+[node name="Honk" type="AudioStreamPlayer2D" parent="GameScreen_Base/FredNose"]
 stream = ExtResource("5_fdwq8")
 
 [node name="LeftDoorView_temp" type="ColorRect" parent="GameScreen_Base"]
@@ -339,38 +497,26 @@ color = Color(1, 0, 0, 1)
 
 [node name="GameTick" type="Timer" parent="."]
 
-[node name="CameraScreenDisplay" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("PlaceholderTexture2D_p6g4t")
-
-[node name="PanelContainer" type="PanelContainer" parent="CameraScreenDisplay"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 125.0
-offset_top = -315.0
-offset_right = 464.0
-offset_bottom = -47.0
-grow_horizontal = 2
-grow_vertical = 0
-
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]
 [connection signal="mouse_entered" from="CameraNode/Left Camera Pan" to="CameraNode" method="_on_left_camera_pan_mouse_entered"]
 [connection signal="mouse_exited" from="CameraNode/Left Camera Pan" to="CameraNode" method="_on_left_camera_pan_mouse_exited"]
 [connection signal="mouse_entered" from="CameraNode/Right Camera Pan" to="CameraNode" method="_on_right_camera_pan_mouse_entered"]
 [connection signal="mouse_exited" from="CameraNode/Right Camera Pan" to="CameraNode" method="_on_right_camera_pan_mouse_exited"]
+[connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1A" to="CameraNode/CameraScreenDisplay" method="_on_cam_1a_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1B" to="CameraNode/CameraScreenDisplay" method="_on_cam_1b_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1C" to="CameraNode/CameraScreenDisplay" method="_on_cam_1c_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam2A" to="CameraNode/CameraScreenDisplay" method="_on_cam_2a_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam2B" to="CameraNode/CameraScreenDisplay" method="_on_cam_2b_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam3" to="CameraNode/CameraScreenDisplay" method="_on_cam_3_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam4A" to="CameraNode/CameraScreenDisplay" method="_on_cam_4a_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam4B" to="CameraNode/CameraScreenDisplay" method="_on_cam_4b_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam5" to="CameraNode/CameraScreenDisplay" method="_on_cam_5_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam6" to="CameraNode/CameraScreenDisplay" method="_on_cam_6_pressed"]
+[connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam7" to="CameraNode/CameraScreenDisplay" method="_on_cam_7_pressed"]
 [connection signal="toggled" from="GameScreen_Base/LeftControls/LeftDoor" to="." method="_on_left_door_toggled"]
 [connection signal="toggled" from="GameScreen_Base/LeftControls/LeftLight" to="." method="_on_left_light_toggled"]
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightDoor" to="." method="_on_right_door_toggled"]
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightLight" to="." method="_on_right_light_toggled"]
-[connection signal="button_down" from="GameScreen_Base/Poster_temp/FredNose" to="." method="_on_fred_nose_button_down"]
+[connection signal="button_down" from="GameScreen_Base/FredNose" to="." method="_on_fred_nose_button_down"]
 [connection signal="timeout" from="GameTick" to="." method="_on_game_tick_timeout"]

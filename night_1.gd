@@ -11,7 +11,7 @@ var night = 1
 var left_door_open = true
 var right_door_open = true
 var camera_open = false
-var dev_mode = false
+var dev_mode = true
 @onready var power_meter_list = [$CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Low,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Medium,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/High,
@@ -67,7 +67,6 @@ func power_display(change):
 	power_meter_list[1].set_visible(power_usage >= 2)
 	power_meter_list[2].set_visible(power_usage >= 3)
 	power_meter_list[3].set_visible(power_usage >= 4)
-	print(power_usage)
 	
 func _on_game_tick_timeout() -> void:
 	tick() #redundant
@@ -121,6 +120,6 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 
 #Open the camera system
 func _on_cam_access_mouse_entered() -> void:
-	if not camera_open:
-		#play animation, open camera panel
-		pass
+	#play animation, open camera panel
+	camera_open = !camera_open
+	$CameraNode/CameraScreenDisplay.set_visible(camera_open)
