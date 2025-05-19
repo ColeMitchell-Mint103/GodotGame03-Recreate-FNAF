@@ -93,33 +93,14 @@ text = "12:00 AM
 position = Vector2(130, 0)
 script = ExtResource("3_kmeu0")
 
-[node name="Left Camera Pan" type="Control" parent="CameraNode"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 150.0
-offset_bottom = 700.0
-mouse_filter = 1
-
-[node name="Right Camera Pan" type="Control" parent="CameraNode"]
-custom_minimum_size = Vector2(5.2, 22.195)
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 735.285
-offset_right = 885.285
-offset_bottom = 700.0
-grow_horizontal = 0
-mouse_filter = 1
-
 [node name="Camera2D" type="Camera2D" parent="CameraNode"]
+z_index = 3
 anchor_mode = 0
 zoom = Vector2(1.3, 1)
 limit_left = 0
 limit_top = 0
 limit_right = 1150
 limit_bottom = 645
-drag_horizontal_enabled = true
 drag_right_margin = 0.85
 editor_draw_limits = true
 editor_draw_drag_margin = true
@@ -198,9 +179,23 @@ offset_right = 60.0
 offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(1.236, 1.26328)
+scale = Vector2(1.036, 1.26328)
 texture = SubResource("CompressedTexture2D_1rg4c")
 expand_mode = 2
+
+[node name="LeftCameraNode" type="Control" parent="CameraNode/Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -1.0
+offset_bottom = -1.0
+
+[node name="RightCameraNode" type="Control" parent="CameraNode/Camera2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 888.0
+offset_top = 2.0
+offset_right = 888.0
+offset_bottom = 2.0
 
 [node name="CameraScreenDisplay" type="TextureRect" parent="CameraNode"]
 visible = false
@@ -230,10 +225,11 @@ offset_bottom = 40.0
 
 [node name="MapUI" type="TextureRect" parent="CameraNode/CameraScreenDisplay"]
 layout_mode = 0
-offset_left = 741.5
-offset_top = 284.5
-offset_right = 1124.5
-offset_bottom = 589.5
+offset_left = 653.5
+offset_top = 335.5
+offset_right = 1036.5
+offset_bottom = 640.5
+scale = Vector2(0.96, 0.879999)
 texture = ExtResource("6_hvn0r")
 
 [node name="CameraDetail" type="Label" parent="CameraNode/CameraScreenDisplay/MapUI"]
@@ -498,10 +494,6 @@ color = Color(1, 0, 0, 1)
 [node name="GameTick" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="mouse_entered" from="CameraNode/Left Camera Pan" to="CameraNode" method="_on_left_camera_pan_mouse_entered"]
-[connection signal="mouse_exited" from="CameraNode/Left Camera Pan" to="CameraNode" method="_on_left_camera_pan_mouse_exited"]
-[connection signal="mouse_entered" from="CameraNode/Right Camera Pan" to="CameraNode" method="_on_right_camera_pan_mouse_entered"]
-[connection signal="mouse_exited" from="CameraNode/Right Camera Pan" to="CameraNode" method="_on_right_camera_pan_mouse_exited"]
 [connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]
 [connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1A" to="CameraNode/CameraScreenDisplay" method="_on_cam_1a_pressed"]
 [connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1B" to="CameraNode/CameraScreenDisplay" method="_on_cam_1b_pressed"]

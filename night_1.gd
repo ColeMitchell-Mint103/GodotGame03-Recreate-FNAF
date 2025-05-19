@@ -78,7 +78,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 #honk honk
 func _on_fred_nose_button_down() -> void:
-	$GameScreen_Base/Poster_temp/FredNose/Honk.play()
+	$GameScreen_Base/FredNose/Honk.play()
 
 func _on_left_door_toggled(toggled_on: bool) -> void:
 	if toggled_on: 
