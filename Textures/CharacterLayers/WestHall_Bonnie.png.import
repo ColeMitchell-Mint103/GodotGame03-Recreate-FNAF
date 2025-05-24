@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deq483mmjyya1"
-path="res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"
+uid="uid://c8mks1abaeqrj"
+path="res://.godot/imported/WestHall_Bonnie.png-987ced694b523395303fb13fe3746f74.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/Bathrooms_Base.png"
-dest_files=["res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"]
+source_file="res://Textures/CharacterLayers/WestHall_Bonnie.png"
+dest_files=["res://.godot/imported/WestHall_Bonnie.png-987ced694b523395303fb13fe3746f74.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deq483mmjyya1"
-path="res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"
+uid="uid://cur1okpc65tg3"
+path="res://.godot/imported/Dining_Bonnie.png-b3960192b7d35253637dc03603a65685.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/Bathrooms_Base.png"
-dest_files=["res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"]
+source_file="res://Textures/CharacterLayers/Dining_Bonnie.png"
+dest_files=["res://.godot/imported/Dining_Bonnie.png-b3960192b7d35253637dc03603a65685.ctex"]
 
 [params]
 

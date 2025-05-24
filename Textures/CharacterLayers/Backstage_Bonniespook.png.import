@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deq483mmjyya1"
-path="res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"
+uid="uid://b8isrexb8j8m1"
+path="res://.godot/imported/Backstage_Bonniespook.png-704cf3253ffb015f1e89f69b928afeed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/Bathrooms_Base.png"
-dest_files=["res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"]
+source_file="res://Textures/CharacterLayers/Backstage_Bonniespook.png"
+dest_files=["res://.godot/imported/Backstage_Bonniespook.png-704cf3253ffb015f1e89f69b928afeed.ctex"]
 
 [params]
 

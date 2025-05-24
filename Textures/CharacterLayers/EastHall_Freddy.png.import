@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deq483mmjyya1"
-path="res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"
+uid="uid://ohgslxku01vp"
+path="res://.godot/imported/EastHall_Freddy.png-06aae53719da195e9c1807765f3f18f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/Bathrooms_Base.png"
-dest_files=["res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"]
+source_file="res://Textures/CharacterLayers/EastHall_Freddy.png"
+dest_files=["res://.godot/imported/EastHall_Freddy.png-06aae53719da195e9c1807765f3f18f4.ctex"]
 
 [params]
 

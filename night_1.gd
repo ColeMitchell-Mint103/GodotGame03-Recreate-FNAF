@@ -12,6 +12,7 @@ var left_door_open = true
 var right_door_open = true
 var camera_open = false
 var dev_mode = true
+var animatronic_aggression = [4, 2, 0, 1] #Bonnie, Chica, Freddy, Foxy
 @onready var power_meter_list = [$CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Low,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Medium,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/High,
@@ -52,13 +53,15 @@ func game_start():
 	$GameScreen_Base.set_visible(true)
 	$CameraNode.set_visible(true)
 	$CameraNode/Camera2D/HUD.set_visible(true)
+	$AnimatronicAIController.initialize(animatronic_aggression)
+	
 #Lights off, open doors, DISABLE AI, freddy singing blah blah
 func powerout():
-	pass
+	pass #give freddy megalovania notes
 
 # Stop AI, roll clock, play fanfare, load next night
 func win_game():
-	pass
+	pass #unenthusiastic party horn
 
 #Affect the usage display in the corner
 func power_display(change):

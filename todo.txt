@@ -1,0 +1,18 @@
+1. Camera panel button is touchy.
+2. Enemy AI
+3. Foxy animations
+4. Kitchen SFX
+5. Death animations
+6. Title screen (image and sound)
+7. Lighting effects
+8. Power out
+9. Death scream
+10. Jumpscares
+11. Save management
+12. Night progression
+13. Movement SFX
+14. Passive SFX
+15. Golden Freddy
+16. Door animation
+17. Does power usage go over 4?
+18. Camera cutting effect

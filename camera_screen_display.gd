@@ -15,7 +15,10 @@ var room_textures = {"Show Stage" : "res://Textures/RoomFiles/Showstage_Base.png
 }
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	#pass # Replace with function body.
+	$CharacterLayer1.set_texture(load("res://Textures/CharacterLayers/Showstage_Chica.png"))
+	$CharacterLayer2.set_texture(load("res://Textures/CharacterLayers/Showstage_Freddy.png"))
+	$CharacterLayer3.set_texture(load("res://Textures/CharacterLayers/Showstage_Bonnie.png"))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

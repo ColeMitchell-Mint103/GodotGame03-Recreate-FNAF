@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deq483mmjyya1"
-path="res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"
+uid="uid://b6f7wbdj86rpi"
+path="res://.godot/imported/PirateCove_Foxy3.png-7d7fcdfd7e7ea1b9717d1e0ed43518eb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/Bathrooms_Base.png"
-dest_files=["res://.godot/imported/Bathrooms_Base.png-0bd316436b000b9c91a889292b8c5115.ctex"]
+source_file="res://Textures/CharacterLayers/PirateCove_Foxy3.png"
+dest_files=["res://.godot/imported/PirateCove_Foxy3.png-7d7fcdfd7e7ea1b9717d1e0ed43518eb.ctex"]
 
 [params]
 
