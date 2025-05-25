@@ -6,14 +6,15 @@ var ChicaAI = 0
 var FoxyAI = 0
 
 #Locations
-var FreddyPos = "ShowStage"
-var BonniePos = "Showstage"
-var ChicaPos = "Showstage"
+var FreddyPos = "1A"
+var BonniePos = "1A"
+var ChicaPos = "1A"
 var FoxyStage = 0
 
 #Variable to drive AI to the Office over time so it doesn't wander forever
 var bonnie_angy = 0 
 
+signal did_move(room)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -42,31 +43,36 @@ func tick():
 		move_foxy()
 	bonnie_angy += 1
 
+func give_Locations():
+	return [BonniePos, ChicaPos, FreddyPos, FoxyStage]
 
-var bonnie_movement_WANDER = {"Showstage" : ["Dining"],
-"Dining" : ["Backstage", "WestHall"],
-"Backstage" : ["Dining"],
-"WestHall" : ["Dining", "Office", "WestHallCorner"],
-"WestHallCorner" : ["Office"]
+var bonnie_movement_WANDER = {"1A" : ["1B"],
+"1B" : ["5", "2A"],
+"5" : ["1B"],
+"2A" : ["1B", "Office", "2B"],
+"2B" : ["Office"]
 }
-var bonnie_movement_AGGRESS = {"Showstage" : "Dining",
-"Dining" : "WestHall",
-"Backstage" : "Dining",
-"WestHall" : "WestHallCorner",
-"WestHallCorner" : "Office"
+var bonnie_movement_AGGRESS = {"1A" : "1B",
+"1B" : "2A",
+"5" : "1B",
+"2A" : "2B",
+"2B" : "Office"
 }
 
 
 func move_bonnie():
 	if BonniePos == "Office":
-		pass #kill player
+		pass #kill player if door open, leave if not
 	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggression
+		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_AGGRESS[BonniePos]
 	else: #Wander move
+		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_WANDER[BonniePos].pick_random()
 	if BonniePos == "Office": #Satisfied by reaching Office
 		bonnie_angy = 0
 	#Play audio sound
+	print(BonniePos)
 
 func move_chica():
 	pass

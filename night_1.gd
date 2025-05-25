@@ -12,7 +12,7 @@ var left_door_open = true
 var right_door_open = true
 var camera_open = false
 var dev_mode = true
-var animatronic_aggression = [4, 2, 0, 1] #Bonnie, Chica, Freddy, Foxy
+var animatronic_aggression = [10, 2, 0, 1] #Bonnie, Chica, Freddy, Foxy
 @onready var power_meter_list = [$CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Low,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Medium,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/High,
@@ -47,6 +47,8 @@ func tick():
 	$CameraNode/Camera2D/HUD/Time_PowerInfo/Power.set_text("Power: " + str(int(power)) + "%")
 	var time_key = str(hour) if hour > 0 else "12" #Stupid fucking time system
 	$CameraNode/Camera2D/HUD/Box_TimeInfo/Time.set_text(time_key + " AM")
+	#Tick the AI control
+	$AnimatronicAIController.tick()
 
 func game_start():
 	$GameTick.start()

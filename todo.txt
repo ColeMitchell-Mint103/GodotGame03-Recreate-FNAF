@@ -16,3 +16,4 @@
 16. Door animation
 17. Does power usage go over 4?
 18. Camera cutting effect
+19. Phone calls

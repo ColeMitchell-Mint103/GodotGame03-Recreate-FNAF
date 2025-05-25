@@ -541,6 +541,7 @@ script = ExtResource("11_yabde")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]
+[connection signal="visibility_changed" from="CameraNode/CameraScreenDisplay" to="CameraNode/CameraScreenDisplay" method="_on_visibility_changed"]
 [connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1A" to="CameraNode/CameraScreenDisplay" method="_on_cam_1a_pressed"]
 [connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1B" to="CameraNode/CameraScreenDisplay" method="_on_cam_1b_pressed"]
 [connection signal="pressed" from="CameraNode/CameraScreenDisplay/MapUI/Cam1C" to="CameraNode/CameraScreenDisplay" method="_on_cam_1c_pressed"]
@@ -558,3 +559,4 @@ script = ExtResource("11_yabde")
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightLight" to="." method="_on_right_light_toggled"]
 [connection signal="button_down" from="GameScreen_Base/FredNose" to="." method="_on_fred_nose_button_down"]
 [connection signal="timeout" from="GameTick" to="." method="_on_game_tick_timeout"]
+[connection signal="did_move" from="AnimatronicAIController" to="CameraNode/CameraScreenDisplay" method="_on_animatronic_ai_controller_did_move"]
