@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=44 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -10,7 +10,27 @@
 [ext_resource type="Texture2D" uid="uid://b8v4ho8gloks4" path="res://CameraMap.png" id="6_hvn0r"]
 [ext_resource type="StyleBox" uid="uid://b16wsk8eq3fc0" path="res://CamButtonStyle.tres" id="7_51kmr"]
 [ext_resource type="Script" path="res://camera_screen_display.gd" id="7_dw0s4"]
+[ext_resource type="Texture2D" uid="uid://cmdhm3sb2u2rg" path="res://Textures/RoomFiles/OfficeWest.png" id="8_580vg"]
+[ext_resource type="Texture2D" uid="uid://ddalku87kv8v1" path="res://Textures/CharacterLayers/Office_Bonnie.png" id="9_ejvqj"]
+[ext_resource type="Texture2D" uid="uid://de25sjm7dj7qt" path="res://Textures/RoomFiles/OfficeEast.png" id="10_m28nn"]
+[ext_resource type="Texture2D" uid="uid://bb15x0gcscrff" path="res://Textures/CharacterLayers/Office_Chica.png" id="11_a152u"]
 [ext_resource type="Script" path="res://animatronic_ai_controller.gd" id="11_yabde"]
+[ext_resource type="Texture2D" uid="uid://b0ahlq4phv7yc" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0000.png" id="13_jrvrd"]
+[ext_resource type="Texture2D" uid="uid://qt7bawsfhhow" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0001.png" id="14_p4jm6"]
+[ext_resource type="Texture2D" uid="uid://skujg4h1hayt" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0003.png" id="15_qcl8k"]
+[ext_resource type="Texture2D" uid="uid://hgxths8kgbor" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0005.png" id="16_3um8f"]
+[ext_resource type="Texture2D" uid="uid://da7yueukcmnie" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0007.png" id="17_62tkl"]
+[ext_resource type="Texture2D" uid="uid://pxcbolxti0su" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0009.png" id="18_83b7m"]
+[ext_resource type="Texture2D" uid="uid://dcsfsv23v6shk" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0011.png" id="19_qntos"]
+[ext_resource type="AudioStream" uid="uid://3eolmdd44x3a" path="res://SFX/DoorClose.wav" id="20_6anms"]
+[ext_resource type="AudioStream" uid="uid://8nwgu1au46ho" path="res://SFX/DoorOpen.wav" id="21_i5n53"]
+[ext_resource type="Texture2D" uid="uid://3d00tmbhi72w" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0000.png" id="22_6mqtc"]
+[ext_resource type="Texture2D" uid="uid://bbf0h1kqq8rh2" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0001.png" id="23_l1dhh"]
+[ext_resource type="Texture2D" uid="uid://voucf0i3080k" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0003.png" id="24_hsa0v"]
+[ext_resource type="Texture2D" uid="uid://cbwmb3pt22iqc" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0005.png" id="25_y8v4e"]
+[ext_resource type="Texture2D" uid="uid://gavfru3ebp1p" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0007.png" id="26_hkail"]
+[ext_resource type="Texture2D" uid="uid://d27v3u1q25gdd" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0009.png" id="27_12adq"]
+[ext_resource type="Texture2D" uid="uid://drhcmeswjaw1" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0011.png" id="28_nuo0d"]
 
 [sub_resource type="Animation" id="Animation_jmj1j"]
 resource_name = "Fadeout"
@@ -51,6 +71,154 @@ _data = {
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1rg4c"]
 load_path = "res://.godot/imported/CamBarText.png-5f8c0c593d93da3d804f3f39263d9640.ctex"
+
+[sub_resource type="Animation" id="Animation_w8hd3"]
+resource_name = "LeftDoorClose"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.2, 0.266667, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("13_jrvrd"), ExtResource("14_p4jm6"), ExtResource("15_qcl8k"), ExtResource("16_3um8f"), ExtResource("17_62tkl"), ExtResource("18_83b7m"), ExtResource("19_qntos")]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.119681,
+"start_offset": 0.2379,
+"stream": ExtResource("20_6anms")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_081s4"]
+resource_name = "LeftDoorOpen"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333, 0.333333, 0.433333, 0.466667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("19_qntos"), ExtResource("18_83b7m"), ExtResource("17_62tkl"), ExtResource("16_3um8f"), ExtResource("15_qcl8k"), ExtResource("14_p4jm6"), ExtResource("13_jrvrd")]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.119681,
+"start_offset": 0.0,
+"stream": ExtResource("21_i5n53")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_fs58j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_jrvrd")]
+}
+
+[sub_resource type="Animation" id="Animation_75sni"]
+resource_name = "RightDoorOpen"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.266667, 0.333333, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("28_nuo0d"), ExtResource("27_12adq"), ExtResource("26_hkail"), ExtResource("25_y8v4e"), ExtResource("24_hsa0v"), ExtResource("23_l1dhh"), ExtResource("22_6mqtc")]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.11,
+"start_offset": 0.0,
+"stream": ExtResource("21_i5n53")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_646lk"]
+resource_name = "RightDoorClose"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("22_6mqtc"), ExtResource("22_6mqtc"), ExtResource("23_l1dhh"), ExtResource("24_hsa0v"), ExtResource("25_y8v4e"), ExtResource("26_hkail"), ExtResource("27_12adq"), ExtResource("28_nuo0d")]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.11,
+"start_offset": 0.24,
+"stream": ExtResource("20_6anms")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3qk7g"]
+_data = {
+"LeftDoorClose": SubResource("Animation_w8hd3"),
+"LeftDoorOpen": SubResource("Animation_081s4"),
+"RESET": SubResource("Animation_fs58j"),
+"RightDoorClose": SubResource("Animation_646lk"),
+"RightDoorOpen": SubResource("Animation_75sni")
+}
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xjqxg"]
 size = Vector2(40, 40)
@@ -204,9 +372,10 @@ z_index = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -128.0
-offset_right = 1021.0
-offset_bottom = 647.0
+offset_left = -129.5
+offset_top = -0.5
+offset_right = 1022.5
+offset_bottom = 647.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -260,6 +429,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="todoStaticLayer" type="TextureRect" parent="CameraNode/CameraScreenDisplay"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -413,6 +583,54 @@ text = "CAM
 7"
 alignment = 0
 
+[node name="LeftHallTexture" type="TextureRect" parent="."]
+modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.5
+offset_top = -0.5
+offset_right = 0.5
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_580vg")
+
+[node name="BonnieOffice" type="TextureRect" parent="LeftHallTexture"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_ejvqj")
+
+[node name="RightHallTexture" type="TextureRect" parent="."]
+modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.5
+offset_top = -0.5
+offset_right = 0.5
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_m28nn")
+
+[node name="ChicaOffice" type="TextureRect" parent="RightHallTexture"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_a152u")
+
 [node name="GameScreen_Base" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -422,6 +640,38 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("5_0q6wr")
+
+[node name="LeftDoor" type="TextureRect" parent="GameScreen_Base"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_jrvrd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameScreen_Base/LeftDoor"]
+libraries = {
+"": SubResource("AnimationLibrary_3qk7g")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftDoor"]
+
+[node name="RightDoor" type="TextureRect" parent="GameScreen_Base"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_jrvrd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameScreen_Base/RightDoor"]
+libraries = {
+"": SubResource("AnimationLibrary_3qk7g")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightDoor"]
 
 [node name="LeftControls" type="VBoxContainer" parent="GameScreen_Base"]
 layout_mode = 1
@@ -500,44 +750,21 @@ flat = true
 [node name="Honk" type="AudioStreamPlayer2D" parent="GameScreen_Base/FredNose"]
 stream = ExtResource("5_fdwq8")
 
-[node name="LeftDoorView_temp" type="ColorRect" parent="GameScreen_Base"]
-visible = false
-layout_mode = 0
-offset_left = 29.0
-offset_top = 103.0
-offset_right = 115.0
-offset_bottom = 247.0
-color = Color(0, 0, 0, 1)
-metadata/_edit_group_ = true
-
-[node name="LeftDoor_temp" type="ColorRect" parent="GameScreen_Base/LeftDoorView_temp"]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_right = 86.0
-offset_bottom = 144.0
-color = Color(1, 0, 0, 1)
-
-[node name="RightDoorView_temp2" type="ColorRect" parent="GameScreen_Base"]
-visible = false
-layout_mode = 0
-offset_left = 1044.0
-offset_top = 108.0
-offset_right = 1130.0
-offset_bottom = 252.0
-color = Color(0, 0, 0, 1)
-metadata/_edit_group_ = true
-
-[node name="RightDoor_temp" type="ColorRect" parent="GameScreen_Base/RightDoorView_temp2"]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_right = 86.0
-offset_bottom = 144.0
-color = Color(1, 0, 0, 1)
-
 [node name="GameTick" type="Timer" parent="."]
 
 [node name="AnimatronicAIController" type="Node" parent="."]
 script = ExtResource("11_yabde")
+
+[node name="BonnieTimer" type="Timer" parent="AnimatronicAIController"]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="Timer2" type="Timer" parent="AnimatronicAIController"]
+
+[node name="Timer3" type="Timer" parent="AnimatronicAIController"]
+
+[node name="Timer4" type="Timer" parent="AnimatronicAIController"]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]

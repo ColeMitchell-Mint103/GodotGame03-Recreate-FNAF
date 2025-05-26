@@ -8,11 +8,11 @@ var power_usage = 1 #clamp between 1 and 4?
 var power_factor = 0.13 #power modifier
 var freddy_factor #not ready for freddy
 var night = 1
-var left_door_open = true
-var right_door_open = true
 var camera_open = false
 var dev_mode = true
 var animatronic_aggression = [10, 2, 0, 1] #Bonnie, Chica, Freddy, Foxy
+var leftDoorOpen = true
+var rightDoorOpen = true
 @onready var power_meter_list = [$CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Low,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Medium,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/High,
@@ -88,39 +88,40 @@ func _on_fred_nose_button_down() -> void:
 func _on_left_door_toggled(toggled_on: bool) -> void:
 	if toggled_on: 
 		power_display(1)
-		$GameScreen_Base/LeftDoorView_temp/LeftDoor_temp.set_self_modulate(Color(1,1,1,1))
+		$GameScreen_Base/LeftDoor/AnimationPlayer.play("LeftDoorClose")
 	else : 
 		power_display(-1)
-		$GameScreen_Base/LeftDoorView_temp/LeftDoor_temp.set_self_modulate(Color(0,0,0,0))
-	left_door_open = !toggled_on
+		$GameScreen_Base/LeftDoor/AnimationPlayer.play("LeftDoorOpen")
+	leftDoorOpen = !toggled_on
 	$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.play()
 
 func _on_left_light_toggled(toggled_on: bool) -> void:
 	if toggled_on: 
 		power_display(1)
-		$GameScreen_Base/LeftDoorView_temp.set_color(Color(1, 1, 1))
+		$LeftHallTexture.set_modulate(Color(1, 1, 1))
 	else : 
 		power_display(-1)
-		$GameScreen_Base/LeftDoorView_temp.set_color(Color(0,0,0))
+		$LeftHallTexture.set_modulate(Color(0.018, 0.018, 0.018))
 	$GameScreen_Base/LeftControls/LeftLight/AudioStreamPlayer2D.play()
 
 func _on_right_door_toggled(toggled_on: bool) -> void:
 	if toggled_on: 
 		power_display(1)
-		$GameScreen_Base/RightDoorView_temp2/RightDoor_temp.set_self_modulate(Color(1,1,1,1))
+		$GameScreen_Base/RightDoor/AnimationPlayer.play("RightDoorClose")
 	else : 
 		power_display(-1)
-		$GameScreen_Base/RightDoorView_temp2/RightDoor_temp.set_self_modulate(Color(0,0,0,0))
-	right_door_open = !toggled_on
+		$GameScreen_Base/RightDoor/AnimationPlayer.play("RightDoorOpen")
+	rightDoorOpen = !toggled_on
 	$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
 
 func _on_right_light_toggled(toggled_on: bool) -> void:
 	if toggled_on: 
 		power_display(1)
-		$GameScreen_Base/RightDoorView_temp2.set_color(Color(1,1,1))
+		$RightHallTexture.set_modulate(Color(1, 1, 1))
+		#Spook noise
 	else : 
 		power_display(-1)
-		$GameScreen_Base/RightDoorView_temp2.set_color(Color(0,0,0))
+		$RightHallTexture.set_modulate(Color(0.018, 0.018, 0.018))
 	$GameScreen_Base/RightControls/RightLight/AudioStreamPlayer2D.play()
 
 #Open the camera system

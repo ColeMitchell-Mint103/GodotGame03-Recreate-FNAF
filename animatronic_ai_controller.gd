@@ -33,8 +33,10 @@ func initialize(AIValues):
 
 #Core loop
 func tick():
-	if randi_range(0, 20) <= BonnieAI:
-		move_bonnie()
+	if $BonnieTimer.is_stopped(): #First pause is 30s currently
+		if randi_range(0, 20) <= BonnieAI:
+			move_bonnie()
+			$BonnieTimer.start(randf_range(150, 400) / BonnieAI) #Cooldown shortens with AI level
 	if randi_range(0, 20) <= ChicaAI:
 		move_chica()
 	if randi_range(0, 20) <= FreddyAI:
@@ -62,7 +64,10 @@ var bonnie_movement_AGGRESS = {"1A" : "1B",
 
 func move_bonnie():
 	if BonniePos == "Office":
-		pass #kill player if door open, leave if not
+		print("Bonniepass")
+		#if door closed, leave
+		BonniePos = '1B'
+		#else kill player
 	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggression
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_AGGRESS[BonniePos]
@@ -71,6 +76,7 @@ func move_bonnie():
 		BonniePos = bonnie_movement_WANDER[BonniePos].pick_random()
 	if BonniePos == "Office": #Satisfied by reaching Office
 		bonnie_angy = 0
+		$"../LeftHallTexture/BonnieOffice".set_visible(true)
 	#Play audio sound
 	print(BonniePos)
 
