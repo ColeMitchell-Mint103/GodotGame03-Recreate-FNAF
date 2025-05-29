@@ -45,6 +45,9 @@ var room_Characters = {"1A" : ["res://Textures/CharacterLayers/Showstage_Bonnie.
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#Load on ready to ensure NOT NULL
+	#await get_tree().create_timer(0.5).timeout #No effect
+	if self.is_visible(): #Set invisible so program doesn't crash if left visible
+		self.set_visible(false)
 	layer_List = [$CharacterLayer1, $CharacterLayer2, $CharacterLayer3, $CharacterLayer4, $CharacterLayer5] #layer 1 = bonnie, layer 2 = chica
 
 
@@ -54,9 +57,9 @@ func _process(delta: float) -> void:
 
 #Animation maybe?
 #camera moving tech
-func update_cam(camName):
+func update_cam(camName = current_camera):
 	current_camera = camName
-	$MapUI/CameraDetail.set_text(room_names[current_camera]) 
+	$ScreenCamera/MapUI/CameraDetail.set_text(room_names[current_camera]) 
 	$RoomView.set_texture(load(room_textures[current_camera]))
 	build_room()
 
@@ -112,8 +115,7 @@ func _on_animatronic_ai_controller_did_move(room: Variant) -> void:
 		await get_tree().create_timer(0.05).timeout #Code runs too fast to take layer out
 		update_cam(current_camera)
 
-
-
 func _on_visibility_changed() -> void:
-	if is_visible():
-		update_cam(current_camera)
+	pass
+	#if is_visible():
+		#update_cam(current_camera)

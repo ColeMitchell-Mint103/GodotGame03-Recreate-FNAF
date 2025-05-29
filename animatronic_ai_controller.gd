@@ -78,7 +78,7 @@ func move_bonnie():
 		bonnie_angy = 0
 		$"../LeftHallTexture/BonnieOffice".set_visible(true)
 	#Play audio sound
-	print(BonniePos)
+	print("Bonnie: " + BonniePos)
 
 func move_chica():
 	pass

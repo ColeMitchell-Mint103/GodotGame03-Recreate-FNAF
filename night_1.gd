@@ -127,5 +127,10 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 #Open the camera system
 func _on_cam_access_mouse_entered() -> void:
 	#play animation, open camera panel
+	if camera_open:
+		$CameraNode/Camera2D.make_current()
+	else:
+		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current()
 	camera_open = !camera_open
-	$CameraNode/CameraScreenDisplay.set_visible(camera_open)
+	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
+	$ScreenCameraNode/CameraScreenDisplay.update_cam()
