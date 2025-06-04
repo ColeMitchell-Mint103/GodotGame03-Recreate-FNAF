@@ -1,18 +1,22 @@
 extends ColorRect
 
-var hourLength = 60 #seconds
+var hourLength = 120 #seconds
 var current_time = 0
 var hour = 0 #stupid fucking AM
 var power = 100.0 #float for fun
 var power_usage = 1 #clamp between 1 and 4?
 var power_factor = 0.13 #power modifier
-var freddy_factor #not ready for freddy
+var freddy_factor #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
 var dev_mode = true
 var animatronic_aggression = [10, 2, 0, 1] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
+
+var gotKilled = "NO"
+var leftControlsEnabled = true
+var rightControlsEnabled = true
 @onready var power_meter_list = [$CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Low,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Medium,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/High,
@@ -63,8 +67,21 @@ func powerout():
 
 # Stop AI, roll clock, play fanfare, load next night
 func win_game():
-	pass #unenthusiastic party horn
+	pass #unenthusiastic party horn, animation, load next night
 
+#End game logic
+func lose_game():
+	$GameTick.stop()
+	$CameraNode.set_process_mode(Node.PROCESS_MODE_DISABLED)
+	$CameraNode/Camera2D.set_position(Vector2(0,0))
+	$CameraNode/Camera2D/HUD.set_visible(false)
+	$CameraNode/Camera2D/JumpscareLayer.set_visible(false)
+	#crrep screen
+	$GameOverScreen.set_texture(load("res://Textures/BonnieDeath.png"))
+	#delay
+	await get_tree().create_timer(10).timeout
+	#back to title
+	get_tree().change_scene_to_file("res://TitleScreen.tscn")
 #Affect the usage display in the corner
 func power_display(change):
 	power_usage += change
@@ -72,6 +89,12 @@ func power_display(change):
 	power_meter_list[1].set_visible(power_usage >= 2)
 	power_meter_list[2].set_visible(power_usage >= 3)
 	power_meter_list[3].set_visible(power_usage >= 4)
+	
+#Bonnie has 'killed' the player but jumpscare has not fired yet
+func bonnieKill():
+	leftControlsEnabled = false
+	gotKilled = "BONNIE"
+	#maybe use moan sound
 	
 func _on_game_tick_timeout() -> void:
 	tick() #redundant
@@ -86,6 +109,10 @@ func _on_fred_nose_button_down() -> void:
 	$GameScreen_Base/FredNose/Honk.play()
 
 func _on_left_door_toggled(toggled_on: bool) -> void:
+	if not leftControlsEnabled:
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream("res://SFX/no.wav")
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
+		pass
 	if toggled_on: 
 		power_display(1)
 		$GameScreen_Base/LeftDoor/AnimationPlayer.play("LeftDoorClose")
@@ -105,6 +132,10 @@ func _on_left_light_toggled(toggled_on: bool) -> void:
 	$GameScreen_Base/LeftControls/LeftLight/AudioStreamPlayer2D.play()
 
 func _on_right_door_toggled(toggled_on: bool) -> void:
+	if not rightControlsEnabled:
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream("res://SFX/no.wav")
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
+		pass
 	if toggled_on: 
 		power_display(1)
 		$GameScreen_Base/RightDoor/AnimationPlayer.play("RightDoorClose")
@@ -126,11 +157,32 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 
 #Open the camera system
 func _on_cam_access_mouse_entered() -> void:
+	#prevent cam during death
+	if gotKilled != "NO":
+		pass
 	#play animation, open camera panel
 	if camera_open:
-		$CameraNode/Camera2D.make_current()
+		$CameraNode/Camera2D.make_current() #room view
+		power_display(-1)
 	else:
-		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current()
+		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current() #camera view
+		power_display(1)
 	camera_open = !camera_open
 	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
 	$ScreenCameraNode/CameraScreenDisplay.update_cam()
+	#JUMPSCARE STUFF on cam down
+	if not camera_open:
+		match gotKilled:
+			"BONNIE":
+				#play animation
+				$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/bonniejump0002.png"))
+				$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
+				await get_tree().create_timer(3).timeout
+				lose_game() #wait for finish
+			_:
+				pass
+
+func _input(event):
+	if event is InputEventKey and event.keycode == KEY_L:
+		print("Cheat: Move Bonnie to office")
+		$AnimatronicAIController.BonniePos = "Office"

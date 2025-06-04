@@ -1,9 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=47 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
 [ext_resource type="AudioStream" uid="uid://dflpv3yx7jmxv" path="res://SFX/Defaultsound.wav" id="3_fhdu7"]
 [ext_resource type="Script" path="res://camera_node.gd" id="3_kmeu0"]
+[ext_resource type="AudioStream" uid="uid://cyegfd3b71wtr" path="res://SFX/whatchasay.wav" id="3_y1dr5"]
 [ext_resource type="Texture2D" uid="uid://b3cuhg0txemdr" path="res://Textures/Office_Base.png" id="5_0q6wr"]
 [ext_resource type="Texture2D" uid="uid://bmhec3bm753dr" path="res://Textures/RoomFiles/Showstage_Base.png" id="5_2vqj7"]
 [ext_resource type="AudioStream" uid="uid://bh6s4dsom6whb" path="res://SFX/freddyhonk.wav" id="5_fdwq8"]
@@ -227,6 +228,8 @@ size = Vector2(40, 40)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q7agr"]
 size = Vector2(40, 40)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hahl8"]
+
 [node name="ColorRect" type="ColorRect"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -366,6 +369,15 @@ offset_left = 888.0
 offset_top = 2.0
 offset_right = 888.0
 offset_bottom = 2.0
+
+[node name="JumpscareLayer" type="TextureRect" parent="CameraNode/Camera2D"]
+offset_left = -131.0
+offset_top = 2.0
+offset_right = 1021.0
+offset_bottom = 650.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D/JumpscareLayer"]
+stream = ExtResource("3_y1dr5")
 
 [node name="LeftHallTexture" type="TextureRect" parent="."]
 modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
@@ -540,7 +552,6 @@ stream = ExtResource("5_fdwq8")
 script = ExtResource("11_yabde")
 
 [node name="BonnieTimer" type="Timer" parent="AnimatronicAIController"]
-wait_time = 30.0
 one_shot = true
 autostart = true
 
@@ -553,6 +564,7 @@ autostart = true
 [node name="ScreenCameraNode" type="Node2D" parent="."]
 
 [node name="CameraScreenDisplay" type="TextureRect" parent="ScreenCameraNode"]
+visible = false
 z_index = 3
 offset_right = 1152.0
 offset_bottom = 648.0
@@ -607,10 +619,14 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="todoStaticLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+modulate = Color(0, 0, 0, 0.670588)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_hahl8")
 
 [node name="ScreenCamera" type="Camera2D" parent="ScreenCameraNode/CameraScreenDisplay"]
 anchor_mode = 0
@@ -621,12 +637,12 @@ script = ExtResource("30_xkcso")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 517.0
-offset_top = 378.0
-offset_right = 900.0
-offset_bottom = 683.0
+offset_left = 510.0
+offset_top = 398.0
+offset_right = 893.0
+offset_bottom = 703.0
 grow_horizontal = 0
-scale = Vector2(0.96, 0.879999)
+scale = Vector2(0.8, 0.733)
 texture = ExtResource("6_hvn0r")
 metadata/_edit_use_anchors_ = true
 
@@ -771,6 +787,11 @@ text = "CAM
 alignment = 0
 
 [node name="CamPauseTimer" type="Timer" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
+
+[node name="GameOverScreen" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]

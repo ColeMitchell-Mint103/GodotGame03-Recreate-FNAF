@@ -1,8 +1,8 @@
 extends Node
 #Numerical Aggression index for custom night
-var FreddyAI = 0
 var BonnieAI = 0
 var ChicaAI = 0
+var FreddyAI = 0
 var FoxyAI = 0
 
 #Locations
@@ -26,14 +26,14 @@ func _process(delta: float) -> void:
 
 #Pass initial parameters
 func initialize(AIValues):
-	FreddyAI = AIValues[0]
-	BonnieAI = AIValues[1]
-	ChicaAI = AIValues[2]
+	BonnieAI = AIValues[0]
+	ChicaAI = AIValues[1]
+	FreddyAI = AIValues[2]
 	FoxyAI = AIValues[3]
 
 #Core loop
 func tick():
-	if $BonnieTimer.is_stopped(): #First pause is 30s currently
+	if $BonnieTimer.is_stopped(): #First pause is 30s currently, set via node
 		if randi_range(0, 20) <= BonnieAI:
 			move_bonnie()
 			$BonnieTimer.start(randf_range(150, 400) / BonnieAI) #Cooldown shortens with AI level
@@ -64,10 +64,13 @@ var bonnie_movement_AGGRESS = {"1A" : "1B",
 
 func move_bonnie():
 	if BonniePos == "Office":
-		print("Bonniepass")
 		#if door closed, leave
-		BonniePos = '1B'
-		#else kill player
+		if $"..".leftDoorOpen:
+			$"..".bonnieKill()
+			print("Killed byBonnie")
+			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
+		else:
+			BonniePos = '1B'
 	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggression
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_AGGRESS[BonniePos]
