@@ -1,13 +1,17 @@
-[gd_scene load_steps=47 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=51 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
 [ext_resource type="AudioStream" uid="uid://dflpv3yx7jmxv" path="res://SFX/Defaultsound.wav" id="3_fhdu7"]
 [ext_resource type="Script" path="res://camera_node.gd" id="3_kmeu0"]
 [ext_resource type="AudioStream" uid="uid://cyegfd3b71wtr" path="res://SFX/whatchasay.wav" id="3_y1dr5"]
+[ext_resource type="AudioStream" uid="uid://cp45ffts3je5k" path="res://SFX/KitchenBaseLow.wav" id="4_dabi5"]
+[ext_resource type="AudioStream" uid="uid://c0mdf6mdjopu7" path="res://SFX/freddyhonklooping.wav" id="4_j0p4i"]
 [ext_resource type="Texture2D" uid="uid://b3cuhg0txemdr" path="res://Textures/Office_Base.png" id="5_0q6wr"]
 [ext_resource type="Texture2D" uid="uid://bmhec3bm753dr" path="res://Textures/RoomFiles/Showstage_Base.png" id="5_2vqj7"]
 [ext_resource type="AudioStream" uid="uid://bh6s4dsom6whb" path="res://SFX/freddyhonk.wav" id="5_fdwq8"]
+[ext_resource type="AudioStream" uid="uid://cnwwfksfd63s5" path="res://SFX/KitchenBaseHigh.wav" id="5_vmdyh"]
+[ext_resource type="AudioStream" uid="uid://k6ow2uvb7eq1" path="res://SFX/ChicaKitchen.wav" id="6_134aq"]
 [ext_resource type="Texture2D" uid="uid://b8v4ho8gloks4" path="res://CameraMap.png" id="6_hvn0r"]
 [ext_resource type="StyleBox" uid="uid://b16wsk8eq3fc0" path="res://CamButtonStyle.tres" id="7_51kmr"]
 [ext_resource type="Script" path="res://camera_screen_display.gd" id="7_dw0s4"]
@@ -371,13 +375,32 @@ offset_right = 888.0
 offset_bottom = 2.0
 
 [node name="JumpscareLayer" type="TextureRect" parent="CameraNode/Camera2D"]
-offset_left = -131.0
-offset_top = 2.0
-offset_right = 1021.0
-offset_bottom = 650.0
+offset_left = -189.0
+offset_top = -42.0
+offset_right = 1160.0
+offset_bottom = 690.0
+metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D/JumpscareLayer"]
 stream = ExtResource("3_y1dr5")
+
+[node name="GameOverScreen" type="TextureRect" parent="CameraNode/Camera2D"]
+offset_right = 1152.0
+offset_bottom = 648.0
+scale = Vector2(0.785, 1.033)
+
+[node name="KitchenFreddyStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
+stream = ExtResource("4_j0p4i")
+pitch_scale = 0.68
+
+[node name="KitchenChicaStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
+stream = ExtResource("6_134aq")
+
+[node name="KitchenLowBaseStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
+stream = ExtResource("4_dabi5")
+
+[node name="KitchenHighBaseStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
+stream = ExtResource("5_vmdyh")
 
 [node name="LeftHallTexture" type="TextureRect" parent="."]
 modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
@@ -555,7 +578,9 @@ script = ExtResource("11_yabde")
 one_shot = true
 autostart = true
 
-[node name="Timer2" type="Timer" parent="AnimatronicAIController"]
+[node name="ChicaTimer" type="Timer" parent="AnimatronicAIController"]
+one_shot = true
+autostart = true
 
 [node name="Timer3" type="Timer" parent="AnimatronicAIController"]
 
@@ -787,11 +812,6 @@ text = "CAM
 alignment = 0
 
 [node name="CamPauseTimer" type="Timer" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
-
-[node name="GameOverScreen" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]

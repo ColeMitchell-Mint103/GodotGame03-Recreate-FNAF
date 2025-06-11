@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn1t02ne3sufd"
-path="res://.godot/imported/bonniejump0003.png-c0e3e9eb4b05b13dcb2a375dc6796425.ctex"
+uid="uid://bax2gb8rlaqas"
+path="res://.godot/imported/bonniejump0002.png-9a8dfdcdb6649c42fd593adb9494dd92.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/JumpscareAnims/bonniejump0003.png"
-dest_files=["res://.godot/imported/bonniejump0003.png-c0e3e9eb4b05b13dcb2a375dc6796425.ctex"]
+source_file="res://Textures/JumpscareAnims/bonniejump/bonniejump0002.png"
+dest_files=["res://.godot/imported/bonniejump0002.png-9a8dfdcdb6649c42fd593adb9494dd92.ctex"]
 
 [params]
 

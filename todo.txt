@@ -1,3 +1,7 @@
+Last Worked On:
+Kitchen sounds. (Set baselow to low volume when camera lowered.)
+
+Todo:
 1. Camera panel button is touchy.
 2. Enemy AI
 3. Foxy animations

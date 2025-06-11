@@ -28,18 +28,18 @@ var room_textures = {"1A" : "res://Textures/RoomFiles/Showstage_Base.png",
 "7" : "res://Textures/RoomFiles/Bathrooms_Base.png"
 }
 
-var room_Characters = {"1A" : ["res://Textures/CharacterLayers/Showstage_Bonnie.png", #1A loads Chica->Freddy->Bonnie in layers *fucked!*
+var room_Characters = {"1A" : ["res://Textures/CharacterLayers/Showstage_Bonnie.png", 
 "res://Textures/CharacterLayers/Showstage_Chica.png", "res://Textures/CharacterLayers/Showstage_Freddy.png"],
 "1B" : ["res://Textures/CharacterLayers/Dining_Bonnie.png", "res://Textures/CharacterLayers/Dining_Chica.png", null],
-"1C" : [],#pirates cove
+"1C" : ["res://Textures/CharacterLayers/PirateCove_Foxy1.png"],#pirates cove
 "2A" : ["res://Textures/CharacterLayers/WestHall_Bonnie.png", null, null],
 "2B" : ["res://Textures/CharacterLayers/WestHallCorner_Bonnie.png", null, null],
 "3" : ["res://Textures/CharacterLayers/Supply_Closet_Bonnie.png", null, null],
-"4A" : [], #East Hall
-"4B" : [], #East Hall Corner
+"4A" : [null, "res://Textures/CharacterLayers/EastHall_Chica.png", null, null], #East Hall
+"4B" : [null, "res://Textures/CharacterLayers/EastHallCorner_Chica.png", null, null], #East Hall Corner
 "5" : ["res://Textures/CharacterLayers/Backstage_Bonnie.png", null, null],
-"6" : [],#Kitchen
-"7" : [] #Bathrooms
+"6" : [null, "", null, null],#Kitchen, there are none
+"7" : [null, "res://Textures/CharacterLayers/Bathrooms_Chica1.png", null, null] #Bathrooms
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -59,6 +59,10 @@ func _process(delta: float) -> void:
 #camera moving tech
 func update_cam(camName = current_camera):
 	current_camera = camName
+	if camName == "6":
+		kitchenSounds()
+	else:
+		kitchenSoundsOff()
 	$ScreenCamera/MapUI/CameraDetail.set_text(room_names[current_camera]) 
 	$RoomView.set_texture(load(room_textures[current_camera]))
 	build_room()
@@ -103,6 +107,7 @@ func _on_cam_5_pressed() -> void:
 
 func _on_cam_6_pressed() -> void:
 	update_cam("6")
+	#kitchenSounds()
 
 func _on_cam_7_pressed() -> void:
 	update_cam("7")
@@ -115,7 +120,23 @@ func _on_animatronic_ai_controller_did_move(room: Variant) -> void:
 		await get_tree().create_timer(0.05).timeout #Code runs too fast to take layer out
 		update_cam(current_camera)
 
-func _on_visibility_changed() -> void:
-	pass
-	#if is_visible():
-		#update_cam(current_camera)
+#Set the kitchen sound layers
+#0: BaseLow, 1: BaseHigh, 2: Chica, 3: Freddy
+func kitchenSounds():
+	var locations = $"../../AnimatronicAIController".give_Locations()
+	var chicaPresent = locations[1] == "6"
+	var freddyPresent = locations[2] == "6"
+	$"../../CameraNode/Camera2D/KitchenChicaStream"._set_playing(chicaPresent)
+	$"../../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(0)
+	$"../../CameraNode/Camera2D/KitchenFreddyStream"._set_playing(freddyPresent)
+	$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing((!chicaPresent) != (!freddyPresent)) # XOR
+	$"../../CameraNode/Camera2D/KitchenHighBaseStream"._set_playing(chicaPresent and freddyPresent)
+
+func kitchenSoundsOff():
+	$"../../CameraNode/Camera2D/KitchenFreddyStream"._set_playing(false)
+	$"../../CameraNode/Camera2D/KitchenChicaStream"._set_playing(false)
+	if $"../../AnimatronicAIController".give_Locations()[1] == "6": #If chica still present
+		$"../../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(-20)
+	else:
+		$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(false)
+	$"../../CameraNode/Camera2D/KitchenHighBaseStream"._set_playing(false)

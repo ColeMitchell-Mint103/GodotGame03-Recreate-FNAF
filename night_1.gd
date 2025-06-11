@@ -10,13 +10,14 @@ var freddy_factor #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
 var dev_mode = true
-var animatronic_aggression = [10, 2, 0, 1] #Bonnie, Chica, Freddy, Foxy
+var animatronic_aggression = [10, 10, 0, 1] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 
 var gotKilled = "NO"
 var leftControlsEnabled = true
 var rightControlsEnabled = true
+var camDoNotOpen = false
 @onready var power_meter_list = [$CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Low,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Medium,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/High,
@@ -72,12 +73,13 @@ func win_game():
 #End game logic
 func lose_game():
 	$GameTick.stop()
-	$CameraNode.set_process_mode(Node.PROCESS_MODE_DISABLED)
 	$CameraNode/Camera2D.set_position(Vector2(0,0))
 	$CameraNode/Camera2D/HUD.set_visible(false)
 	$CameraNode/Camera2D/JumpscareLayer.set_visible(false)
 	#crrep screen
-	$GameOverScreen.set_texture(load("res://Textures/BonnieDeath.png"))
+	match gotKilled:
+		"BONNIE": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/BonnieDeath.png"))
+		"CHICA": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/ChicaDeath.png"))
 	#delay
 	await get_tree().create_timer(10).timeout
 	#back to title
@@ -94,6 +96,11 @@ func power_display(change):
 func bonnieKill():
 	leftControlsEnabled = false
 	gotKilled = "BONNIE"
+	#maybe use moan sound
+
+func chicaKill():
+	rightControlsEnabled = false
+	gotKilled = "CHICA"
 	#maybe use moan sound
 	
 func _on_game_tick_timeout() -> void:
@@ -158,8 +165,8 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 #Open the camera system
 func _on_cam_access_mouse_entered() -> void:
 	#prevent cam during death
-	if gotKilled != "NO":
-		pass
+	if camDoNotOpen:
+		return
 	#play animation, open camera panel
 	if camera_open:
 		$CameraNode/Camera2D.make_current() #room view
@@ -175,7 +182,17 @@ func _on_cam_access_mouse_entered() -> void:
 		match gotKilled:
 			"BONNIE":
 				#play animation
-				$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/bonniejump0002.png"))
+				camDoNotOpen = true #Stop controls
+				$CameraNode.camDoNotMove = true
+				$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/bonniejump/bonniejump0002.png"))
+				$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
+				await get_tree().create_timer(3).timeout
+				lose_game() #wait for finish
+			"CHICA":
+				#play animation
+				camDoNotOpen = true #Stop controls
+				$CameraNode.camDoNotMove = true
+				$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/ChicaJump.png"))
 				$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
 				await get_tree().create_timer(3).timeout
 				lose_game() #wait for finish
@@ -183,6 +200,12 @@ func _on_cam_access_mouse_entered() -> void:
 				pass
 
 func _input(event):
-	if event is InputEventKey and event.keycode == KEY_L:
-		print("Cheat: Move Bonnie to office")
-		$AnimatronicAIController.BonniePos = "Office"
+	if event.is_action_pressed("DevCheat"):
+	#if event is InputEventKey and event.keycode == KEY_L:
+		#print("Cheat: End game")
+		#lose_game()
+		#print("Cheat: Move Bonnie to office")
+		#$AnimatronicAIController.BonniePos = "Office"
+		print("Cheat: Chica to Kitchen")
+		$AnimatronicAIController.move_chica("6")
+		

@@ -13,6 +13,7 @@ var FoxyStage = 0
 
 #Variable to drive AI to the Office over time so it doesn't wander forever
 var bonnie_angy = 0 
+var chica_angy = 0
 
 signal did_move(room)
 # Called when the node enters the scene tree for the first time.
@@ -37,13 +38,16 @@ func tick():
 		if randi_range(0, 20) <= BonnieAI:
 			move_bonnie()
 			$BonnieTimer.start(randf_range(150, 400) / BonnieAI) #Cooldown shortens with AI level
-	if randi_range(0, 20) <= ChicaAI:
-		move_chica()
+	if $ChicaTimer.is_stopped():
+		if randi_range(0, 20) <= ChicaAI:
+			move_chica()
+			$ChicaTimer.start(randf_range(150, 600) / ChicaAI) #Chica slower than bon bon
 	if randi_range(0, 20) <= FreddyAI:
 		move_freddy()
 	if randi_range(0, 20) <= FoxyAI:
 		move_foxy()
 	bonnie_angy += 1
+	chica_angy += 1
 
 func give_Locations():
 	return [BonniePos, ChicaPos, FreddyPos, FoxyStage]
@@ -61,7 +65,7 @@ var bonnie_movement_AGGRESS = {"1A" : "1B",
 "2B" : "Office"
 }
 
-
+#Moves Bonnie animatromo to new room.
 func move_bonnie():
 	if BonniePos == "Office":
 		#if door closed, leave
@@ -83,8 +87,51 @@ func move_bonnie():
 	#Play audio sound
 	print("Bonnie: " + BonniePos)
 
-func move_chica():
-	pass
+var chica_movement_WANDER = {"1A" : ["1B"],
+"1B" : ["7", "4A", "6"],
+"7" : ["1B"],
+"6" : ["1B"], #Kitchen
+"4A" : ["1B", "4B", "Office"],
+"4B" : ["Office"]
+}
+var chica_movement_AGGRESS = {"1A" : ["1B"],
+"1B" : ["4A"],
+"7" : ["1B"],
+"6" : ["1B"], #Kitchen
+"4A" : ["Office"],
+"4B" : ["Office"]
+}
+
+#Moves Chica, the fat bird, to new room.
+#Emits did_move -> camera_screen.gd
+func move_chica(room = ""):
+	if ChicaPos == "Office":
+		if $"..".rightDoorOpen:
+			$"..".chicaKill()
+			print("Killed byChica")
+			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
+		else:
+			ChicaPos = '1B' #if door closed, leave
+	
+	if room != "": #Cheat purposes
+		ChicaPos = room
+	elif BonniePos == "1A":
+		return #Cannot leave before Bonnie
+	elif randi_range(0, 1000) <= chica_angy: #Roll for aggression
+		did_move.emit(ChicaPos)
+		ChicaPos = chica_movement_AGGRESS[ChicaPos]
+	else: #Wander move
+		did_move.emit(ChicaPos)
+		ChicaPos = chica_movement_WANDER[ChicaPos].pick_random()
+	
+	if ChicaPos == "Office": #Satisfied by reaching Office
+		chica_angy = 0
+		$"../RightHallTexture/ChicaOffice".set_visible(true)
+	if ChicaPos == "6":
+		$"../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(true)
+		$"../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(-20)
+	#Play audio sound
+	print("Chica: " + ChicaPos)
 	
 func move_freddy():
 	pass
