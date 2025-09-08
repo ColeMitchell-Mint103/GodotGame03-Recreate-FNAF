@@ -25,7 +25,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-#Pass initial parameters
+#Pass initial parameters in NightX script
 func initialize(AIValues):
 	BonnieAI = AIValues[0]
 	ChicaAI = AIValues[1]
@@ -33,6 +33,7 @@ func initialize(AIValues):
 	FoxyAI = AIValues[3]
 
 #Core loop
+#Pauses / Timers are cooldowns to prevent rapid lucky movement.
 func tick():
 	if $BonnieTimer.is_stopped(): #First pause is 30s currently, set via node
 		if randi_range(0, 20) <= BonnieAI:
@@ -42,8 +43,10 @@ func tick():
 		if randi_range(0, 20) <= ChicaAI:
 			move_chica()
 			$ChicaTimer.start(randf_range(150, 600) / ChicaAI) #Chica slower than bon bon
-	if randi_range(0, 20) <= FreddyAI:
-		move_freddy()
+	if $FreddyTimer.is_stopped():
+		if randi_range(0, 20) <= FreddyAI:
+			move_freddy()
+		$FreddyTimer.start(randf_range(300,360) / FreddyAI)
 	if randi_range(0, 20) <= FoxyAI:
 		move_foxy()
 	bonnie_angy += 1
@@ -94,12 +97,12 @@ var chica_movement_WANDER = {"1A" : ["1B"],
 "4A" : ["1B", "4B", "Office"],
 "4B" : ["Office"]
 }
-var chica_movement_AGGRESS = {"1A" : ["1B"],
-"1B" : ["4A"],
-"7" : ["1B"],
-"6" : ["1B"], #Kitchen
-"4A" : ["Office"],
-"4B" : ["Office"]
+var chica_movement_AGGRESS = {"1A" : "1B",
+"1B" : "4A",
+"7" : "1B",
+"6" : "1B", #Kitchen
+"4A" : "Office",
+"4B" : "Office"
 }
 
 #Moves Chica, the fat bird, to new room.
@@ -127,14 +130,31 @@ func move_chica(room = ""):
 	if ChicaPos == "Office": #Satisfied by reaching Office
 		chica_angy = 0
 		$"../RightHallTexture/ChicaOffice".set_visible(true)
-	if ChicaPos == "6":
-		$"../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(true)
-		$"../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(-20)
+	#if ChicaPos == "6":
+		#$"../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(true)
+		#$"../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(-20)
 	#Play audio sound
 	print("Chica: " + ChicaPos)
 	
+	
+	
+var freddy_movement = {"1A":"1B",
+	"1B":"7",
+	"7":"6",
+	"6":"4A",
+	"4A":"4B",
+	}
+# Move Freddy to next room.
 func move_freddy():
-	pass
+	if FreddyPos == "4B" and $"..".rightDoorOpen:
+		$"..".freddyKill()
+		print("Killed by Freddy")
+	else:
+		FreddyPos = freddy_movement[FreddyPos]
+		did_move.emit(FreddyPos)
+		print("Freddy: " + FreddyPos)
+	#Play FredLaugh
+	
 
 func move_foxy():
 	pass

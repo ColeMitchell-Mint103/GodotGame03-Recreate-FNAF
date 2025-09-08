@@ -127,7 +127,6 @@ func kitchenSounds():
 	var chicaPresent = locations[1] == "6"
 	var freddyPresent = locations[2] == "6"
 	$"../../CameraNode/Camera2D/KitchenChicaStream"._set_playing(chicaPresent)
-	$"../../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(0)
 	$"../../CameraNode/Camera2D/KitchenFreddyStream"._set_playing(freddyPresent)
 	$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing((!chicaPresent) != (!freddyPresent)) # XOR
 	$"../../CameraNode/Camera2D/KitchenHighBaseStream"._set_playing(chicaPresent and freddyPresent)
@@ -135,8 +134,5 @@ func kitchenSounds():
 func kitchenSoundsOff():
 	$"../../CameraNode/Camera2D/KitchenFreddyStream"._set_playing(false)
 	$"../../CameraNode/Camera2D/KitchenChicaStream"._set_playing(false)
-	if $"../../AnimatronicAIController".give_Locations()[1] == "6": #If chica still present
-		$"../../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(-20)
-	else:
-		$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(false)
+	$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(false)
 	$"../../CameraNode/Camera2D/KitchenHighBaseStream"._set_playing(false)

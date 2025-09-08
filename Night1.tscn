@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=52 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://dcsfsv23v6shk" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0011.png" id="19_qntos"]
 [ext_resource type="AudioStream" uid="uid://3eolmdd44x3a" path="res://SFX/DoorClose.wav" id="20_6anms"]
 [ext_resource type="AudioStream" uid="uid://8nwgu1au46ho" path="res://SFX/DoorOpen.wav" id="21_i5n53"]
+[ext_resource type="Texture2D" uid="uid://dofb7ekl7rl8a" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0008.png" id="22_5caea"]
 [ext_resource type="Texture2D" uid="uid://3d00tmbhi72w" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0000.png" id="22_6mqtc"]
 [ext_resource type="Texture2D" uid="uid://bbf0h1kqq8rh2" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0001.png" id="23_l1dhh"]
 [ext_resource type="Texture2D" uid="uid://voucf0i3080k" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0003.png" id="24_hsa0v"]
@@ -88,7 +89,7 @@ tracks/0/path = NodePath(".:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.2, 0.266667, 0.333333),
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.133333, 0.3, 0.366667, 0.433333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("13_jrvrd"), ExtResource("14_p4jm6"), ExtResource("15_qcl8k"), ExtResource("16_3um8f"), ExtResource("17_62tkl"), ExtResource("18_83b7m"), ExtResource("19_qntos")]
@@ -112,25 +113,13 @@ tracks/1/use_blend = true
 [sub_resource type="Animation" id="Animation_081s4"]
 resource_name = "LeftDoorOpen"
 length = 0.7
-tracks/0/type = "value"
+tracks/0/type = "audio"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
+tracks/0/path = NodePath("AudioStreamPlayer2D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333, 0.333333, 0.433333, 0.466667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("19_qntos"), ExtResource("18_83b7m"), ExtResource("17_62tkl"), ExtResource("16_3um8f"), ExtResource("15_qcl8k"), ExtResource("14_p4jm6"), ExtResource("13_jrvrd")]
-}
-tracks/1/type = "audio"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer2D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "clips": [{
 "end_offset": 0.119681,
 "start_offset": 0.0,
@@ -138,7 +127,19 @@ tracks/1/keys = {
 }],
 "times": PackedFloat32Array(0)
 }
-tracks/1/use_blend = true
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2, 0.266667, 0.333333, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("19_qntos"), ExtResource("18_83b7m"), ExtResource("22_5caea"), ExtResource("16_3um8f"), ExtResource("15_qcl8k"), ExtResource("14_p4jm6"), ExtResource("13_jrvrd")]
+}
 
 [sub_resource type="Animation" id="Animation_fs58j"]
 length = 0.001
@@ -149,6 +150,18 @@ tracks/0/path = NodePath(".:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_jrvrd")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -582,7 +595,7 @@ autostart = true
 one_shot = true
 autostart = true
 
-[node name="Timer3" type="Timer" parent="AnimatronicAIController"]
+[node name="FreddyTimer" type="Timer" parent="AnimatronicAIController"]
 
 [node name="Timer4" type="Timer" parent="AnimatronicAIController"]
 

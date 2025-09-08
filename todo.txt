@@ -1,5 +1,10 @@
 Last Worked On:
+Working Freddy Faznut in animatronicAI
+
+Paused:
 Kitchen sounds. (Set baselow to low volume when camera lowered.)
+Door animation is scuffed (Right door head keeps disappearing.)
+Animatronic AI is set high for testing purposes.
 
 Todo:
 1. Camera panel button is touchy.
