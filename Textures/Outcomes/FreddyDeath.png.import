@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d07cx8lsx4n0h"
-path="res://.godot/imported/BonnieDeath.png-02ebce97f2259c552645fe6f2ed11535.ctex"
+uid="uid://mj8qawgr2gnm"
+path="res://.godot/imported/FreddyDeath.png-985174446327026b5521fb29da6c44c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/BonnieDeath.png"
-dest_files=["res://.godot/imported/BonnieDeath.png-02ebce97f2259c552645fe6f2ed11535.ctex"]
+source_file="res://Textures/Outcomes/FreddyDeath.png"
+dest_files=["res://.godot/imported/FreddyDeath.png-985174446327026b5521fb29da6c44c5.ctex"]
 
 [params]
 

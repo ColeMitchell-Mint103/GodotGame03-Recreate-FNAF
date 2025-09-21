@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://camera_node.gd" id="3_kmeu0"]
 [ext_resource type="AudioStream" uid="uid://cyegfd3b71wtr" path="res://SFX/whatchasay.wav" id="3_y1dr5"]
 [ext_resource type="AudioStream" uid="uid://cp45ffts3je5k" path="res://SFX/KitchenBaseLow.wav" id="4_dabi5"]
-[ext_resource type="AudioStream" uid="uid://c0mdf6mdjopu7" path="res://SFX/freddyhonklooping.wav" id="4_j0p4i"]
+[ext_resource type="AudioStream" uid="uid://bj2v67p3myec8" path="res://SFX/FreddyKitchen.wav" id="4_e6x5j"]
 [ext_resource type="Texture2D" uid="uid://b3cuhg0txemdr" path="res://Textures/Office_Base.png" id="5_0q6wr"]
 [ext_resource type="Texture2D" uid="uid://bmhec3bm753dr" path="res://Textures/RoomFiles/Showstage_Base.png" id="5_2vqj7"]
 [ext_resource type="AudioStream" uid="uid://bh6s4dsom6whb" path="res://SFX/freddyhonk.wav" id="5_fdwq8"]
@@ -403,8 +403,7 @@ offset_bottom = 648.0
 scale = Vector2(0.785, 1.033)
 
 [node name="KitchenFreddyStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
-stream = ExtResource("4_j0p4i")
-pitch_scale = 0.68
+stream = ExtResource("4_e6x5j")
 
 [node name="KitchenChicaStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
 stream = ExtResource("6_134aq")
@@ -596,6 +595,10 @@ one_shot = true
 autostart = true
 
 [node name="FreddyTimer" type="Timer" parent="AnimatronicAIController"]
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AnimatronicAIController/FreddyTimer"]
 
 [node name="Timer4" type="Timer" parent="AnimatronicAIController"]
 

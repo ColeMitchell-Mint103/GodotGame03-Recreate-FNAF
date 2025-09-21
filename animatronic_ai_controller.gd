@@ -14,6 +14,7 @@ var FoxyStage = 0
 #Variable to drive AI to the Office over time so it doesn't wander forever
 var bonnie_angy = 0 
 var chica_angy = 0
+var freddy_angy = 0
 
 signal did_move(room)
 # Called when the node enters the scene tree for the first time.
@@ -43,14 +44,23 @@ func tick():
 		if randi_range(0, 20) <= ChicaAI:
 			move_chica()
 			$ChicaTimer.start(randf_range(150, 600) / ChicaAI) #Chica slower than bon bon
-	if $FreddyTimer.is_stopped():
-		if randi_range(0, 20) <= FreddyAI:
-			move_freddy()
-		$FreddyTimer.start(randf_range(300,360) / FreddyAI)
+	#if $FreddyTimer.is_stopped():
+		#if randi_range(0, 20) <= FreddyAI:
+			#move_freddy()
+		#$FreddyTimer.start(randf_range(300,360) / FreddyAI)
 	if randi_range(0, 20) <= FoxyAI:
 		move_foxy()
 	bonnie_angy += 1
 	chica_angy += 1
+	# Freddy gains angy when not looked at, lowers when viewed. If angy too high, he move.
+	if $"../ScreenCameraNode/CameraScreenDisplay".isFreddyOnCam():
+		freddy_angy -= 1
+	else:
+		freddy_angy += 1
+	if freddy_angy >= 200 / FreddyAI:
+		move_freddy()
+		print("Freddy: " + FreddyPos)
+		freddy_angy = 0
 
 func give_Locations():
 	return [BonniePos, ChicaPos, FreddyPos, FoxyStage]
@@ -144,16 +154,24 @@ var freddy_movement = {"1A":"1B",
 	"6":"4A",
 	"4A":"4B",
 	}
+var FreddyLaughs =["res://SFX/Freddy/FreddyLaugh-01.wav","res://SFX/Freddy/FreddyLaugh-02.wav",
+"res://SFX/Freddy/FreddyLaugh-03.wav", "res://SFX/Freddy/FreddyLaugh-04-2.wav"]
 # Move Freddy to next room.
-func move_freddy():
-	if FreddyPos == "4B" and $"..".rightDoorOpen:
-		$"..".freddyKill()
-		print("Killed by Freddy")
+# Kitchen sounds -> camera_screen
+func move_freddy(room = ""):
+	if room != "": #Cheat purposes
+		FreddyPos = room
+	elif FreddyPos == "4B" and $"..".rightDoorOpen:
+		if $"..".rightDoorOpen:
+			$"..".freddyKill()
+			print("Killed by Freddy")
+		else:
+			print("Freddy Blocked by Door")
 	else:
-		FreddyPos = freddy_movement[FreddyPos]
 		did_move.emit(FreddyPos)
-		print("Freddy: " + FreddyPos)
-	#Play FredLaugh
+		FreddyPos = freddy_movement[FreddyPos]
+		$FreddyTimer/AudioStreamPlayer.set_stream(load(FreddyLaughs[randi_range(0, FreddyLaughs.size() - 1)])) #range is INCLUSIVE
+		$FreddyTimer/AudioStreamPlayer.play() #Play FredLaugh
 	
 
 func move_foxy():

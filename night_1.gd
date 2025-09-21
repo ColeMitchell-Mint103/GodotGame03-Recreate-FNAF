@@ -10,7 +10,7 @@ var freddy_factor #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
 var dev_mode = true
-var animatronic_aggression = [10, 10, 0, 1] #Bonnie, Chica, Freddy, Foxy
+var animatronic_aggression = [10, 10, 10, 1] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 
@@ -80,6 +80,7 @@ func lose_game():
 	match gotKilled:
 		"BONNIE": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/BonnieDeath.png"))
 		"CHICA": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/ChicaDeath.png"))
+		"FREDDY": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/FreddyDeath.png"))
 	#delay
 	await get_tree().create_timer(10).timeout
 	#back to title
@@ -102,6 +103,21 @@ func chicaKill():
 	rightControlsEnabled = false
 	gotKilled = "CHICA"
 	#maybe use moan sound
+
+func freddyKill():
+	#play animation
+	$CameraNode/Camera2D.make_current() #room view
+	power_display(-1)
+	camera_open = false
+	#await get_tree().create_timer(3).timeout #Pause before jump?
+	camDoNotOpen = true #Stop controls
+	$CameraNode.camDoNotMove = true
+	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
+	$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/FreddyJump.png"))
+	$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
+	gotKilled = "FREDDY"
+	await get_tree().create_timer(3).timeout
+	lose_game() #wait for finish
 	
 func _on_game_tick_timeout() -> void:
 	tick() #redundant
@@ -177,7 +193,7 @@ func _on_cam_access_mouse_entered() -> void:
 	camera_open = !camera_open
 	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
 	$ScreenCameraNode/CameraScreenDisplay.update_cam()
-	#JUMPSCARE STUFF on cam down
+	#JUMPSCARE STUFF on cam down -> set function
 	if not camera_open:
 		match gotKilled:
 			"BONNIE":
@@ -199,6 +215,7 @@ func _on_cam_access_mouse_entered() -> void:
 			_:
 				pass
 
+#Development function
 func _input(event):
 	if event.is_action_pressed("DevCheat"):
 	#if event is InputEventKey and event.keycode == KEY_L:
@@ -208,4 +225,6 @@ func _input(event):
 		#$AnimatronicAIController.BonniePos = "Office"
 		print("Cheat: Chica to Kitchen")
 		$AnimatronicAIController.move_chica("6")
+		print("Cheat: Freddy to 4B")
+		$AnimatronicAIController.move_freddy("4B")
 		

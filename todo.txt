@@ -1,8 +1,8 @@
 Last Worked On:
-Working Freddy Faznut in animatronicAI
+Working Freddy Faznut in animatronicAI - adjusting kill -> night_1
 
 Paused:
-Kitchen sounds. (Set baselow to low volume when camera lowered.)
+Kitchen sounds. (Set baselow to low volume when camera lowered.) (Tracks don't loop)
 Door animation is scuffed (Right door head keeps disappearing.)
 Animatronic AI is set high for testing purposes.
 

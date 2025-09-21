@@ -28,18 +28,19 @@ var room_textures = {"1A" : "res://Textures/RoomFiles/Showstage_Base.png",
 "7" : "res://Textures/RoomFiles/Bathrooms_Base.png"
 }
 
+# Images of characters, currently in bonnie,chica,freddy. See build_room()
 var room_Characters = {"1A" : ["res://Textures/CharacterLayers/Showstage_Bonnie.png", 
 "res://Textures/CharacterLayers/Showstage_Chica.png", "res://Textures/CharacterLayers/Showstage_Freddy.png"],
-"1B" : ["res://Textures/CharacterLayers/Dining_Bonnie.png", "res://Textures/CharacterLayers/Dining_Chica.png", null],
+"1B" : ["res://Textures/CharacterLayers/Dining_Bonnie.png", "res://Textures/CharacterLayers/Dining_Chica.png", "res://Textures/CharacterLayers/Dining_Freddy.png"],
 "1C" : ["res://Textures/CharacterLayers/PirateCove_Foxy1.png"],#pirates cove
 "2A" : ["res://Textures/CharacterLayers/WestHall_Bonnie.png", null, null],
 "2B" : ["res://Textures/CharacterLayers/WestHallCorner_Bonnie.png", null, null],
 "3" : ["res://Textures/CharacterLayers/Supply_Closet_Bonnie.png", null, null],
-"4A" : [null, "res://Textures/CharacterLayers/EastHall_Chica.png", null, null], #East Hall
-"4B" : [null, "res://Textures/CharacterLayers/EastHallCorner_Chica.png", null, null], #East Hall Corner
+"4A" : [null, "res://Textures/CharacterLayers/EastHall_Chica.png", "res://Textures/CharacterLayers/EastHall_Freddy.png", null], #East Hall
+"4B" : [null, "res://Textures/CharacterLayers/EastHallCorner_Chica.png", "res://Textures/CharacterLayers/EastHallCorner_Freddy.png", null], #East Hall Corner
 "5" : ["res://Textures/CharacterLayers/Backstage_Bonnie.png", null, null],
-"6" : [null, "", null, null],#Kitchen, there are none
-"7" : [null, "res://Textures/CharacterLayers/Bathrooms_Chica1.png", null, null] #Bathrooms
+"6" : [null, "", "", null],#Kitchen, there are none - If you load null the program crashes.
+"7" : [null, "res://Textures/CharacterLayers/Bathrooms_Chica1.png", "res://Textures/CharacterLayers/Bathrooms_Freddy.png", null] #Bathrooms
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -136,3 +137,6 @@ func kitchenSoundsOff():
 	$"../../CameraNode/Camera2D/KitchenChicaStream"._set_playing(false)
 	$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(false)
 	$"../../CameraNode/Camera2D/KitchenHighBaseStream"._set_playing(false)
+
+func isFreddyOnCam():
+	return camera_open and current_camera == $"../../AnimatronicAIController".give_Locations()[2]
