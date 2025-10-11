@@ -10,7 +10,7 @@ var freddy_factor #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
 var dev_mode = true
-var animatronic_aggression = [10, 10, 10, 1] #Bonnie, Chica, Freddy, Foxy
+var animatronic_aggression = [10, 10, 10, 3] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 
@@ -81,6 +81,7 @@ func lose_game():
 		"BONNIE": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/BonnieDeath.png"))
 		"CHICA": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/ChicaDeath.png"))
 		"FREDDY": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/FreddyDeath.png"))
+		"FOXY": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/FoxyDeath.png"))
 	#delay
 	await get_tree().create_timer(10).timeout
 	#back to title
@@ -106,13 +107,10 @@ func chicaKill():
 
 func freddyKill():
 	#play animation
-	$CameraNode/Camera2D.make_current() #room view
-	power_display(-1)
-	camera_open = false
+	camera_flip()
 	#await get_tree().create_timer(3).timeout #Pause before jump?
 	camDoNotOpen = true #Stop controls
 	$CameraNode.camDoNotMove = true
-	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
 	$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/FreddyJump.png"))
 	$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
 	gotKilled = "FREDDY"
@@ -180,19 +178,7 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 
 #Open the camera system
 func _on_cam_access_mouse_entered() -> void:
-	#prevent cam during death
-	if camDoNotOpen:
-		return
-	#play animation, open camera panel
-	if camera_open:
-		$CameraNode/Camera2D.make_current() #room view
-		power_display(-1)
-	else:
-		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current() #camera view
-		power_display(1)
-	camera_open = !camera_open
-	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
-	$ScreenCameraNode/CameraScreenDisplay.update_cam()
+	camera_flip()
 	#JUMPSCARE STUFF on cam down -> set function
 	if not camera_open:
 		match gotKilled:
@@ -223,8 +209,41 @@ func _input(event):
 		#lose_game()
 		#print("Cheat: Move Bonnie to office")
 		#$AnimatronicAIController.BonniePos = "Office"
-		print("Cheat: Chica to Kitchen")
-		$AnimatronicAIController.move_chica("6")
-		print("Cheat: Freddy to 4B")
-		$AnimatronicAIController.move_freddy("4B")
-		
+		#print("Cheat: Chica to Kitchen")
+		#$AnimatronicAIController.move_chica("6")
+		#print("Cheat: Freddy to 4B")
+		#$AnimatronicAIController.move_freddy("4B")
+		$AnimatronicAIController.foxy_angy = 4000
+		print("Made Foxy angy")
+
+func camera_flip():
+	#prevent cam during death
+	if camDoNotOpen:
+		return
+	#play animation, open camera panel
+	if camera_open:
+		$CameraNode/Camera2D.make_current() #room view
+		power_display(-1)
+	else:
+		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current() #camera view
+		power_display(1)
+	camera_open = !camera_open
+	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
+	$ScreenCameraNode/CameraScreenDisplay.update_cam()
+
+func _on_foxy_kill_you_timer_timeout() -> void:
+	if not leftDoorOpen: #Attack prevented
+		print("Attack Fail Door Closed")
+		#Add sfx
+	else: #You die
+		if camera_open:
+			camera_flip()
+		camDoNotOpen = true
+		#foxyKill
+		$CameraNode.camDoNotMove = true
+		$CameraNode.moveCameraLeft()
+		$CameraNode/Camera2D/JumpscareLayer/FoxyEnterOffice.play("FoxyEnterOffice")
+		$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
+		gotKilled = "FOXY"
+		await get_tree().create_timer(3).timeout
+		lose_game() #wait for finish

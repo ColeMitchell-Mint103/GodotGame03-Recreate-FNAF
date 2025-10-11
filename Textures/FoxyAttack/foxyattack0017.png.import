@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6rrqpa52kmrd"
-path="res://.godot/imported/PirateCove_Foxy1.png-1d1bb4120af5d3974803fd67555cb470.ctex"
+uid="uid://b21tmo40d41pl"
+path="res://.godot/imported/foxyattack0017.png-e745bd48c0d0c923a6e5a51aed8f5fa2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CharacterLayers/PirateCove_Foxy1.png"
-dest_files=["res://.godot/imported/PirateCove_Foxy1.png-1d1bb4120af5d3974803fd67555cb470.ctex"]
+source_file="res://Textures/FoxyAttack/foxyattack0017.png"
+dest_files=["res://.godot/imported/foxyattack0017.png-e745bd48c0d0c923a6e5a51aed8f5fa2.ctex"]
 
 [params]
 

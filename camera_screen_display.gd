@@ -1,6 +1,6 @@
 extends TextureRect
 
-var layer_List = [$CharacterLayer1, $CharacterLayer2, $CharacterLayer3, $CharacterLayer4, $CharacterLayer5] #layer 1 = bonnie, layer 2 = chica
+var layer_List = [$BonnieLayer,$ChicaLayer,$FreddyLayer,$FoxyLayer,$GoldenLayer]
 var current_camera = "1A"
 var camera_open = false
 var room_names = {"1A" : "Show Stage",
@@ -32,7 +32,7 @@ var room_textures = {"1A" : "res://Textures/RoomFiles/Showstage_Base.png",
 var room_Characters = {"1A" : ["res://Textures/CharacterLayers/Showstage_Bonnie.png", 
 "res://Textures/CharacterLayers/Showstage_Chica.png", "res://Textures/CharacterLayers/Showstage_Freddy.png"],
 "1B" : ["res://Textures/CharacterLayers/Dining_Bonnie.png", "res://Textures/CharacterLayers/Dining_Chica.png", "res://Textures/CharacterLayers/Dining_Freddy.png"],
-"1C" : ["res://Textures/CharacterLayers/PirateCove_Foxy1.png"],#pirates cove
+"1C" : ["res://Textures/CharacterLayers/PirateCove_Foxy0.png"],#pirates cove
 "2A" : ["res://Textures/CharacterLayers/WestHall_Bonnie.png", null, null],
 "2B" : ["res://Textures/CharacterLayers/WestHallCorner_Bonnie.png", null, null],
 "3" : ["res://Textures/CharacterLayers/Supply_Closet_Bonnie.png", null, null],
@@ -43,13 +43,21 @@ var room_Characters = {"1A" : ["res://Textures/CharacterLayers/Showstage_Bonnie.
 "7" : [null, "res://Textures/CharacterLayers/Bathrooms_Chica1.png", "res://Textures/CharacterLayers/Bathrooms_Freddy.png", null] #Bathrooms
 }
 
+#FoxyStages
+var foxy_Textures = ["res://Textures/CharacterLayers/PirateCove_Foxy0.png",
+"res://Textures/CharacterLayers/PirateCove_Foxy1.png",
+"res://Textures/CharacterLayers/PirateCove_Foxy2.png",
+"res://Textures/CharacterLayers/PirateCove_Foxy3.png",
+"res://Textures/CharacterLayers/PirateCove_Foxy4.png"
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#Load on ready to ensure NOT NULL
 	#await get_tree().create_timer(0.5).timeout #No effect
 	if self.is_visible(): #Set invisible so program doesn't crash if left visible
 		self.set_visible(false)
-	layer_List = [$CharacterLayer1, $CharacterLayer2, $CharacterLayer3, $CharacterLayer4, $CharacterLayer5] #layer 1 = bonnie, layer 2 = chica
+	layer_List = [$BonnieLayer,$ChicaLayer,$FreddyLayer,$FoxyLayer,$GoldenLayer]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -60,12 +68,19 @@ func _process(delta: float) -> void:
 #camera moving tech
 func update_cam(camName = current_camera):
 	current_camera = camName
+	#Kitchen handling
 	if camName == "6":
 		kitchenSounds()
 	else:
 		kitchenSoundsOff()
 	$ScreenCamera/MapUI/CameraDetail.set_text(room_names[current_camera]) 
 	$RoomView.set_texture(load(room_textures[current_camera]))
+	if camName == "2A" and $"../../AnimatronicAIController".FoxyAttack:
+		print("Foxy chase go")
+		$"../../AnimatronicAIController/FoxyKillYouTimer".stop()
+		$"../../AnimatronicAIController/FoxyKillYouTimer".start(1)
+		$RoomView/FoxyCharge.set_visible(true)
+		$RoomView/FoxyCharge.play() #Foxy charges down the hall now. Should not be drawn over room but only camera.
 	build_room()
 
 ##layer_list currently locked to locations list
@@ -77,6 +92,13 @@ func build_room():
 			layer_List[index].set_texture(load(room_Characters[current_camera][index]))
 		else: #If no animatronic, empty layer
 			layer_List[index].set_texture(null)
+	# Pirate's Cove Handling
+	if current_camera == "1C":
+		for index in range(0, 3): #unload other characters
+			layer_List[index].set_texture(null)
+		layer_List[3].set_texture(load(room_Characters[current_camera][0])) #load Foxy
+	else:
+		layer_List[3].set_texture(null) #unload Foxy
 
 #Show stage has Bonnie, Freddy, and Chica. Bonnie leaves first, then Chica, then Freddy (if not observed). They do not return in the night.
 func _on_cam_1a_pressed() -> void:
@@ -140,3 +162,7 @@ func kitchenSoundsOff():
 
 func isFreddyOnCam():
 	return camera_open and current_camera == $"../../AnimatronicAIController".give_Locations()[2]
+	
+# Called by animatronic_ai_controller when FoxyStage changes.
+func updateFoxy(stage):
+	room_Characters["1C"][0] = foxy_Textures[stage]

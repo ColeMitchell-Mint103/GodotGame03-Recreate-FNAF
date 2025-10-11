@@ -15,6 +15,8 @@ var FoxyStage = 0
 var bonnie_angy = 0 
 var chica_angy = 0
 var freddy_angy = 0
+var foxy_angy = 0
+var FoxyAttack = false
 
 signal did_move(room)
 # Called when the node enters the scene tree for the first time.
@@ -44,12 +46,6 @@ func tick():
 		if randi_range(0, 20) <= ChicaAI:
 			move_chica()
 			$ChicaTimer.start(randf_range(150, 600) / ChicaAI) #Chica slower than bon bon
-	#if $FreddyTimer.is_stopped():
-		#if randi_range(0, 20) <= FreddyAI:
-			#move_freddy()
-		#$FreddyTimer.start(randf_range(300,360) / FreddyAI)
-	if randi_range(0, 20) <= FoxyAI:
-		move_foxy()
 	bonnie_angy += 1
 	chica_angy += 1
 	# Freddy gains angy when not looked at, lowers when viewed. If angy too high, he move.
@@ -57,10 +53,21 @@ func tick():
 		freddy_angy -= 1
 	else:
 		freddy_angy += 1
-	if freddy_angy >= 200 / FreddyAI:
+	if freddy_angy >= 2000 / FreddyAI:
 		move_freddy()
 		print("Freddy: " + FreddyPos)
 		freddy_angy = 0
+	# Foxy gains angy when the cameras are OFF. He attacks if the monitor is down.
+	if not FoxyAttack:
+		if $"../ScreenCameraNode/CameraScreenDisplay".camera_open:
+			foxy_angy += 1
+		else:
+			foxy_angy -= 1
+		if foxy_angy >= 5000 / FoxyAI:
+			move_foxy()
+			foxy_angy = 0
+			print("Foxy Stage: " + str(FoxyStage))
+	
 
 func give_Locations():
 	return [BonniePos, ChicaPos, FreddyPos, FoxyStage]
@@ -173,6 +180,16 @@ func move_freddy(room = ""):
 		$FreddyTimer/AudioStreamPlayer.set_stream(load(FreddyLaughs[randi_range(0, FreddyLaughs.size() - 1)])) #range is INCLUSIVE
 		$FreddyTimer/AudioStreamPlayer.play() #Play FredLaugh
 	
-
+#Foxy moves through 4 stages, with the 4th stage being him running down west hall to kill your ass.
+#At stage 4 he has a timer to attack the office given player inactivity or will run if the West Hall is looked at.?
 func move_foxy():
-	pass
+	FoxyStage = min(4, FoxyStage + 1) #Capped
+	if FoxyStage == 4:
+		FoxyAttack = true
+		print("Foxy attak")
+		$FoxyKillYouTimer.start()
+	$"../ScreenCameraNode/CameraScreenDisplay".updateFoxy(FoxyStage)
+	did_move.emit("1C") #1C = Pirate's Cove
+	
+	
+	

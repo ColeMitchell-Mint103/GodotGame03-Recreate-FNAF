@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=74 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -7,18 +7,14 @@
 [ext_resource type="AudioStream" uid="uid://cyegfd3b71wtr" path="res://SFX/whatchasay.wav" id="3_y1dr5"]
 [ext_resource type="AudioStream" uid="uid://cp45ffts3je5k" path="res://SFX/KitchenBaseLow.wav" id="4_dabi5"]
 [ext_resource type="AudioStream" uid="uid://bj2v67p3myec8" path="res://SFX/FreddyKitchen.wav" id="4_e6x5j"]
-[ext_resource type="Texture2D" uid="uid://bimy3abt2qqs3" path="res://Textures/FoxyEnterOffice/FoxyOffice1.png" id="4_wb11m"]
 [ext_resource type="Texture2D" uid="uid://b3cuhg0txemdr" path="res://Textures/Office_Base.png" id="5_0q6wr"]
 [ext_resource type="Texture2D" uid="uid://bmhec3bm753dr" path="res://Textures/RoomFiles/Showstage_Base.png" id="5_2vqj7"]
 [ext_resource type="AudioStream" uid="uid://bh6s4dsom6whb" path="res://SFX/freddyhonk.wav" id="5_fdwq8"]
-[ext_resource type="Texture2D" uid="uid://docifkahixf5y" path="res://Textures/FoxyEnterOffice/FoxyOffice2.png" id="5_uoksy"]
 [ext_resource type="AudioStream" uid="uid://cnwwfksfd63s5" path="res://SFX/KitchenBaseHigh.wav" id="5_vmdyh"]
 [ext_resource type="AudioStream" uid="uid://k6ow2uvb7eq1" path="res://SFX/ChicaKitchen.wav" id="6_134aq"]
 [ext_resource type="Texture2D" uid="uid://b8v4ho8gloks4" path="res://CameraMap.png" id="6_hvn0r"]
-[ext_resource type="Texture2D" uid="uid://tfcoaywvpjkx" path="res://Textures/FoxyEnterOffice/FoxyOffice3.png" id="6_ktu3m"]
 [ext_resource type="StyleBox" uid="uid://b16wsk8eq3fc0" path="res://CamButtonStyle.tres" id="7_51kmr"]
 [ext_resource type="Script" path="res://camera_screen_display.gd" id="7_dw0s4"]
-[ext_resource type="Texture2D" uid="uid://vy4w7usyd55r" path="res://Textures/FoxyEnterOffice/FoxyJump.png" id="7_wtkcv"]
 [ext_resource type="Texture2D" uid="uid://cmdhm3sb2u2rg" path="res://Textures/RoomFiles/OfficeWest.png" id="8_580vg"]
 [ext_resource type="Texture2D" uid="uid://ddalku87kv8v1" path="res://Textures/CharacterLayers/Office_Bonnie.png" id="9_ejvqj"]
 [ext_resource type="Texture2D" uid="uid://de25sjm7dj7qt" path="res://Textures/RoomFiles/OfficeEast.png" id="10_m28nn"]
@@ -103,31 +99,6 @@ _data = {
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1rg4c"]
 load_path = "res://.godot/imported/CamBarText.png-5f8c0c593d93da3d804f3f39263d9640.ctex"
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_pjvvy"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_wb11m")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_uoksy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_ktu3m")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_wtkcv")
-}],
-"loop": false,
-"name": &"FoxyEnterOffice",
-"speed": 4.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="Animation" id="Animation_w8hd3"]
 resource_name = "LeftDoorClose"
@@ -517,11 +488,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D/JumpscareLayer"]
 stream = ExtResource("3_y1dr5")
-
-[node name="FoxyEnterOffice" type="AnimatedSprite2D" parent="CameraNode/Camera2D/JumpscareLayer"]
-position = Vector2(59, 42)
-sprite_frames = SubResource("SpriteFrames_pjvvy")
-centered = false
 
 [node name="GameOverScreen" type="TextureRect" parent="CameraNode/Camera2D"]
 offset_right = 1152.0
@@ -976,7 +942,6 @@ alignment = 0
 [connection signal="button_down" from="GameScreen_Base/FredNose" to="." method="_on_fred_nose_button_down"]
 [connection signal="timeout" from="GameTick" to="." method="_on_game_tick_timeout"]
 [connection signal="did_move" from="AnimatronicAIController" to="ScreenCameraNode/CameraScreenDisplay" method="_on_animatronic_ai_controller_did_move"]
-[connection signal="timeout" from="AnimatronicAIController/FoxyKillYouTimer" to="." method="_on_foxy_kill_you_timer_timeout"]
 [connection signal="visibility_changed" from="ScreenCameraNode/CameraScreenDisplay" to="ScreenCameraNode/CameraScreenDisplay" method="_on_visibility_changed"]
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam1A" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_1a_pressed"]
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam1B" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_1b_pressed"]

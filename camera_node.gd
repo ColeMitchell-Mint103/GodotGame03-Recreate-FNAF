@@ -26,4 +26,7 @@ func _process(delta: float) -> void:
 		var xpos_temp = $Camera2D.get_position().x + moving * movespeed
 		xpos_temp = clamp(xpos_temp, -130, 130) #Keep camera (and children) within screen frame
 		$Camera2D.set_position(Vector2(xpos_temp, 0))
-	
+
+#For Foxy attak
+func moveCameraLeft():
+	$Camera2D.set_position(Vector2(minPos, 0))
