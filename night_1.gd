@@ -234,7 +234,18 @@ func camera_flip():
 func _on_foxy_kill_you_timer_timeout() -> void:
 	if not leftDoorOpen: #Attack prevented
 		print("Attack Fail Door Closed")
-		#Add sfx
+		#Stop the anim overlay
+		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.set_visible(false)
+		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.pause()
+		#Hit the door sfx
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/lockerhit1.mp3"))
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
+		#Reset Foxy
+		$AnimatronicAIController.FoxyAttack = false
+		$AnimatronicAIController.FoxyStage = 0
+		$ScreenCameraNode/CameraScreenDisplay.updateFoxy(0)
+		camera_flip()
+		power -= 3.0 #he drains power with Foxy magic
 	else: #You die
 		if camera_open:
 			camera_flip()

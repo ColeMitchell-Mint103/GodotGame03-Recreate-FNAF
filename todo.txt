@@ -1,5 +1,5 @@
 Last Worked On:
-Working Foxy attack animation and death -> night1 Implement death
+Working Foxy attack animation and death -> night1 Door knocking, make sure he resets
 
 Paused:
 Kitchen sounds. (Set baselow to low volume when camera lowered.) (Tracks don't loop)
@@ -7,7 +7,7 @@ Door animation is scuffed (Right door head keeps disappearing.)
 Animatronic AI is set high for testing purposes.
 
 Todo:
-1. Foxy
+1. DONE- Foxy
 2. Power Out
 3. Night end
 	

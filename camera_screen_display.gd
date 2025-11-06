@@ -76,9 +76,11 @@ func update_cam(camName = current_camera):
 	$ScreenCamera/MapUI/CameraDetail.set_text(room_names[current_camera]) 
 	$RoomView.set_texture(load(room_textures[current_camera]))
 	if camName == "2A" and $"../../AnimatronicAIController".FoxyAttack:
+		$"../../AnimatronicAIController".FoxyAttack = false #Maybe problematic
 		print("Foxy chase go")
 		$"../../AnimatronicAIController/FoxyKillYouTimer".stop()
 		$"../../AnimatronicAIController/FoxyKillYouTimer".start(1)
+		$RoomView/FoxyCharge.set_frame(0)
 		$RoomView/FoxyCharge.set_visible(true)
 		$RoomView/FoxyCharge.play() #Foxy charges down the hall now. Should not be drawn over room but only camera.
 	build_room()
