@@ -6,10 +6,11 @@ var hour = 0 #stupid fucking AM
 var power = 100.0 #float for fun
 var power_usage = 1 #clamp between 1 and 4?
 var power_factor = 0.13 #power modifier
-var freddy_factor #not ready for freddy - soon golden freddy activity
+var power_dead = false
+var his_power_factor #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
-var dev_mode = true
+var dev_mode = true #turn off
 var animatronic_aggression = [10, 10, 10, 3] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
@@ -21,7 +22,8 @@ var camDoNotOpen = false
 @onready var power_meter_list = [$CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Low,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Medium,
  $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/High,
- $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Veryhigh]
+ $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/Veryhigh,
+ $CameraNode/Camera2D/HUD/Time_PowerInfo/Meter/StupidHigh]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -42,7 +44,8 @@ func tick():
 	current_time += 1
 	hour = current_time / hourLength
 	power -= power_usage * power_factor
-	if power <= 0:
+	if power <= 0 and not power_dead:
+		power_dead = true
 		powerout()
 	if hour == 6:
 		win_game()
@@ -62,9 +65,43 @@ func game_start():
 	$CameraNode/Camera2D/HUD.set_visible(true)
 	$AnimatronicAIController.initialize(animatronic_aggression)
 	
-#Lights off, open doors, DISABLE AI, freddy singing blah blah
+#Player has run out of power. Game ends soon. Should the kill time be variable?
 func powerout():
-	pass #give freddy megalovania notes
+	#Disable animatronic AI? Can Foxy rush over Freddy?
+	$CameraNode/Camera2D/HUD/Time_PowerInfo.set_visible(false)
+	#Make dark, disable controls, open doors, Freddy jingle, jumpscare
+	if camera_open: 
+		camera_flip()
+	camDoNotOpen = true
+	$GameScreen_Base.set_modulate(Color(0.2,0.2,0.2))
+	$GameScreen_Base/PowerOutPlayer.play()
+	if not leftDoorOpen:
+		_on_left_door_toggled(false)
+	if not rightDoorOpen:
+		_on_right_door_toggled(false)
+	if $LeftHallTexture.get_modulate().is_equal_approx(Color(1, 1, 1)): #Rough way to check if light is on
+		_on_left_light_toggled(false)
+	if $RightHallTexture.get_modulate().is_equal_approx(Color(1, 1, 1)):
+		_on_right_light_toggled(false)
+	leftControlsEnabled = false
+	rightControlsEnabled = false
+	var freddyTimer = randf_range(50, 65) * 2 / $AnimatronicAIController.FreddyAI
+	await get_tree().create_timer(freddyTimer).timeout #waiting for freddy timer
+	#Freddy animation -> screen black -> jump -> dead
+	$FreddyStare.set_visible(true)
+	$FreddyStare/FreddyStare_Anim.play("FreddySing")
+	#$FreddyStare/FreddyStare_SongTimer.start(randf_range(0.8, 1.5)) #Config song time for balance later
+	await get_tree().create_timer(randf_range(3, 12)).timeout #singing timer
+	$FreddyStare/FreddyStare_Anim.play("RESET")
+	
+	await get_tree().create_timer(randf_range(10, 20)).timeout #dark pause timer
+	$CameraNode/Camera2D/JumpscareLayer/FoxyEnterOffice.set_animation("FreddyPowerOutAttack")
+	$CameraNode/Camera2D/JumpscareLayer/FoxyEnterOffice.play()
+	$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
+	await get_tree().create_timer(1.0).timeout
+	gotKilled = "NOPOWER"
+	lose_game()
+	
 
 # Stop AI, roll clock, play fanfare, load next night
 func win_game():
@@ -82,10 +119,12 @@ func lose_game():
 		"CHICA": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/ChicaDeath.png"))
 		"FREDDY": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/FreddyDeath.png"))
 		"FOXY": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/FoxyDeath.png"))
+		"NOPOWER": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/PowerOutDeath.png"))
 	#delay
 	await get_tree().create_timer(10).timeout
 	#back to title
 	get_tree().change_scene_to_file("res://TitleScreen.tscn")
+
 #Affect the usage display in the corner
 func power_display(change):
 	power_usage += change
@@ -93,6 +132,7 @@ func power_display(change):
 	power_meter_list[1].set_visible(power_usage >= 2)
 	power_meter_list[2].set_visible(power_usage >= 3)
 	power_meter_list[3].set_visible(power_usage >= 4)
+	power_meter_list[4].set_visible(power_usage >= 5)
 	
 #Bonnie has 'killed' the player but jumpscare has not fired yet
 func bonnieKill():
@@ -131,7 +171,7 @@ func _on_fred_nose_button_down() -> void:
 
 func _on_left_door_toggled(toggled_on: bool) -> void:
 	if not leftControlsEnabled:
-		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream("res://SFX/no.wav")
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
 		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
 		pass
 	if toggled_on: 
@@ -154,7 +194,7 @@ func _on_left_light_toggled(toggled_on: bool) -> void:
 
 func _on_right_door_toggled(toggled_on: bool) -> void:
 	if not rightControlsEnabled:
-		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream("res://SFX/no.wav")
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
 		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
 		pass
 	if toggled_on: 
@@ -213,8 +253,10 @@ func _input(event):
 		#$AnimatronicAIController.move_chica("6")
 		#print("Cheat: Freddy to 4B")
 		#$AnimatronicAIController.move_freddy("4B")
-		$AnimatronicAIController.foxy_angy = 4000
-		print("Made Foxy angy")
+		#$AnimatronicAIController.foxy_angy = 4000
+		#print("Made Foxy angy")
+		power = 1.00
+		print("Low power")
 
 func camera_flip():
 	#prevent cam during death

@@ -88,13 +88,14 @@ var bonnie_movement_AGGRESS = {"1A" : "1B",
 #Moves Bonnie animatromo to new room.
 func move_bonnie():
 	if BonniePos == "Office":
-		#if door closed, leave
 		if $"..".leftDoorOpen:
 			$"..".bonnieKill()
 			print("Killed byBonnie")
 			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
 		else:
+			#if door closed, leave
 			BonniePos = '1B'
+			$"../LeftHallTexture/BonnieOffice".set_visible(false)
 	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggression
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_AGGRESS[BonniePos]
@@ -132,6 +133,7 @@ func move_chica(room = ""):
 			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
 		else:
 			ChicaPos = '1B' #if door closed, leave
+			$"../RightHallTexture/ChicaOffice".set_visible(false)
 	
 	if room != "": #Cheat purposes
 		ChicaPos = room
