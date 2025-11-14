@@ -105,7 +105,19 @@ func powerout():
 
 # Stop AI, roll clock, play fanfare, load next night
 func win_game():
-	pass #unenthusiastic party horn, animation, load next night
+	#unenthusiastic party horn, animation, load next night
+	$GameTick.stop()
+	$CameraNode/Camera2D.set_position(Vector2(0,0))
+	$CameraNode/Camera2D/HUD.set_visible(false)
+	$CameraNode/Camera2D/JumpscareLayer.set_visible(false)
+	$VictoryOverlay.set_visible(true)
+	$CameraNode/Camera2D.set_zoom(Vector2(1,1))
+	$CameraNode.camDoNotMove = true
+	$VictoryOverlay/VictorySFX.play()
+	#delay
+	await get_tree().create_timer(10).timeout
+	#load next night
+	get_tree().change_scene_to_file("res://TitleScreen.tscn")
 
 #End game logic
 func lose_game():
@@ -113,7 +125,7 @@ func lose_game():
 	$CameraNode/Camera2D.set_position(Vector2(0,0))
 	$CameraNode/Camera2D/HUD.set_visible(false)
 	$CameraNode/Camera2D/JumpscareLayer.set_visible(false)
-	#crrep screen
+	#creep screen
 	match gotKilled:
 		"BONNIE": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/BonnieDeath.png"))
 		"CHICA": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/ChicaDeath.png"))
@@ -255,8 +267,10 @@ func _input(event):
 		#$AnimatronicAIController.move_freddy("4B")
 		#$AnimatronicAIController.foxy_angy = 4000
 		#print("Made Foxy angy")
-		power = 1.00
-		print("Low power")
+		#power = 1.00
+		#print("Low power")
+		current_time = 6*hourLength
+		print("Win night")
 
 func camera_flip():
 	#prevent cam during death

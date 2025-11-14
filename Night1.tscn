@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=96 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -74,6 +74,8 @@
 [ext_resource type="Texture2D" uid="uid://cnfeck7cyhvx2" path="res://Textures/FoxyAttack/foxyattack0018.png" id="54_8daxo"]
 [ext_resource type="Texture2D" uid="uid://ch6rbvs6mv215" path="res://Textures/FoxyAttack/foxyattack0019.png" id="55_lufpj"]
 [ext_resource type="Texture2D" uid="uid://bahdklvuh2h8o" path="res://Textures/FoxyAttack/foxyattack0020.png" id="56_cepqo"]
+[ext_resource type="Texture2D" uid="uid://bj1qa750ihhyo" path="res://Textures/NightOver.png" id="75_xttin"]
+[ext_resource type="AudioStream" uid="uid://djnmcpfk46ja4" path="res://SFX/Yippie.wav" id="76_5l7yi"]
 
 [sub_resource type="Animation" id="Animation_jmj1j"]
 resource_name = "Fadeout"
@@ -1103,6 +1105,15 @@ alignment = 0
 [node name="CamPauseTimer" type="Timer" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenCameraNode/CameraScreenDisplay"]
+
+[node name="VictoryOverlay" type="TextureRect" parent="."]
+visible = false
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("75_xttin")
+
+[node name="VictorySFX" type="AudioStreamPlayer2D" parent="VictoryOverlay"]
+stream = ExtResource("76_5l7yi")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]
