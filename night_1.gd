@@ -7,11 +7,11 @@ var power = 100.0 #float for fun
 var power_usage = 1 #clamp between 1 and 4?
 var power_factor = 0.13 #power modifier
 var power_dead = false
-var his_power_factor #not ready for freddy - soon golden freddy activity
+var his_power_factor = 0.25 #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
-var dev_mode = true #turn off
-var animatronic_aggression = [10, 10, 10, 3] #Bonnie, Chica, Freddy, Foxy
+var dev_mode = false #turn off
+var animatronic_aggression = [3, 3, 3, 3] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 
@@ -63,7 +63,9 @@ func game_start():
 	$GameScreen_Base.set_visible(true)
 	$CameraNode.set_visible(true)
 	$CameraNode/Camera2D/HUD.set_visible(true)
+	$CameraNode.camDoNotMove = false
 	$AnimatronicAIController.initialize(animatronic_aggression)
+	$FanAmbient.begin(his_power_factor)
 	
 #Player has run out of power. Game ends soon. Should the kill time be variable?
 func powerout():
@@ -183,8 +185,8 @@ func _on_fred_nose_button_down() -> void:
 
 func _on_left_door_toggled(toggled_on: bool) -> void:
 	if not leftControlsEnabled:
-		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
-		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
+		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
+		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.play()
 		pass
 	if toggled_on: 
 		power_display(1)
@@ -230,6 +232,7 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 
 #Open the camera system
 func _on_cam_access_mouse_entered() -> void:
+	$CameraNode/Camera2D/HUD/ReferenceRect/CamAccess.set_visible(false)
 	camera_flip()
 	#JUMPSCARE STUFF on cam down -> set function
 	if not camera_open:
@@ -256,6 +259,7 @@ func _on_cam_access_mouse_entered() -> void:
 #Development function
 func _input(event):
 	if event.is_action_pressed("DevCheat"):
+		pass
 	#if event is InputEventKey and event.keycode == KEY_L:
 		#print("Cheat: End game")
 		#lose_game()
@@ -269,8 +273,8 @@ func _input(event):
 		#print("Made Foxy angy")
 		#power = 1.00
 		#print("Low power")
-		current_time = 6*hourLength
-		print("Win night")
+		#current_time = 6*hourLength
+		#print("Win night")
 
 func camera_flip():
 	#prevent cam during death
@@ -278,9 +282,13 @@ func camera_flip():
 		return
 	#play animation, open camera panel
 	if camera_open:
+		$CameraNode/Camera2D/CameraSounds_DARK.set_stream(load("res://SFX/dark2.mp3"))
+		$CameraNode/Camera2D/CameraSounds_DARK.play()
 		$CameraNode/Camera2D.make_current() #room view
 		power_display(-1)
 	else:
+		$CameraNode/Camera2D/CameraSounds_DARK.set_stream(load("res://SFX/dark.mp3"))
+		$CameraNode/Camera2D/CameraSounds_DARK.play()
 		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current() #camera view
 		power_display(1)
 	camera_open = !camera_open
@@ -314,3 +322,6 @@ func _on_foxy_kill_you_timer_timeout() -> void:
 		gotKilled = "FOXY"
 		await get_tree().create_timer(3).timeout
 		lose_game() #wait for finish
+
+func _on_reference_rect_mouse_exited() -> void:
+	$CameraNode/Camera2D/HUD/ReferenceRect/CamAccess.set_visible(true)

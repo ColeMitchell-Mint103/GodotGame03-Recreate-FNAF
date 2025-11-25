@@ -22,7 +22,7 @@ func _on_pressed() -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	get_tree().change_scene_to_file("res://Night1.tscn")
+	get_tree().change_scene_to_file("res://Night1.tscn") #Check anim looping if doesnt load scene
 	#get_tree().root.add_child(load("res://Night1.tscn").instantiate())
 	#var level = get_tree().root.get_node('TitleScreen')
 	#get_tree().get_node("TitleScreen").free()

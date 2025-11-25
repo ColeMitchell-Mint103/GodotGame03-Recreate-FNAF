@@ -6,7 +6,7 @@ var moving = 0
 var minPos = 0 #
 var maxPos = 260
 var center = 130
-var camDoNotMove = false
+var camDoNotMove = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

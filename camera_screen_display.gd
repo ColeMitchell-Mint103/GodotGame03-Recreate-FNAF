@@ -105,43 +105,54 @@ func build_room():
 #Show stage has Bonnie, Freddy, and Chica. Bonnie leaves first, then Chica, then Freddy (if not observed). They do not return in the night.
 func _on_cam_1a_pressed() -> void:
 	update_cam("1A") 
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_1b_pressed() -> void:
 	update_cam("1B")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_1c_pressed() -> void:
 	update_cam("1C")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_2a_pressed() -> void:
 	update_cam("2A")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_2b_pressed() -> void:
 	update_cam("2B")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_3_pressed() -> void:
 	update_cam("3")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_4a_pressed() -> void:
 	update_cam("4A") 
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_4b_pressed() -> void:
 	update_cam("4B")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_5_pressed() -> void:
 	update_cam("5")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 func _on_cam_6_pressed() -> void:
 	update_cam("6")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 	#kitchenSounds()
 
 func _on_cam_7_pressed() -> void:
 	update_cam("7")
+	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
 
 
 func _on_animatronic_ai_controller_did_move(room: Variant) -> void:
 	#If animatronic left the room you staring at, remove their layer
 	if str(room) == current_camera:
-		#todo: kill the camera temporarily
+		#TODO: kill the camera temporarily
 		await get_tree().create_timer(0.05).timeout #Code runs too fast to take layer out
 		update_cam(current_camera)
 

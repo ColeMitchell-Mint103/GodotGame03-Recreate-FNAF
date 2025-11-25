@@ -34,6 +34,8 @@ func initialize(AIValues):
 	ChicaAI = AIValues[1]
 	FreddyAI = AIValues[2]
 	FoxyAI = AIValues[3]
+	$BonnieTimer.start(30 / BonnieAI + 5)
+	$ChicaTimer.start(30 / ChicaAI + 5)
 
 #Core loop
 #Pauses / Timers are cooldowns to prevent rapid lucky movement.
@@ -105,7 +107,7 @@ func move_bonnie():
 	if BonniePos == "Office": #Satisfied by reaching Office
 		bonnie_angy = 0
 		$"../LeftHallTexture/BonnieOffice".set_visible(true)
-	#Play audio sound
+	$"../FanAmbient/LEFT Footstep Audio".play() #Play audio sound
 	print("Bonnie: " + BonniePos)
 
 var chica_movement_WANDER = {"1A" : ["1B"],
@@ -152,7 +154,7 @@ func move_chica(room = ""):
 	#if ChicaPos == "6":
 		#$"../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(true)
 		#$"../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(-20)
-	#Play audio sound
+	$"../FanAmbient/RIGHT Footstep Audio".play()#Play audio sound
 	print("Chica: " + ChicaPos)
 	
 	

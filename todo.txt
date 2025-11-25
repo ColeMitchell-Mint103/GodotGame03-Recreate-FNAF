@@ -1,5 +1,5 @@
 Last Worked On:
-Working Foxy attack animation and death -> night1 Door knocking, make sure he resets
+Broad changes to audio systems -see FanAmbient and Audio tab
 
 Paused:
 Kitchen sounds. (Set baselow to low volume when camera lowered.) (Tracks don't loop)
@@ -7,10 +7,15 @@ Door animation is scuffed (Right door head keeps disappearing.)
 Animatronic AI is set high for testing purposes.
 
 Todo:
-4. Change monitor button -> Use Scott solution (button disappears when clicked, reappears after leaving zone)
-5. Main menu  continue game doesn't work after dying?
+6. Audio
+7. Camera breaks on move + anims
+8. Visual overhaul
+9. Golden Freddy
+10. Window resizing?
 	
 Done:
+5. Main menu  continue game doesn't work after dying?
+4. Change monitor button -> Use Scott solution (button disappears when clicked, reappears after leaving zone)
 Foxy
 Bonnie
 Chica

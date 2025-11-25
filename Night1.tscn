@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=109 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -33,6 +33,8 @@
 [ext_resource type="Texture2D" uid="uid://skujg4h1hayt" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0003.png" id="15_qcl8k"]
 [ext_resource type="Texture2D" uid="uid://hgxths8kgbor" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0005.png" id="16_3um8f"]
 [ext_resource type="Texture2D" uid="uid://da6ifybfaw4ss" path="res://Textures/FreddyStare/FreddyOfficeStare.png" id="16_6q0ft"]
+[ext_resource type="AudioStream" uid="uid://bsewy5u40rbcc" path="res://SFX/dark.mp3" id="16_xygcr"]
+[ext_resource type="AudioStream" uid="uid://dj4nksslfk4yp" path="res://SFX/deep.mp3" id="17_3g1im"]
 [ext_resource type="Texture2D" uid="uid://da7yueukcmnie" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0007.png" id="17_62tkl"]
 [ext_resource type="Texture2D" uid="uid://cobmoi27eghi" path="res://Textures/FreddyStare/FreddyOfficeStareglowwhite.png" id="17_oke2d"]
 [ext_resource type="Texture2D" uid="uid://pxcbolxti0su" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0009.png" id="18_83b7m"]
@@ -76,6 +78,16 @@
 [ext_resource type="Texture2D" uid="uid://bahdklvuh2h8o" path="res://Textures/FoxyAttack/foxyattack0020.png" id="56_cepqo"]
 [ext_resource type="Texture2D" uid="uid://bj1qa750ihhyo" path="res://Textures/NightOver.png" id="75_xttin"]
 [ext_resource type="AudioStream" uid="uid://djnmcpfk46ja4" path="res://SFX/Yippie.wav" id="76_5l7yi"]
+[ext_resource type="AudioStream" uid="uid://cgmb78srodyv2" path="res://SFX/AmbientLayer/FanAmbient.wav" id="77_aq3c8"]
+[ext_resource type="Script" path="res://fan_ambient.gd" id="78_6wpve"]
+[ext_resource type="AudioStream" uid="uid://bl6uvemprnvtp" path="res://SFX/Footstep/Footstep1.wav" id="78_amrf8"]
+[ext_resource type="AudioStream" uid="uid://bm5yqk0auiojw" path="res://SFX/Footstep/Footstep2.wav" id="79_cysri"]
+[ext_resource type="AudioStream" uid="uid://c8jsxkbp46kju" path="res://SFX/AmbientLayer/3arrrgh.mp3" id="80_c3un1"]
+[ext_resource type="AudioStream" uid="uid://2vi5vkdec0dl" path="res://SFX/AmbientLayer/augh.mp3" id="81_tn8cs"]
+[ext_resource type="AudioStream" uid="uid://bfmnb7loffk3m" path="res://SFX/AmbientLayer/bah.mp3" id="82_cmx4j"]
+[ext_resource type="AudioStream" uid="uid://cwovbp1c7lkw8" path="res://SFX/AmbientLayer/ohhhhhhh.mp3" id="83_sojh3"]
+[ext_resource type="AudioStream" uid="uid://3tdjgw4lx33w" path="res://SFX/AmbientLayer/penetration-2.mp3" id="84_07gxk"]
+[ext_resource type="AudioStream" uid="uid://bpshl6eob6hr8" path="res://SFX/AmbientLayer/Ambient_HandClap.wav" id="85_4nktl"]
 
 [sub_resource type="Animation" id="Animation_jmj1j"]
 resource_name = "Fadeout"
@@ -317,19 +329,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("13_jrvrd")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:texture")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("13_jrvrd")]
+"values": [ExtResource("22_6mqtc")]
 }
 
 [sub_resource type="Animation" id="Animation_646lk"]
@@ -482,6 +482,15 @@ animations = [{
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hahl8"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_veypf"]
+random_pitch = 1.3
+streams_count = 5
+stream_0/stream = ExtResource("80_c3un1")
+stream_1/stream = ExtResource("81_tn8cs")
+stream_2/stream = ExtResource("82_cmx4j")
+stream_3/stream = ExtResource("83_sojh3")
+stream_4/stream = ExtResource("84_07gxk")
+
 [node name="ColorRect" type="ColorRect"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -598,19 +607,24 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 color = Color(0.422006, 0.0910332, 0.203647, 1)
 
-[node name="CamAccess" type="TextureRect" parent="CameraNode/Camera2D/HUD"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="ReferenceRect" type="ReferenceRect" parent="CameraNode/Camera2D/HUD"]
+z_index = 1
+offset_left = 166.0
+offset_top = 579.0
+offset_right = 206.0
+offset_bottom = 619.0
+scale = Vector2(13.1569, 1.50661)
+
+[node name="CamAccess" type="TextureRect" parent="CameraNode/Camera2D/HUD/ReferenceRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -392.0
-offset_top = -56.0
-offset_right = 60.0
-offset_bottom = -12.0
+offset_top = 2.65497
+offset_bottom = 2.65497
 grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(1.036, 1.26328)
+grow_vertical = 2
+scale = Vector2(0.993437, 1.13053)
 texture = SubResource("CompressedTexture2D_1rg4c")
 expand_mode = 2
 
@@ -659,6 +673,14 @@ stream = ExtResource("4_dabi5")
 
 [node name="KitchenHighBaseStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
 stream = ExtResource("5_vmdyh")
+
+[node name="CameraSounds_DARK" type="AudioStreamPlayer" parent="CameraNode/Camera2D"]
+stream = ExtResource("16_xygcr")
+bus = &"Camera"
+
+[node name="Camera_DEEP" type="AudioStreamPlayer" parent="CameraNode/Camera2D/CameraSounds_DARK"]
+stream = ExtResource("17_3g1im")
+bus = &"Camera"
 
 [node name="LeftHallTexture" type="TextureRect" parent="."]
 modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
@@ -741,7 +763,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_jrvrd")
+texture = ExtResource("22_6mqtc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GameScreen_Base/LeftDoor"]
 libraries = {
@@ -757,7 +779,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_jrvrd")
+texture = ExtResource("22_6mqtc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GameScreen_Base/RightDoor"]
 libraries = {
@@ -1108,6 +1130,7 @@ alignment = 0
 
 [node name="VictoryOverlay" type="TextureRect" parent="."]
 visible = false
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("75_xttin")
@@ -1115,8 +1138,31 @@ texture = ExtResource("75_xttin")
 [node name="VictorySFX" type="AudioStreamPlayer2D" parent="VictoryOverlay"]
 stream = ExtResource("76_5l7yi")
 
+[node name="FanAmbient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("77_aq3c8")
+bus = &"Fan"
+script = ExtResource("78_6wpve")
+
+[node name="LEFT Footstep Audio" type="AudioStreamPlayer" parent="FanAmbient"]
+stream = ExtResource("78_amrf8")
+bus = &"LeftPan"
+
+[node name="RIGHT Footstep Audio" type="AudioStreamPlayer" parent="FanAmbient"]
+stream = ExtResource("79_cysri")
+bus = &"RightPan"
+
+[node name="RandomAmbient" type="AudioStreamPlayer" parent="FanAmbient"]
+stream = SubResource("AudioStreamRandomizer_veypf")
+volume_db = -20.883
+
+[node name="RandomTimer" type="Timer" parent="FanAmbient/RandomAmbient"]
+
+[node name="FunSongAmbient" type="AudioStreamPlayer" parent="FanAmbient"]
+stream = ExtResource("85_4nktl")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/CamAccess" to="." method="_on_cam_access_mouse_entered"]
+[connection signal="mouse_exited" from="CameraNode/Camera2D/HUD/ReferenceRect" to="." method="_on_reference_rect_mouse_exited"]
+[connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/ReferenceRect/CamAccess" to="." method="_on_cam_access_mouse_entered"]
 [connection signal="toggled" from="GameScreen_Base/LeftControls/LeftDoor" to="." method="_on_left_door_toggled"]
 [connection signal="toggled" from="GameScreen_Base/LeftControls/LeftLight" to="." method="_on_left_light_toggled"]
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightDoor" to="." method="_on_right_door_toggled"]
@@ -1138,3 +1184,5 @@ stream = ExtResource("76_5l7yi")
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam6" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_6_pressed"]
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam7" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_7_pressed"]
 [connection signal="timeout" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/CamPauseTimer" to="ScreenCameraNode/CameraScreenDisplay/ScreenCamera" method="_on_cam_pause_timer_timeout"]
+[connection signal="finished" from="FanAmbient/RandomAmbient" to="FanAmbient" method="_on_random_ambient_finished"]
+[connection signal="timeout" from="FanAmbient/RandomAmbient/RandomTimer" to="FanAmbient" method="_on_random_timer_timeout"]
