@@ -11,7 +11,7 @@ var his_power_factor = 0.25 #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
 var dev_mode = false #turn off
-var animatronic_aggression = [3, 3, 3, 3] #Bonnie, Chica, Freddy, Foxy
+var animatronic_aggression = [3, 3, 3, 20] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 
@@ -71,6 +71,8 @@ func game_start():
 func powerout():
 	#Disable animatronic AI? Can Foxy rush over Freddy?
 	$CameraNode/Camera2D/HUD/Time_PowerInfo.set_visible(false)
+	$AnimatronicAIController.allHalt = true #Stop AI
+	$FanAmbient.stop()
 	#Make dark, disable controls, open doors, Freddy jingle, jumpscare
 	if camera_open: 
 		camera_flip()
@@ -198,6 +200,10 @@ func _on_left_door_toggled(toggled_on: bool) -> void:
 	$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.play()
 
 func _on_left_light_toggled(toggled_on: bool) -> void:
+	if not leftControlsEnabled:
+		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
+		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.play()
+		pass
 	if toggled_on: 
 		power_display(1)
 		$LeftHallTexture.set_modulate(Color(1, 1, 1))
@@ -221,6 +227,10 @@ func _on_right_door_toggled(toggled_on: bool) -> void:
 	$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
 
 func _on_right_light_toggled(toggled_on: bool) -> void:
+	if not rightControlsEnabled:
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
+		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
+		pass
 	if toggled_on: 
 		power_display(1)
 		$RightHallTexture.set_modulate(Color(1, 1, 1))
@@ -281,35 +291,47 @@ func camera_flip():
 	if camDoNotOpen:
 		return
 	#play animation, open camera panel
-	if camera_open:
+	if camera_open: #Closing the cam
+		$ScreenCameraNode/ReferenceRect/Monitor.play("Reverse")
 		$CameraNode/Camera2D/CameraSounds_DARK.set_stream(load("res://SFX/dark2.mp3"))
 		$CameraNode/Camera2D/CameraSounds_DARK.play()
 		$CameraNode/Camera2D.make_current() #room view
 		power_display(-1)
-	else:
+	else: #Opening the cam
+		camDoNotOpen = true
+		$ScreenCameraNode/ReferenceRect/Monitor.play("default")
 		$CameraNode/Camera2D/CameraSounds_DARK.set_stream(load("res://SFX/dark.mp3"))
 		$CameraNode/Camera2D/CameraSounds_DARK.play()
+		var camera_open_speed = $ScreenCameraNode/ReferenceRect/Monitor.get_sprite_frames().get_animation_speed("default")
+		var camera_open_frames = $ScreenCameraNode/ReferenceRect/Monitor.get_sprite_frames().get_frame_count("default")
+		await get_tree().create_timer(camera_open_frames / camera_open_speed).timeout
 		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current() #camera view
 		power_display(1)
+		$AnimatronicAIController.foxy_angy = max($AnimatronicAIController.foxy_angy - 2, -10) 
+		#Cut anger on flipping cam to account for the timer being slow
 	camera_open = !camera_open
 	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
 	$ScreenCameraNode/CameraScreenDisplay.update_cam()
+	if not camera_open:
+		$ScreenCameraNode/CameraScreenDisplay.cam_close()
+	camDoNotOpen = false
 
 func _on_foxy_kill_you_timer_timeout() -> void:
 	if not leftDoorOpen: #Attack prevented
-		print("Attack Fail Door Closed")
+		#print("Attack Fail Door Closed")
 		#Stop the anim overlay
 		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.set_visible(false)
 		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.pause()
 		#Hit the door sfx
-		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/lockerhit1.mp3"))
-		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
+		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/lockerhit1.mp3"))
+		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.play()
 		#Reset Foxy
 		$AnimatronicAIController.FoxyAttack = false
 		$AnimatronicAIController.FoxyStage = 0
 		$ScreenCameraNode/CameraScreenDisplay.updateFoxy(0)
 		camera_flip()
 		power -= 3.0 #he drains power with Foxy magic
+		$"FanAmbient/Foxy Audio/FoxyAmbientTimer".start()
 	else: #You die
 		if camera_open:
 			camera_flip()
@@ -325,3 +347,10 @@ func _on_foxy_kill_you_timer_timeout() -> void:
 
 func _on_reference_rect_mouse_exited() -> void:
 	$CameraNode/Camera2D/HUD/ReferenceRect/CamAccess.set_visible(true)
+
+#Foxy random mumbling.
+func _on_foxy_ambient_timeout() -> void:
+	$"FanAmbient/Foxy Audio/FoxyAmbient".play()
+
+func _on_foxy_ambient_finished() -> void:
+	$"FanAmbient/Foxy Audio/FoxyAmbientTimer".start(randi_range(25, 1000 / $AnimatronicAIController.FoxyAI))

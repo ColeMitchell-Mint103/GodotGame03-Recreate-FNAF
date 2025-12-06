@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3icxlej0au63"
-path="res://.godot/imported/WestHall_Golden.png-8d54955bd859132e88b884f2d07eaff0.ctex"
+uid="uid://ddbqkp4knp2hk"
+path="res://.godot/imported/MonitorCrapb1.png-b0daac8ab81b4acf3d4ca17a6fc3ad01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/WestHall_Golden.png"
-dest_files=["res://.godot/imported/WestHall_Golden.png-8d54955bd859132e88b884f2d07eaff0.ctex"]
+source_file="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb1.png"
+dest_files=["res://.godot/imported/MonitorCrapb1.png-b0daac8ab81b4acf3d4ca17a6fc3ad01.ctex"]
 
 [params]
 

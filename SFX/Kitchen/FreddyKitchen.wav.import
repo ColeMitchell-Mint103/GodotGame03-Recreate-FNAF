@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bj2v67p3myec8"
-path="res://.godot/imported/FreddyKitchen.wav-f70582d31fe18f8ccc498ee92d6a4fb9.sample"
+path="res://.godot/imported/FreddyKitchen.wav-b141f472ad5155d3c0ce9533939a61dd.sample"
 
 [deps]
 
-source_file="res://SFX/FreddyKitchen.wav"
-dest_files=["res://.godot/imported/FreddyKitchen.wav-f70582d31fe18f8ccc498ee92d6a4fb9.sample"]
+source_file="res://SFX/Kitchen/FreddyKitchen.wav"
+dest_files=["res://.godot/imported/FreddyKitchen.wav-b141f472ad5155d3c0ce9533939a61dd.sample"]
 
 [params]
 

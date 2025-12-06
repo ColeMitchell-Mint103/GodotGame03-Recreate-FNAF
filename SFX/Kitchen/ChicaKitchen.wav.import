@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://k6ow2uvb7eq1"
-path="res://.godot/imported/ChicaKitchen.wav-e613ccfad160c1567fa24815258aac08.sample"
+path="res://.godot/imported/ChicaKitchen.wav-ab4daabadd4a20c7c7dfdee4526a7b0b.sample"
 
 [deps]
 
-source_file="res://SFX/ChicaKitchen.wav"
-dest_files=["res://.godot/imported/ChicaKitchen.wav-e613ccfad160c1567fa24815258aac08.sample"]
+source_file="res://SFX/Kitchen/ChicaKitchen.wav"
+dest_files=["res://.godot/imported/ChicaKitchen.wav-ab4daabadd4a20c7c7dfdee4526a7b0b.sample"]
 
 [params]
 

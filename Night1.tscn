@@ -1,19 +1,18 @@
-[gd_scene load_steps=109 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=143 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
 [ext_resource type="AudioStream" uid="uid://dflpv3yx7jmxv" path="res://SFX/Defaultsound.wav" id="3_fhdu7"]
 [ext_resource type="AudioStream" uid="uid://dx5ct3tx0ogii" path="res://SFX/ScreamRightVersion.wav" id="3_ivdt6"]
 [ext_resource type="Script" path="res://camera_node.gd" id="3_kmeu0"]
-[ext_resource type="AudioStream" uid="uid://cp45ffts3je5k" path="res://SFX/KitchenBaseLow.wav" id="4_dabi5"]
-[ext_resource type="AudioStream" uid="uid://bj2v67p3myec8" path="res://SFX/FreddyKitchen.wav" id="4_e6x5j"]
+[ext_resource type="AudioStream" uid="uid://cp45ffts3je5k" path="res://SFX/Kitchen/KitchenBaseLow.wav" id="4_dabi5"]
+[ext_resource type="AudioStream" uid="uid://bj2v67p3myec8" path="res://SFX/Kitchen/FreddyKitchen.wav" id="4_e6x5j"]
 [ext_resource type="Texture2D" uid="uid://bimy3abt2qqs3" path="res://Textures/FoxyEnterOffice/FoxyOffice1.png" id="4_wb11m"]
 [ext_resource type="Texture2D" uid="uid://b3cuhg0txemdr" path="res://Textures/Office_Base.png" id="5_0q6wr"]
 [ext_resource type="Texture2D" uid="uid://bmhec3bm753dr" path="res://Textures/RoomFiles/Showstage_Base.png" id="5_2vqj7"]
 [ext_resource type="AudioStream" uid="uid://bh6s4dsom6whb" path="res://SFX/freddyhonk.wav" id="5_fdwq8"]
 [ext_resource type="Texture2D" uid="uid://docifkahixf5y" path="res://Textures/FoxyEnterOffice/FoxyOffice2.png" id="5_uoksy"]
-[ext_resource type="AudioStream" uid="uid://cnwwfksfd63s5" path="res://SFX/KitchenBaseHigh.wav" id="5_vmdyh"]
-[ext_resource type="AudioStream" uid="uid://k6ow2uvb7eq1" path="res://SFX/ChicaKitchen.wav" id="6_134aq"]
+[ext_resource type="AudioStream" uid="uid://k6ow2uvb7eq1" path="res://SFX/Kitchen/ChicaKitchen.wav" id="6_134aq"]
 [ext_resource type="Texture2D" uid="uid://b8v4ho8gloks4" path="res://CameraMap.png" id="6_hvn0r"]
 [ext_resource type="Texture2D" uid="uid://tfcoaywvpjkx" path="res://Textures/FoxyEnterOffice/FoxyOffice3.png" id="6_ktu3m"]
 [ext_resource type="StyleBox" uid="uid://b16wsk8eq3fc0" path="res://CamButtonStyle.tres" id="7_51kmr"]
@@ -76,18 +75,50 @@
 [ext_resource type="Texture2D" uid="uid://cnfeck7cyhvx2" path="res://Textures/FoxyAttack/foxyattack0018.png" id="54_8daxo"]
 [ext_resource type="Texture2D" uid="uid://ch6rbvs6mv215" path="res://Textures/FoxyAttack/foxyattack0019.png" id="55_lufpj"]
 [ext_resource type="Texture2D" uid="uid://bahdklvuh2h8o" path="res://Textures/FoxyAttack/foxyattack0020.png" id="56_cepqo"]
+[ext_resource type="Texture2D" uid="uid://cklkve850n2kr" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap1.png" id="73_5mpif"]
+[ext_resource type="Texture2D" uid="uid://cb3sxoh51ahno" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap2.png" id="74_cp1rw"]
+[ext_resource type="Texture2D" uid="uid://cwsxnrttqnj6g" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb4.png" id="74_kk160"]
+[ext_resource type="Texture2D" uid="uid://bd54svintxuj4" path="res://Textures/MonitorAnim/MonitorStatic/monitor_static0000.png" id="74_yhtnl"]
+[ext_resource type="Texture2D" uid="uid://ddbqkp4knp2hk" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb1.png" id="75_gegec"]
+[ext_resource type="Texture2D" uid="uid://cc7dljp26d1kr" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap3.png" id="75_mgetk"]
+[ext_resource type="Texture2D" uid="uid://5044m8lrvii5" path="res://Textures/MonitorAnim/MonitorStatic/monitor_static0001.png" id="75_vdaph"]
 [ext_resource type="Texture2D" uid="uid://bj1qa750ihhyo" path="res://Textures/NightOver.png" id="75_xttin"]
 [ext_resource type="AudioStream" uid="uid://djnmcpfk46ja4" path="res://SFX/Yippie.wav" id="76_5l7yi"]
+[ext_resource type="Texture2D" uid="uid://d0xirnoqb5ax4" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap4.png" id="76_6uxgw"]
+[ext_resource type="Texture2D" uid="uid://dxivaj38eq7uc" path="res://Textures/MonitorAnim/monitor0007.png" id="76_h012l"]
+[ext_resource type="Texture2D" uid="uid://t2fh8hnatg1y" path="res://Textures/MonitorAnim/MonitorStatic/monitor_static0002.png" id="76_xro2o"]
+[ext_resource type="Texture2D" uid="uid://ccn71vudbvcxh" path="res://Textures/MonitorAnim/MonitorStatic/monitor_static0003.png" id="77_1wj0a"]
+[ext_resource type="Texture2D" uid="uid://dc2evqwuj3qke" path="res://Textures/MonitorAnim/monitor0006.png" id="77_23157"]
 [ext_resource type="AudioStream" uid="uid://cgmb78srodyv2" path="res://SFX/AmbientLayer/FanAmbient.wav" id="77_aq3c8"]
+[ext_resource type="Texture2D" uid="uid://hvkaeswfofka" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap5.png" id="77_hy4a5"]
 [ext_resource type="Script" path="res://fan_ambient.gd" id="78_6wpve"]
 [ext_resource type="AudioStream" uid="uid://bl6uvemprnvtp" path="res://SFX/Footstep/Footstep1.wav" id="78_amrf8"]
+[ext_resource type="Texture2D" uid="uid://btj8gakbrse45" path="res://Textures/MonitorAnim/MonitorStatic/monitor_static0004.png" id="78_gtw1w"]
+[ext_resource type="Texture2D" uid="uid://drmobo4ej4quj" path="res://Textures/MonitorAnim/monitor0005.png" id="78_qxf4j"]
+[ext_resource type="Texture2D" uid="uid://c126ypbw058q3" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap6.png" id="78_rhajt"]
+[ext_resource type="AudioStream" uid="uid://cg2wjp0univhm" path="res://SFX/whatthefuck.wav" id="79_chniu"]
 [ext_resource type="AudioStream" uid="uid://bm5yqk0auiojw" path="res://SFX/Footstep/Footstep2.wav" id="79_cysri"]
+[ext_resource type="Texture2D" uid="uid://beh11cuot8m0t" path="res://Textures/MonitorAnim/monitor0004.png" id="79_nq1ax"]
+[ext_resource type="Texture2D" uid="uid://dbsqu4iyn0jqc" path="res://Textures/MonitorAnim/monitor0003.png" id="80_bimjl"]
 [ext_resource type="AudioStream" uid="uid://c8jsxkbp46kju" path="res://SFX/AmbientLayer/3arrrgh.mp3" id="80_c3un1"]
+[ext_resource type="Texture2D" uid="uid://c3dcdh1jg661i" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb2.png" id="81_8inw1"]
+[ext_resource type="Texture2D" uid="uid://bwwfdueph6gt4" path="res://Textures/MonitorAnim/monitor0002.png" id="81_238fy"]
 [ext_resource type="AudioStream" uid="uid://2vi5vkdec0dl" path="res://SFX/AmbientLayer/augh.mp3" id="81_tn8cs"]
+[ext_resource type="Texture2D" uid="uid://dy0vguligxry6" path="res://Textures/MonitorAnim/monitor0001.png" id="82_54mtl"]
 [ext_resource type="AudioStream" uid="uid://bfmnb7loffk3m" path="res://SFX/AmbientLayer/bah.mp3" id="82_cmx4j"]
+[ext_resource type="AudioStream" uid="uid://bnnrshvnqau21" path="res://SFX/Foxy/get-out-of-jabronioutfit.mp3" id="82_hucjt"]
+[ext_resource type="Texture2D" uid="uid://cbeni3im5aafk" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb3.png" id="82_tnvlo"]
+[ext_resource type="AudioStream" uid="uid://b1ax08ah1wkd2" path="res://SFX/Foxy/heybuddywrongdoor.mp3" id="83_lhujt"]
 [ext_resource type="AudioStream" uid="uid://cwovbp1c7lkw8" path="res://SFX/AmbientLayer/ohhhhhhh.mp3" id="83_sojh3"]
+[ext_resource type="Texture2D" uid="uid://bcg0ftim74ikb" path="res://Textures/MonitorAnim/monitor0000.png" id="83_u5gg3"]
 [ext_resource type="AudioStream" uid="uid://3tdjgw4lx33w" path="res://SFX/AmbientLayer/penetration-2.mp3" id="84_07gxk"]
+[ext_resource type="AudioStream" uid="uid://b3rvlevtx0krc" path="res://SFX/Foxy/ill-throw-you-around-a-littlebit.mp3" id="84_yjy5f"]
 [ext_resource type="AudioStream" uid="uid://bpshl6eob6hr8" path="res://SFX/AmbientLayer/Ambient_HandClap.wav" id="85_4nktl"]
+[ext_resource type="AudioStream" uid="uid://ct18hsno5ewri" path="res://SFX/Foxy/nahfuckyou.mp3" id="85_cyix6"]
+[ext_resource type="AudioStream" uid="uid://o00k816gjngp" path="res://SFX/Foxy/show-you-whos-boss-of-this-gym.mp3" id="86_ovinn"]
+[ext_resource type="AudioStream" uid="uid://3eg6ilfsyqxl" path="res://SFX/Foxy/troubles-breathin.mp3" id="87_tbrvx"]
+[ext_resource type="AudioStream" uid="uid://dbgrq8nrek2f" path="res://SFX/Foxy/wahoo.mp3" id="88_xnqbr"]
+[ext_resource type="AudioStream" uid="uid://dyqcfqf7gjvri" path="res://SFX/Foxy/why-dont-you-give-up.mp3" id="89_6g7jy"]
 
 [sub_resource type="Animation" id="Animation_jmj1j"]
 resource_name = "Fadeout"
@@ -477,13 +508,163 @@ animations = [{
 }],
 "loop": false,
 "name": &"FoxyCharge",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ado7j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("73_5mpif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_kk160")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_gegec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_cp1rw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_mgetk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_6uxgw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_hy4a5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_rhajt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_8inw1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_tnvlo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rvjov"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("74_yhtnl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_vdaph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_xro2o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_1wj0a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_gtw1w")
+}],
+"loop": true,
+"name": &"StaticAnim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_45vbs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_h012l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_23157")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_qxf4j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_nq1ax")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_bimjl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_238fy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_54mtl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_u5gg3")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"Reverse",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_u5gg3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_54mtl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_238fy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_bimjl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_nq1ax")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_qxf4j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_23157")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_h012l")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
 "speed": 20.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hahl8"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0hndb"]
+streams_count = 8
+stream_0/stream = ExtResource("82_hucjt")
+stream_1/stream = ExtResource("83_lhujt")
+stream_2/stream = ExtResource("84_yjy5f")
+stream_3/stream = ExtResource("85_cyix6")
+stream_4/stream = ExtResource("86_ovinn")
+stream_5/stream = ExtResource("87_tbrvx")
+stream_6/stream = ExtResource("88_xnqbr")
+stream_7/stream = ExtResource("89_6g7jy")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_veypf"]
-random_pitch = 1.3
 streams_count = 5
 stream_0/stream = ExtResource("80_c3un1")
 stream_1/stream = ExtResource("81_tn8cs")
@@ -664,15 +845,21 @@ scale = Vector2(0.785, 1.033)
 
 [node name="KitchenFreddyStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
 stream = ExtResource("4_e6x5j")
+volume_db = -80.0
+autoplay = true
+bus = &"Kitchen"
 
 [node name="KitchenChicaStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
 stream = ExtResource("6_134aq")
+volume_db = -80.0
+autoplay = true
+bus = &"Kitchen"
 
-[node name="KitchenLowBaseStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
+[node name="KitchenBaseStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
 stream = ExtResource("4_dabi5")
-
-[node name="KitchenHighBaseStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
-stream = ExtResource("5_vmdyh")
+volume_db = -80.0
+autoplay = true
+bus = &"Kitchen"
 
 [node name="CameraSounds_DARK" type="AudioStreamPlayer" parent="CameraNode/Camera2D"]
 stream = ExtResource("16_xygcr")
@@ -956,20 +1143,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="todoStaticLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
-modulate = Color(0, 0, 0, 0.670588)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("PlaceholderTexture2D_hahl8")
-
 [node name="ScreenCamera" type="Camera2D" parent="ScreenCameraNode/CameraScreenDisplay"]
+position = Vector2(168, 1)
 anchor_mode = 0
 zoom = Vector2(1.4, 1)
 script = ExtResource("30_xkcso")
+
+[node name="CamCrapLayer" type="AnimatedSprite2D" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
+modulate = Color(0.124, 0.143, 1.081, 0.746)
+position = Vector2(-168, -1)
+sprite_frames = SubResource("SpriteFrames_ado7j")
+autoplay = "default"
+frame = 6
+frame_progress = 0.495404
+centered = false
+
+[node name="MonitorStatic" type="AnimatedSprite2D" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
+scale = Vector2(0.75, 1)
+sprite_frames = SubResource("SpriteFrames_rvjov")
+centered = false
+
+[node name="CamOutTimer" type="Timer" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MonitorStatic"]
+
+[node name="MonitorStatic" type="AudioStreamPlayer2D" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MonitorStatic"]
+stream = ExtResource("79_chniu")
+bus = &"Camera"
 
 [node name="MapUI" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
 anchors_preset = 1
@@ -1128,6 +1326,22 @@ alignment = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenCameraNode/CameraScreenDisplay"]
 
+[node name="ReferenceRect" type="ReferenceRect" parent="ScreenCameraNode"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Monitor" type="AnimatedSprite2D" parent="ScreenCameraNode/ReferenceRect"]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_45vbs")
+frame = 9
+frame_progress = 1.0
+centered = false
+
 [node name="VictoryOverlay" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
@@ -1147,13 +1361,23 @@ script = ExtResource("78_6wpve")
 stream = ExtResource("78_amrf8")
 bus = &"LeftPan"
 
+[node name="Foxy Audio" type="AudioStreamPlayer" parent="FanAmbient"]
+bus = &"Foxy"
+
+[node name="FoxyAmbientTimer" type="Timer" parent="FanAmbient/Foxy Audio"]
+wait_time = 60.0
+autostart = true
+
+[node name="FoxyAmbient" type="AudioStreamPlayer" parent="FanAmbient/Foxy Audio"]
+stream = SubResource("AudioStreamRandomizer_0hndb")
+
 [node name="RIGHT Footstep Audio" type="AudioStreamPlayer" parent="FanAmbient"]
 stream = ExtResource("79_cysri")
 bus = &"RightPan"
 
 [node name="RandomAmbient" type="AudioStreamPlayer" parent="FanAmbient"]
 stream = SubResource("AudioStreamRandomizer_veypf")
-volume_db = -20.883
+volume_db = -15.871
 
 [node name="RandomTimer" type="Timer" parent="FanAmbient/RandomAmbient"]
 
@@ -1172,6 +1396,8 @@ stream = ExtResource("85_4nktl")
 [connection signal="did_move" from="AnimatronicAIController" to="ScreenCameraNode/CameraScreenDisplay" method="_on_animatronic_ai_controller_did_move"]
 [connection signal="timeout" from="AnimatronicAIController/FoxyKillYouTimer" to="." method="_on_foxy_kill_you_timer_timeout"]
 [connection signal="visibility_changed" from="ScreenCameraNode/CameraScreenDisplay" to="ScreenCameraNode/CameraScreenDisplay" method="_on_visibility_changed"]
+[connection signal="timeout" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MonitorStatic/CamOutTimer" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_out_timer_timeout"]
+[connection signal="timeout" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MonitorStatic/CamOutTimer" to="ScreenCameraNode/CameraScreenDisplay/ScreenCamera" method="_on_cam_out_timer_timeout"]
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam1A" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_1a_pressed"]
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam1B" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_1b_pressed"]
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam1C" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_1c_pressed"]
@@ -1184,5 +1410,7 @@ stream = ExtResource("85_4nktl")
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam6" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_6_pressed"]
 [connection signal="pressed" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MapUI/Cam7" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_7_pressed"]
 [connection signal="timeout" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/CamPauseTimer" to="ScreenCameraNode/CameraScreenDisplay/ScreenCamera" method="_on_cam_pause_timer_timeout"]
+[connection signal="timeout" from="FanAmbient/Foxy Audio/FoxyAmbientTimer" to="." method="_on_foxy_ambient_timeout"]
+[connection signal="finished" from="FanAmbient/Foxy Audio/FoxyAmbient" to="." method="_on_foxy_ambient_finished"]
 [connection signal="finished" from="FanAmbient/RandomAmbient" to="FanAmbient" method="_on_random_ambient_finished"]
 [connection signal="timeout" from="FanAmbient/RandomAmbient/RandomTimer" to="FanAmbient" method="_on_random_timer_timeout"]

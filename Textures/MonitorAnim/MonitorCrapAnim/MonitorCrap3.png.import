@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dy1c1onu4ox7t"
-path="res://.godot/imported/DiningRoom_Base_cakeeated.png-9c6d7532905165a864eacf1c85865c23.ctex"
+uid="uid://cc7dljp26d1kr"
+path="res://.godot/imported/MonitorCrap3.png-798fd71599ab0b3d627ca53eca975b4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/DiningRoom_Base_cakeeated.png"
-dest_files=["res://.godot/imported/DiningRoom_Base_cakeeated.png-9c6d7532905165a864eacf1c85865c23.ctex"]
+source_file="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap3.png"
+dest_files=["res://.godot/imported/MonitorCrap3.png-798fd71599ab0b3d627ca53eca975b4c.ctex"]
 
 [params]
 

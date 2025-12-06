@@ -18,6 +18,10 @@ var freddy_angy = 0
 var foxy_angy = 0
 var FoxyAttack = false
 
+var FreddyKitchen = false
+var ChicaKitchen = false
+
+var allHalt = false
 signal did_move(room)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,6 +44,8 @@ func initialize(AIValues):
 #Core loop
 #Pauses / Timers are cooldowns to prevent rapid lucky movement.
 func tick():
+	if allHalt:
+		pass
 	if $BonnieTimer.is_stopped(): #First pause is 30s currently, set via node
 		if randi_range(0, 20) <= BonnieAI:
 			move_bonnie()
@@ -61,11 +67,9 @@ func tick():
 		freddy_angy = 0
 	# Foxy gains angy when the cameras are OFF. He attacks if the monitor is down.
 	if not FoxyAttack:
-		if $"../ScreenCameraNode/CameraScreenDisplay".camera_open:
-			foxy_angy += 1
-		else:
-			foxy_angy -= 1
-		if foxy_angy >= 5000 / FoxyAI:
+		foxy_angy += -1 if $"..".camera_open else 1
+		foxy_angy = max(foxy_angy,-10) #Limit how low his anger can go
+		if foxy_angy >= 500 / FoxyAI and randi_range(0,25) <= FoxyAI: #Add a little RNG
 			move_foxy()
 			foxy_angy = 0
 			print("Foxy Stage: " + str(FoxyStage))
@@ -151,9 +155,26 @@ func move_chica(room = ""):
 	if ChicaPos == "Office": #Satisfied by reaching Office
 		chica_angy = 0
 		$"../RightHallTexture/ChicaOffice".set_visible(true)
-	#if ChicaPos == "6":
-		#$"../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(true)
-		#$"../CameraNode/Camera2D/KitchenLowBaseStream".set_volume_db(-20)
+	
+	#Kitchen audio handling
+	if ChicaPos == "6":
+		ChicaKitchen = true
+		$"../CameraNode/Camera2D/KitchenChicaStream".set_volume_db(0)
+		$"../CameraNode/Camera2D/KitchenBaseStream".set_volume_db(0)
+		if ChicaKitchen and FreddyKitchen:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_stream(load("res://SFX/Kitchen/KitchenBaseHigh.wav"))
+		else:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_stream(load("res://SFX/Kitchen/KitchenBaseLow.wav"))
+		$"../CameraNode/Camera2D/KitchenBaseStream".play()
+	else: #Chica leaves the kitchen
+		ChicaKitchen = false
+		$"../CameraNode/Camera2D/KitchenChicaStream".set_volume_db(-100)
+		if FreddyKitchen:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_stream(load("res://SFX/Kitchen/KitchenBaseLow.wav"))
+			$"../CameraNode/Camera2D/KitchenBaseStream".play()
+		else:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_volume_db(-100)
+	
 	$"../FanAmbient/RIGHT Footstep Audio".play()#Play audio sound
 	print("Chica: " + ChicaPos)
 	
@@ -179,10 +200,28 @@ func move_freddy(room = ""):
 		else:
 			print("Freddy Blocked by Door")
 	else:
-		did_move.emit(FreddyPos)
 		FreddyPos = freddy_movement[FreddyPos]
-		$FreddyTimer/AudioStreamPlayer.set_stream(load(FreddyLaughs[randi_range(0, FreddyLaughs.size() - 1)])) #range is INCLUSIVE
-		$FreddyTimer/AudioStreamPlayer.play() #Play FredLaugh
+	did_move.emit(FreddyPos)
+	$FreddyTimer/AudioStreamPlayer.set_stream(load(FreddyLaughs[randi_range(0, FreddyLaughs.size() - 1)])) #range is INCLUSIVE
+	$FreddyTimer/AudioStreamPlayer.play() #Play FredLaugh
+	#Kitchen audio handling
+	if FreddyPos == "6":
+		FreddyKitchen = true
+		$"../CameraNode/Camera2D/KitchenFreddyStream".set_volume_db(0)
+		$"../CameraNode/Camera2D/KitchenBaseStream".set_volume_db(0)
+		if FreddyKitchen and ChicaKitchen:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_stream(load("res://SFX/Kitchen/KitchenBaseHigh.wav"))
+		else:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_stream(load("res://SFX/Kitchen/KitchenBaseLow.wav"))
+		$"../CameraNode/Camera2D/KitchenBaseStream".play()
+	else: #Freddy leaves the kitchen
+		FreddyKitchen = false
+		$"../CameraNode/Camera2D/KitchenFreddyStream".set_volume_db(-100)
+		if ChicaKitchen:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_stream(load("res://SFX/Kitchen/KitchenBaseLow.wav"))
+			$"../CameraNode/Camera2D/KitchenBaseStream".play()
+		else:
+			$"../CameraNode/Camera2D/KitchenBaseStream".set_volume_db(-100)
 	
 #Foxy moves through 4 stages, with the 4th stage being him running down west hall to kill your ass.
 #At stage 4 he has a timer to attack the office given player inactivity or will run if the West Hall is looked at.?

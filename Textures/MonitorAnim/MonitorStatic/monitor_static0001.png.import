@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8ul52ampp7nc"
-path="res://.godot/imported/DiningRoom_Base_milkspilled.png-25afc9561693b3500f0ae2073fa0f863.ctex"
+uid="uid://5044m8lrvii5"
+path="res://.godot/imported/monitor_static0001.png-a89ab421bca486366bf286d7b4ea8dfa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/DiningRoom_Base_milkspilled.png"
-dest_files=["res://.godot/imported/DiningRoom_Base_milkspilled.png-25afc9561693b3500f0ae2073fa0f863.ctex"]
+source_file="res://Textures/MonitorAnim/MonitorStatic/monitor_static0001.png"
+dest_files=["res://.godot/imported/monitor_static0001.png-a89ab421bca486366bf286d7b4ea8dfa.ctex"]
 
 [params]
 

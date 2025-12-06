@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8isrexb8j8m1"
-path="res://.godot/imported/Backstage_Bonniespook.png-704cf3253ffb015f1e89f69b928afeed.ctex"
+uid="uid://drmobo4ej4quj"
+path="res://.godot/imported/monitor0005.png-03d15834e73c941170dc7f3c74d5f32f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/CharacterLayers/Backstage_Bonniespook.png"
-dest_files=["res://.godot/imported/Backstage_Bonniespook.png-704cf3253ffb015f1e89f69b928afeed.ctex"]
+source_file="res://Textures/MonitorAnim/monitor0005.png"
+dest_files=["res://.godot/imported/monitor0005.png-03d15834e73c941170dc7f3c74d5f32f.ctex"]
 
 [params]
 

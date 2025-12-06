@@ -2,7 +2,7 @@ extends TextureRect
 
 var layer_List = [$BonnieLayer,$ChicaLayer,$FreddyLayer,$FoxyLayer,$GoldenLayer]
 var current_camera = "1A"
-var camera_open = false
+#var camera_open = false #bad duplicate donotuse
 var room_names = {"1A" : "Show Stage",
 "1B" : "Dining Area",
 "1C" : "Pirate's Cove",
@@ -69,17 +69,21 @@ func _process(delta: float) -> void:
 func update_cam(camName = current_camera):
 	current_camera = camName
 	#Kitchen handling
-	if camName == "6":
-		kitchenSounds()
-	else:
-		kitchenSoundsOff()
-	$ScreenCamera/MapUI/CameraDetail.set_text(room_names[current_camera]) 
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Kitchen"), 0 if camName == "6" else -10)
+	$ScreenCamera/MapUI/CameraDetail.set_text(room_names[current_camera])
 	$RoomView.set_texture(load(room_textures[current_camera]))
+	#Foxy Camera volume
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Foxy"), 0 if camName == "3" else -10)
+	#FoxyRun handling
 	if camName == "2A" and $"../../AnimatronicAIController".FoxyAttack:
 		$"../../AnimatronicAIController".FoxyAttack = false #Maybe problematic
-		print("Foxy chase go")
+		#print("Foxy chase go")
 		$"../../AnimatronicAIController/FoxyKillYouTimer".stop()
-		$"../../AnimatronicAIController/FoxyKillYouTimer".start(1)
+		$"../../AnimatronicAIController/FoxyKillYouTimer".start(2) #Changed from 1 second
+		$"../../FanAmbient/Foxy Audio/FoxyAmbientTimer".stop() #Pause his ambient noises
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Foxy"), 0)
+		$"../../FanAmbient/Foxy Audio".set_stream(load("res://SFX/Foxy/FoxyRunAudio.mp3"))
+		$"../../FanAmbient/Foxy Audio".play()
 		$RoomView/FoxyCharge.set_frame(0)
 		$RoomView/FoxyCharge.set_visible(true)
 		$RoomView/FoxyCharge.play() #Foxy charges down the hall now. Should not be drawn over room but only camera.
@@ -142,7 +146,6 @@ func _on_cam_5_pressed() -> void:
 func _on_cam_6_pressed() -> void:
 	update_cam("6")
 	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
-	#kitchenSounds()
 
 func _on_cam_7_pressed() -> void:
 	update_cam("7")
@@ -152,30 +155,23 @@ func _on_cam_7_pressed() -> void:
 func _on_animatronic_ai_controller_did_move(room: Variant) -> void:
 	#If animatronic left the room you staring at, remove their layer
 	if str(room) == current_camera:
-		#TODO: kill the camera temporarily
+		$ScreenCamera/MonitorStatic.play("StaticAnim")
+		$ScreenCamera/MonitorStatic/MonitorStatic.play()
+		$ScreenCamera/MonitorStatic/CamOutTimer.start(randf_range(1.0,1.8))
 		await get_tree().create_timer(0.05).timeout #Code runs too fast to take layer out
 		update_cam(current_camera)
 
-#Set the kitchen sound layers
-#0: BaseLow, 1: BaseHigh, 2: Chica, 3: Freddy
-func kitchenSounds():
-	var locations = $"../../AnimatronicAIController".give_Locations()
-	var chicaPresent = locations[1] == "6"
-	var freddyPresent = locations[2] == "6"
-	$"../../CameraNode/Camera2D/KitchenChicaStream"._set_playing(chicaPresent)
-	$"../../CameraNode/Camera2D/KitchenFreddyStream"._set_playing(freddyPresent)
-	$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing((!chicaPresent) != (!freddyPresent)) # XOR
-	$"../../CameraNode/Camera2D/KitchenHighBaseStream"._set_playing(chicaPresent and freddyPresent)
-
-func kitchenSoundsOff():
-	$"../../CameraNode/Camera2D/KitchenFreddyStream"._set_playing(false)
-	$"../../CameraNode/Camera2D/KitchenChicaStream"._set_playing(false)
-	$"../../CameraNode/Camera2D/KitchenLowBaseStream"._set_playing(false)
-	$"../../CameraNode/Camera2D/KitchenHighBaseStream"._set_playing(false)
-
 func isFreddyOnCam():
-	return camera_open and current_camera == $"../../AnimatronicAIController".give_Locations()[2]
+	return $"../..".camera_open and current_camera == $"../../AnimatronicAIController".give_Locations()[2]
 	
 # Called by animatronic_ai_controller when FoxyStage changes.
 func updateFoxy(stage):
 	room_Characters["1C"][0] = foxy_Textures[stage]
+
+func cam_close():
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Kitchen"), -10)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Foxy"), -10)
+
+
+func _on_cam_out_timer_timeout() -> void:
+	$ScreenCamera/MonitorStatic.play("default")

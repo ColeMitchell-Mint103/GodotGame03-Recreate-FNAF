@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cnwwfksfd63s5"
-path="res://.godot/imported/KitchenBaseHigh.wav-08fb8522fef4bada372b8e76cdf94c12.sample"
+path="res://.godot/imported/KitchenBaseHigh.wav-85df8e5b86f72a88591ee5c224b151aa.sample"
 
 [deps]
 
-source_file="res://SFX/KitchenBaseHigh.wav"
-dest_files=["res://.godot/imported/KitchenBaseHigh.wav-08fb8522fef4bada372b8e76cdf94c12.sample"]
+source_file="res://SFX/Kitchen/KitchenBaseHigh.wav"
+dest_files=["res://.godot/imported/KitchenBaseHigh.wav-85df8e5b86f72a88591ee5c224b151aa.sample"]
 
 [params]
 

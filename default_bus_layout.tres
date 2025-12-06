@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://dv8pyj7qdw4uk"]
+[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://dv8pyj7qdw4uk"]
 
 [sub_resource type="AudioEffectPanner" id="AudioEffectPanner_ms8ju"]
 resource_name = "Panner"
@@ -8,12 +8,16 @@ pan = -0.5
 resource_name = "Panner"
 pan = 0.5
 
+[sub_resource type="AudioEffectPanner" id="AudioEffectPanner_u5tqn"]
+resource_name = "Panner"
+pan = 0.2
+
 [resource]
 bus/1/name = &"LeftPan"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
-bus/1/volume_db = 0.0
+bus/1/volume_db = -5.93075
 bus/1/send = &"Master"
 bus/1/effect/0/effect = SubResource("AudioEffectPanner_ms8ju")
 bus/1/effect/0/enabled = true
@@ -21,7 +25,7 @@ bus/2/name = &"RightPan"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = 0.0
+bus/2/volume_db = -5.93075
 bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectPanner_omu6x")
 bus/2/effect/0/enabled = true
@@ -37,3 +41,17 @@ bus/4/mute = false
 bus/4/bypass_fx = false
 bus/4/volume_db = 0.0
 bus/4/send = &"Master"
+bus/5/name = &"Foxy"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = -20.3764
+bus/5/send = &"Master"
+bus/6/name = &"Kitchen"
+bus/6/solo = false
+bus/6/mute = false
+bus/6/bypass_fx = false
+bus/6/volume_db = -10.9863
+bus/6/send = &"Master"
+bus/6/effect/0/effect = SubResource("AudioEffectPanner_u5tqn")
+bus/6/effect/0/enabled = true
