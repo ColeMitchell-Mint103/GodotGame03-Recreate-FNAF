@@ -1,4 +1,7 @@
 Last Worked On:
+Freddy alt
+Chica Fall
+Adding character alts -> animatronic_ai_*
 Changed power_out -> night1
 
 
@@ -7,6 +10,7 @@ TODO:
 	HE appears
 	Hallucinations
 	Alternate screen images
+	Gold Plushie in office
 9. Visual overhaul <- Office
 10. Window resizing?
 x. Footsteps scale with proximity
@@ -15,6 +19,7 @@ x. Phone calls
 x. Kitchen camera fix
 x. Lights turn off when camera opens
 x. How much power is too much? (Max usage is 6?)
+x. Moans during attack if monitor stays up
 	
 DONE:
 7. Camera breaks on move + anims

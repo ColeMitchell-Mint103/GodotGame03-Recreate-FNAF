@@ -61,6 +61,8 @@ func tick():
 		freddy_angy -= 1
 	else:
 		freddy_angy += 1
+		if FreddyPos == "1A":
+			freddy_alt()
 	if freddy_angy >= 2000 / FreddyAI:
 		move_freddy()
 		print("Freddy: " + FreddyPos)
@@ -90,6 +92,12 @@ var bonnie_movement_AGGRESS = {"1A" : "1B",
 "2A" : "2B",
 "2B" : "Office"
 }
+var bonnie_room_alts = {
+"1B" : ["res://Textures/CharacterLayers/Dining_Bonnie.png",
+"res://Textures/CharacterLayers/Dining_BonnieShadow.png"], 
+"5" : ["res://Textures/CharacterLayers/Backstage_Bonnie.png",
+"res://Textures/CharacterLayers/Backstage_Bonniespook.png"]
+}
 
 #Moves Bonnie animatromo to new room.
 func move_bonnie():
@@ -102,15 +110,19 @@ func move_bonnie():
 			#if door closed, leave
 			BonniePos = '1B'
 			$"../LeftHallTexture/BonnieOffice".set_visible(false)
-	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggression
+	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggressive move
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_AGGRESS[BonniePos]
 	else: #Wander move
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_WANDER[BonniePos].pick_random()
+	
 	if BonniePos == "Office": #Satisfied by reaching Office
 		bonnie_angy = 0
 		$"../LeftHallTexture/BonnieOffice".set_visible(true)
+	#Alternate room image handling
+	if bonnie_room_alts.has(BonniePos):
+		$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[BonniePos][0] = bonnie_room_alts[BonniePos].pick_random()
 	$"../FanAmbient/LEFT Footstep Audio".play() #Play audio sound
 	print("Bonnie: " + BonniePos)
 
@@ -128,7 +140,13 @@ var chica_movement_AGGRESS = {"1A" : "1B",
 "4A" : "Office",
 "4B" : "Office"
 }
-
+var chica_room_alts = {"1B" : ["res://Textures/CharacterLayers/Dining_Chica.png", 
+"res://Textures/CharacterLayers/Dining_Chica2.png"],
+"4A" : ["res://Textures/CharacterLayers/EastHall_Chica.png", 
+"res://Textures/CharacterLayers/EastHall_Chica2.png"],
+"7" : ["res://Textures/CharacterLayers/Bathrooms_Chica1.png",
+"res://Textures/CharacterLayers/Bathrooms_Chica2.png"]
+}
 #Moves Chica, the fat bird, to new room.
 #Emits did_move -> camera_screen.gd
 func move_chica(room = ""):
@@ -175,6 +193,11 @@ func move_chica(room = ""):
 		else:
 			$"../CameraNode/Camera2D/KitchenBaseStream".set_volume_db(-100)
 	
+	#Alternate room image handling
+	if chica_room_alts.has(ChicaPos):
+		$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] = chica_room_alts[ChicaPos].pick_random()
+	if $"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] == "res://Textures/CharacterLayers/Bathrooms_Chica2.png":
+		$"../FanAmbient/RIGHT Footstep Audio/RIGHT ChicaFalling".play()
 	$"../FanAmbient/RIGHT Footstep Audio".play()#Play audio sound
 	print("Chica: " + ChicaPos)
 	
@@ -222,7 +245,16 @@ func move_freddy(room = ""):
 			$"../CameraNode/Camera2D/KitchenBaseStream".play()
 		else:
 			$"../CameraNode/Camera2D/KitchenBaseStream".set_volume_db(-100)
-	
+
+var freddy_alts = {"1A" : ["res://Textures/CharacterLayers/Showstage_Freddy.png",
+"res://Textures/CharacterLayers/Showstage_Freddy_alt.png"]
+}
+#Method-based assignment of Freddy alt rooms (currently just Showstage)
+func freddy_alt():
+	if randi_range(0,100) < 1:
+		if freddy_alts.has(FreddyPos): 
+			$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[FreddyPos][2] = freddy_alts[FreddyPos].pick_random()
+
 #Foxy moves through 4 stages, with the 4th stage being him running down west hall to kill your ass.
 #At stage 4 he has a timer to attack the office given player inactivity or will run if the West Hall is looked at.?
 func move_foxy():
@@ -233,6 +265,7 @@ func move_foxy():
 		$FoxyKillYouTimer.start()
 	$"../ScreenCameraNode/CameraScreenDisplay".updateFoxy(FoxyStage)
 	did_move.emit("1C") #1C = Pirate's Cove
-	
-	
-	
+
+var rng = RandomNumberGenerator.new()
+var outcomesArray = [1,2,3,4]
+var outcomeWeights = PackedFloat32Array([5.0,5.0,1.0,0.0])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=143 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=153 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -99,6 +99,7 @@
 [ext_resource type="AudioStream" uid="uid://cg2wjp0univhm" path="res://SFX/whatthefuck.wav" id="79_chniu"]
 [ext_resource type="AudioStream" uid="uid://bm5yqk0auiojw" path="res://SFX/Footstep/Footstep2.wav" id="79_cysri"]
 [ext_resource type="Texture2D" uid="uid://beh11cuot8m0t" path="res://Textures/MonitorAnim/monitor0004.png" id="79_nq1ax"]
+[ext_resource type="AudioStream" uid="uid://cxyk5pt3wp1by" path="res://SFX/79/zombieslaugh.mp3" id="80_88gio"]
 [ext_resource type="Texture2D" uid="uid://dbsqu4iyn0jqc" path="res://Textures/MonitorAnim/monitor0003.png" id="80_bimjl"]
 [ext_resource type="AudioStream" uid="uid://c8jsxkbp46kju" path="res://SFX/AmbientLayer/3arrrgh.mp3" id="80_c3un1"]
 [ext_resource type="Texture2D" uid="uid://c3dcdh1jg661i" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb2.png" id="81_8inw1"]
@@ -119,6 +120,14 @@
 [ext_resource type="AudioStream" uid="uid://3eg6ilfsyqxl" path="res://SFX/Foxy/troubles-breathin.mp3" id="87_tbrvx"]
 [ext_resource type="AudioStream" uid="uid://dbgrq8nrek2f" path="res://SFX/Foxy/wahoo.mp3" id="88_xnqbr"]
 [ext_resource type="AudioStream" uid="uid://dyqcfqf7gjvri" path="res://SFX/Foxy/why-dont-you-give-up.mp3" id="89_6g7jy"]
+[ext_resource type="Texture2D" uid="uid://q46kesyy7hpy" path="res://Textures/79/Hallucinations/HalluciF1.png" id="100_q222n"]
+[ext_resource type="Texture2D" uid="uid://b8mcrj03ykbqt" path="res://Textures/79/Hallucinations/HalluciB1.png" id="101_02e0j"]
+[ext_resource type="Texture2D" uid="uid://d1cwcl4pma2gb" path="res://Textures/79/Hallucinations/HalluciB2.png" id="102_xuyb8"]
+[ext_resource type="Texture2D" uid="uid://pyqy45neshv5" path="res://Textures/79/Hallucinations/HalluciB3.png" id="103_132v1"]
+[ext_resource type="Texture2D" uid="uid://bijgeafsnt1pr" path="res://Textures/79/Hallucinations/HalluciB4.png" id="104_cg5sj"]
+[ext_resource type="Texture2D" uid="uid://bkaab2plwysh7" path="res://Textures/79/Hallucinations/HalluciF2.png" id="105_53ev6"]
+[ext_resource type="Texture2D" uid="uid://bdswir86sygt3" path="res://Textures/79/Hallucinations/Halluci5.png" id="106_yku0i"]
+[ext_resource type="AudioStream" uid="uid://cev62wmc3c05g" path="res://SFX/ChicaSlips.mp3" id="114_rkux1"]
 
 [sub_resource type="Animation" id="Animation_jmj1j"]
 resource_name = "Fadeout"
@@ -159,6 +168,56 @@ _data = {
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1rg4c"]
 load_path = "res://.godot/imported/CamBarText.png-5f8c0c593d93da3d804f3f39263d9640.ctex"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6sps"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_q222n")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_02e0j")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_xuyb8")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_132v1")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_cg5sj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_53ev6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_yku0i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_yku0i")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"Flash",
+"speed": 8.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pjvvy"]
 animations = [{
@@ -809,6 +868,15 @@ scale = Vector2(0.993437, 1.13053)
 texture = SubResource("CompressedTexture2D_1rg4c")
 expand_mode = 2
 
+[node name="HallucinationLayer" type="AnimatedSprite2D" parent="CameraNode/Camera2D"]
+z_index = 5
+scale = Vector2(0.765, 1)
+sprite_frames = SubResource("SpriteFrames_o6sps")
+animation = &"Flash"
+centered = false
+
+[node name="SpookAudio" type="AudioStreamPlayer" parent="CameraNode/Camera2D/HallucinationLayer"]
+
 [node name="LeftCameraNode" type="Control" parent="CameraNode/Camera2D"]
 layout_mode = 3
 anchors_preset = 0
@@ -1136,12 +1204,18 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GoldenLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="FredbearAttackBegin" type="AudioStreamPlayer" parent="ScreenCameraNode/CameraScreenDisplay/GoldenLayer"]
+stream = ExtResource("80_88gio")
+
+[node name="HimTimer" type="Timer" parent="ScreenCameraNode/CameraScreenDisplay/GoldenLayer"]
 
 [node name="ScreenCamera" type="Camera2D" parent="ScreenCameraNode/CameraScreenDisplay"]
 position = Vector2(168, 1)
@@ -1375,6 +1449,10 @@ stream = SubResource("AudioStreamRandomizer_0hndb")
 stream = ExtResource("79_cysri")
 bus = &"RightPan"
 
+[node name="RIGHT ChicaFalling" type="AudioStreamPlayer" parent="FanAmbient/RIGHT Footstep Audio"]
+stream = ExtResource("114_rkux1")
+bus = &"RightPan"
+
 [node name="RandomAmbient" type="AudioStreamPlayer" parent="FanAmbient"]
 stream = SubResource("AudioStreamRandomizer_veypf")
 volume_db = -15.871
@@ -1383,6 +1461,8 @@ volume_db = -15.871
 
 [node name="FunSongAmbient" type="AudioStreamPlayer" parent="FanAmbient"]
 stream = ExtResource("85_4nktl")
+
+[node name="GoldAudio" type="AudioStreamPlayer" parent="FanAmbient"]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="mouse_exited" from="CameraNode/Camera2D/HUD/ReferenceRect" to="." method="_on_reference_rect_mouse_exited"]

@@ -6,6 +6,7 @@ var hour = 0 #stupid fucking AM
 var power = 100.0 #float for fun
 var power_usage = 1 #clamp between 1 and 4?
 var power_factor = 0.13 #power modifier
+var golden_freddy = false
 var power_dead = false
 var his_power_factor = 0.25 #not ready for freddy - soon golden freddy activity
 var night = 1
@@ -57,6 +58,7 @@ func tick():
 	$CameraNode/Camera2D/HUD/Box_TimeInfo/Time.set_text(time_key + " AM")
 	#Tick the AI control
 	$AnimatronicAIController.tick()
+	golden_action()
 
 func game_start():
 	$GameTick.start()
@@ -275,8 +277,8 @@ func _input(event):
 		#lose_game()
 		#print("Cheat: Move Bonnie to office")
 		#$AnimatronicAIController.BonniePos = "Office"
-		#print("Cheat: Chica to Kitchen")
-		#$AnimatronicAIController.move_chica("6")
+		#print("Cheat: Chica to Bathroom")
+		#$AnimatronicAIController.move_chica("7")
 		#print("Cheat: Freddy to 4B")
 		#$AnimatronicAIController.move_freddy("4B")
 		#$AnimatronicAIController.foxy_angy = 4000
@@ -285,6 +287,8 @@ func _input(event):
 		#print("Low power")
 		#current_time = 6*hourLength
 		#print("Win night")
+		#print('Force gold')
+		#$AnimatronicAIController/HimTimer.start(0.2)
 
 func camera_flip():
 	#prevent cam during death
@@ -297,6 +301,11 @@ func camera_flip():
 		$CameraNode/Camera2D/CameraSounds_DARK.play()
 		$CameraNode/Camera2D.make_current() #room view
 		power_display(-1)
+		if golden_freddy:
+			if $ScreenCameraNode/CameraScreenDisplay/GoldenLayer.get_visible():
+				$ScreenCameraNode/CameraScreenDisplay/GoldenLayer/HimTimer.start(5)
+			golden_freddy = false
+			$ScreenCameraNode/CameraScreenDisplay.room_textures["2B"] = "res://Textures/RoomFiles/WestHallCorner_Base.png"
 	else: #Opening the cam
 		camDoNotOpen = true
 		$ScreenCameraNode/ReferenceRect/Monitor.play("default")
@@ -307,8 +316,16 @@ func camera_flip():
 		await get_tree().create_timer(camera_open_frames / camera_open_speed).timeout
 		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current() #camera view
 		power_display(1)
-		$AnimatronicAIController.foxy_angy = max($AnimatronicAIController.foxy_angy - 2, -10) 
+		$AnimatronicAIController.foxy_angy = max($AnimatronicAIController.foxy_angy - 2, -10)
 		#Cut anger on flipping cam to account for the timer being slow
+		#GoldFredbear westhall attack
+		if randi_range(1,20) == 1: #Begin attack
+			golden_freddy = true
+			$ScreenCameraNode/CameraScreenDisplay.room_textures["2B"] = "res://Textures/79/WestHall_Golden.png"
+		if $ScreenCameraNode/CameraScreenDisplay/GoldenLayer.get_visible(): #Survive attack
+			$ScreenCameraNode/CameraScreenDisplay/GoldenLayer/HimTimer.stop()
+			$ScreenCameraNode/CameraScreenDisplay/GoldenLayer.set_visible(false)
+	
 	camera_open = !camera_open
 	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
 	$ScreenCameraNode/CameraScreenDisplay.update_cam()
@@ -354,3 +371,43 @@ func _on_foxy_ambient_timeout() -> void:
 
 func _on_foxy_ambient_finished() -> void:
 	$"FanAmbient/Foxy Audio/FoxyAmbientTimer".start(randi_range(25, 1000 / $AnimatronicAIController.FoxyAI))
+
+
+var halu_sounds = ["res://SFX/79/Spook1.mp3", "res://SFX/79/Spook2.mp3",
+"res://SFX/79/Spook3.mp3", "res://SFX/79/Spook4.mp3"]
+var halu_frames = ["res://Textures/79/Hallucinations/Halluci1.png","res://Textures/79/Hallucinations/Halluci2.png",
+"res://Textures/79/Hallucinations/Halluci3.png","res://Textures/79/Hallucinations/Halluci4.png",
+"res://Textures/79/Hallucinations/Halluci5.png","res://Textures/79/Hallucinations/Halluci6.png",
+"res://Textures/79/Hallucinations/Halluci7.png","res://Textures/79/Hallucinations/Halluci8.png",
+"res://Textures/79/Hallucinations/Halluci9.png","res://Textures/79/Hallucinations/Halluci10.png",
+"res://Textures/79/Hallucinations/HalluciB1.png","res://Textures/79/Hallucinations/HalluciB2.png",
+"res://Textures/79/Hallucinations/HalluciB3.png","res://Textures/79/Hallucinations/HalluciB4.png",
+"res://Textures/79/Hallucinations/HalluciF1.png","res://Textures/79/Hallucinations/HalluciF2.png",
+"res://Textures/79/Hallucinations/HalluciF3.png"
+]
+var dining_altered = false
+#Spooky, rare activities per 1 second game tick
+func golden_action():
+	if randi_range(1, 5) == 1: #Hallucinate -but how to keep centered on camera node AND screen camera node? tryreparent
+		var anim_flash = $CameraNode/Camera2D/HallucinationLayer.get_sprite_frames()
+		anim_flash.clear("Flash")
+		for frame in range(randi_range(3,6)):
+			anim_flash.add_frame("Flash", load(""))
+			anim_flash.add_frame("Flash", load(halu_frames.pick_random()))
+		anim_flash.add_frame("Flash", load(""))
+		$CameraNode/Camera2D/HallucinationLayer.play("Flash")
+		$CameraNode/Camera2D/HallucinationLayer/SpookAudio.set_stream(load(halu_sounds.pick_random()))
+		$CameraNode/Camera2D/HallucinationLayer/SpookAudio.play()
+	
+	if not dining_altered and randi_range(1, 400): #Changing dining hall
+		if randi_range(1,2) == 1:
+			$"../ScreenCameraNode/CameraScreenDisplay".room_textures["1B"] = "res://Textures/79/DiningRoom_Base_milkspilled.png"
+			#audio glass breaking
+			$"../FanAmbient/GoldAudio".set_stream(load("res://SFX/79/Glass_dig2.ogg"))
+			$"../FanAmbient/GoldAudio".play()
+		else:
+			$"../ScreenCameraNode/CameraScreenDisplay".room_textures["1B"] = "res://Textures/79/DiningRoom_Base_cakeeated.png"
+			#cake eat audio
+			$"../FanAmbient/GoldAudio".set_stream(load("res://SFX/79/Eat1.ogg"))
+			$"../FanAmbient/GoldAudio".play()
+		dining_altered = true

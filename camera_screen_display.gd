@@ -126,6 +126,9 @@ func _on_cam_2a_pressed() -> void:
 func _on_cam_2b_pressed() -> void:
 	update_cam("2B")
 	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
+	if $"../..".golden_freddy:
+		$GoldenLayer/FredbearAttackBegin.play()
+		$GoldenLayer.set_visible(true)
 
 func _on_cam_3_pressed() -> void:
 	update_cam("3")
@@ -155,9 +158,10 @@ func _on_cam_7_pressed() -> void:
 func _on_animatronic_ai_controller_did_move(room: Variant) -> void:
 	#If animatronic left the room you staring at, remove their layer
 	if str(room) == current_camera:
-		$ScreenCamera/MonitorStatic.play("StaticAnim")
-		$ScreenCamera/MonitorStatic/MonitorStatic.play()
-		$ScreenCamera/MonitorStatic/CamOutTimer.start(randf_range(1.0,1.8))
+		if $"../..".camera_open:
+			$ScreenCamera/MonitorStatic.play("StaticAnim")
+			$ScreenCamera/MonitorStatic/MonitorStatic.play()
+			$ScreenCamera/MonitorStatic/CamOutTimer.start(randf_range(1.0,1.8))
 		await get_tree().create_timer(0.05).timeout #Code runs too fast to take layer out
 		update_cam(current_camera)
 
