@@ -1,4 +1,4 @@
-[gd_scene load_steps=153 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=155 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -99,10 +99,12 @@
 [ext_resource type="AudioStream" uid="uid://cg2wjp0univhm" path="res://SFX/whatthefuck.wav" id="79_chniu"]
 [ext_resource type="AudioStream" uid="uid://bm5yqk0auiojw" path="res://SFX/Footstep/Footstep2.wav" id="79_cysri"]
 [ext_resource type="Texture2D" uid="uid://beh11cuot8m0t" path="res://Textures/MonitorAnim/monitor0004.png" id="79_nq1ax"]
-[ext_resource type="AudioStream" uid="uid://cxyk5pt3wp1by" path="res://SFX/79/zombieslaugh.mp3" id="80_88gio"]
+[ext_resource type="Texture2D" uid="uid://bhaaub4h7807j" path="res://Textures/79/goldenfroddy.png" id="80_0knh3"]
 [ext_resource type="Texture2D" uid="uid://dbsqu4iyn0jqc" path="res://Textures/MonitorAnim/monitor0003.png" id="80_bimjl"]
 [ext_resource type="AudioStream" uid="uid://c8jsxkbp46kju" path="res://SFX/AmbientLayer/3arrrgh.mp3" id="80_c3un1"]
+[ext_resource type="AudioStream" uid="uid://bbjooq5q1o4tx" path="res://SFX/79/gangingup.mp3" id="80_i4kag"]
 [ext_resource type="Texture2D" uid="uid://c3dcdh1jg661i" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb2.png" id="81_8inw1"]
+[ext_resource type="AudioStream" uid="uid://bro72rbjv6ffy" path="res://SFX/79/GoldenDeathAudio.mp3" id="81_187wd"]
 [ext_resource type="Texture2D" uid="uid://bwwfdueph6gt4" path="res://Textures/MonitorAnim/monitor0002.png" id="81_238fy"]
 [ext_resource type="AudioStream" uid="uid://2vi5vkdec0dl" path="res://SFX/AmbientLayer/augh.mp3" id="81_tn8cs"]
 [ext_resource type="Texture2D" uid="uid://dy0vguligxry6" path="res://Textures/MonitorAnim/monitor0001.png" id="82_54mtl"]
@@ -869,10 +871,11 @@ texture = SubResource("CompressedTexture2D_1rg4c")
 expand_mode = 2
 
 [node name="HallucinationLayer" type="AnimatedSprite2D" parent="CameraNode/Camera2D"]
-z_index = 5
 scale = Vector2(0.765, 1)
 sprite_frames = SubResource("SpriteFrames_o6sps")
 animation = &"Flash"
+frame = 13
+frame_progress = 1.0
 centered = false
 
 [node name="SpookAudio" type="AudioStreamPlayer" parent="CameraNode/Camera2D/HallucinationLayer"]
@@ -1123,6 +1126,21 @@ stream = ExtResource("5_fdwq8")
 [node name="PowerOutPlayer" type="AudioStreamPlayer2D" parent="GameScreen_Base"]
 stream = ExtResource("36_bswqk")
 
+[node name="Fredbear" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("80_0knh3")
+
+[node name="FredbearAttackBegin" type="AudioStreamPlayer" parent="Fredbear"]
+stream = ExtResource("80_i4kag")
+
+[node name="FredbearKill" type="AudioStreamPlayer" parent="Fredbear"]
+stream = ExtResource("81_187wd")
+
+[node name="HimTimer" type="Timer" parent="Fredbear"]
+
 [node name="GameTick" type="Timer" parent="."]
 
 [node name="AnimatronicAIController" type="Node" parent="."]
@@ -1211,11 +1229,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="FredbearAttackBegin" type="AudioStreamPlayer" parent="ScreenCameraNode/CameraScreenDisplay/GoldenLayer"]
-stream = ExtResource("80_88gio")
-
-[node name="HimTimer" type="Timer" parent="ScreenCameraNode/CameraScreenDisplay/GoldenLayer"]
 
 [node name="ScreenCamera" type="Camera2D" parent="ScreenCameraNode/CameraScreenDisplay"]
 position = Vector2(168, 1)
@@ -1472,6 +1485,7 @@ stream = ExtResource("85_4nktl")
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightDoor" to="." method="_on_right_door_toggled"]
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightLight" to="." method="_on_right_light_toggled"]
 [connection signal="button_down" from="GameScreen_Base/FredNose" to="." method="_on_fred_nose_button_down"]
+[connection signal="timeout" from="Fredbear/HimTimer" to="." method="_on_him_timer_timeout"]
 [connection signal="timeout" from="GameTick" to="." method="_on_game_tick_timeout"]
 [connection signal="did_move" from="AnimatronicAIController" to="ScreenCameraNode/CameraScreenDisplay" method="_on_animatronic_ai_controller_did_move"]
 [connection signal="timeout" from="AnimatronicAIController/FoxyKillYouTimer" to="." method="_on_foxy_kill_you_timer_timeout"]

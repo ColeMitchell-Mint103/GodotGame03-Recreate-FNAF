@@ -64,7 +64,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-#Animation maybe?
 #camera moving tech
 func update_cam(camName = current_camera):
 	current_camera = camName
@@ -88,6 +87,9 @@ func update_cam(camName = current_camera):
 		$RoomView/FoxyCharge.set_visible(true)
 		$RoomView/FoxyCharge.play() #Foxy charges down the hall now. Should not be drawn over room but only camera.
 	build_room()
+	if current_camera == "2B" and $"../..".golden_freddy and not $"../../Fredbear".is_visible():
+		$"../../Fredbear/FredbearAttackBegin".play()
+		$"../../Fredbear".set_visible(true)
 
 ##layer_list currently locked to locations list
 #Constructs Character layer to overlay room texture
@@ -126,9 +128,9 @@ func _on_cam_2a_pressed() -> void:
 func _on_cam_2b_pressed() -> void:
 	update_cam("2B")
 	$"../../CameraNode/Camera2D/CameraSounds_DARK/Camera_DEEP".play()
-	if $"../..".golden_freddy:
-		$GoldenLayer/FredbearAttackBegin.play()
-		$GoldenLayer.set_visible(true)
+	#if $"../..".golden_freddy and not $"../../Fredbear".is_visible():
+		#$"../../Fredbear/FredbearAttackBegin".play()
+		#$"../../Fredbear".set_visible(true)
 
 func _on_cam_3_pressed() -> void:
 	update_cam("3")
