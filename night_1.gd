@@ -1,8 +1,8 @@
 extends ColorRect
 
-var hourLength = 120 #seconds
+var hourLength = 120.0 #seconds
 var current_time = 0
-var hour = 0 #stupid fucking AM
+var hour = 0.0 #stupid fucking AM
 var power = 100.0 #float for fun
 var power_usage = 1 #clamp between 1 and 4?
 var power_factor = 0.13 #power modifier
@@ -11,10 +11,11 @@ var power_dead = false
 var his_power_factor = 0.25 #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
-var dev_mode = false #turn off
+var dev_mode = true #turn off
 var animatronic_aggression = [3, 3, 3, 20] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
+var phoneActive = false
 
 var gotKilled = "NO"
 var leftControlsEnabled = true
@@ -42,9 +43,15 @@ func _process(delta: float) -> void:
 
 #core game loop
 func tick():
-	current_time += 1
-	hour = current_time / hourLength
+	current_time += 1.0
+	hour = floor(current_time / hourLength)
+	#Clock handling: USE FLOATS
+	var minute = floor((current_time - (hour * hourLength)) * (60.0 / hourLength))#Converting hourlength "minute" into 60 scale
+	minute = str(minute) if minute > 9 else "0" + str(minute)
+	$GameScreen_Base/ClockText.set_text("0" + str(hour) + ":" + minute)
+	
 	power -= power_usage * power_factor
+	$GameScreen_Base/BatteryIndicator.set_scale(Vector2($GameScreen_Base/BatteryIndicator.get_scale().x,(-1.36 * power / 100.0)))
 	if power <= 0 and not power_dead:
 		power_dead = true
 		powerout()
@@ -143,6 +150,12 @@ func lose_game():
 	#back to title
 	get_tree().change_scene_to_file("res://TitleScreen.tscn")
 
+var power_textures = ["res://Textures/RoomFiles/Office/PowerMeter/Power_Low.png",
+"res://Textures/RoomFiles/Office/PowerMeter/Power_Moderate.png",
+"res://Textures/RoomFiles/Office/PowerMeter/Power_High.png",
+"res://Textures/RoomFiles/Office/PowerMeter/Power_VeryHigh.png",
+"res://Textures/RoomFiles/Office/PowerMeter/Power_StupidHigh.png"]
+
 #Affect the usage display in the corner
 func power_display(change):
 	power_usage += change
@@ -151,6 +164,8 @@ func power_display(change):
 	power_meter_list[2].set_visible(power_usage >= 3)
 	power_meter_list[3].set_visible(power_usage >= 4)
 	power_meter_list[4].set_visible(power_usage >= 5)
+	$GameScreen_Base/PowerMeter.set_texture(load(power_textures[power_usage-1]))
+	
 	
 #Bonnie has 'killed' the player but jumpscare has not fired yet
 func bonnieKill():
@@ -194,10 +209,14 @@ func _on_left_door_toggled(toggled_on: bool) -> void:
 		pass
 	if toggled_on: 
 		power_display(1)
-		$GameScreen_Base/LeftDoor/AnimationPlayer.play("LeftDoorClose")
+		$GameScreen_Base/LeftDoor.play("LeftDoorClose")
+		$GameScreen_Base/LeftDoor/LeftDoorAudio.set_stream(load("res://SFX/DoorClose.wav"))
+		$GameScreen_Base/LeftDoor/LeftDoorAudio.play()
 	else : 
 		power_display(-1)
-		$GameScreen_Base/LeftDoor/AnimationPlayer.play("LeftDoorOpen")
+		$GameScreen_Base/LeftDoor.play("LeftDoorOpen")
+		$GameScreen_Base/LeftDoor/LeftDoorAudio.set_stream(load("res://SFX/DoorOpen.wav"))
+		$GameScreen_Base/LeftDoor/LeftDoorAudio.play()
 	leftDoorOpen = !toggled_on
 	$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.play()
 
@@ -221,10 +240,14 @@ func _on_right_door_toggled(toggled_on: bool) -> void:
 		pass
 	if toggled_on: 
 		power_display(1)
-		$GameScreen_Base/RightDoor/AnimationPlayer.play("RightDoorClose")
+		$GameScreen_Base/RightDoor.play("RightDoorClose")
+		$GameScreen_Base/RightDoor/RightDoorAudio.set_stream(load("res://SFX/DoorClose.wav"))
+		$GameScreen_Base/RightDoor/RightDoorAudio.play()
 	else : 
 		power_display(-1)
-		$GameScreen_Base/RightDoor/AnimationPlayer.play("RightDoorOpen")
+		$GameScreen_Base/RightDoor.play("RightDoorOpen")
+		$GameScreen_Base/RightDoor/RightDoorAudio.set_stream(load("res://SFX/DoorOpen.wav"))
+		$GameScreen_Base/RightDoor/RightDoorAudio.play()
 	rightDoorOpen = !toggled_on
 	$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
 
@@ -307,6 +330,10 @@ func camera_flip():
 			golden_freddy = false
 			$ScreenCameraNode/CameraScreenDisplay.room_textures["2B"] = "res://Textures/RoomFiles/WestHallCorner_Base.png"
 	else: #Opening the cam
+		if $GameScreen_Base/LeftControls/LeftLight.is_pressed():
+			$GameScreen_Base/LeftControls/LeftLight.set_pressed(false) #Light turns off if cam opened.
+		if $GameScreen_Base/RightControls/RightLight.is_pressed():
+			$GameScreen_Base/RightControls/RightLight.set_pressed(false)
 		camDoNotOpen = true
 		$ScreenCameraNode/ReferenceRect/Monitor.play("default")
 		$CameraNode/Camera2D/CameraSounds_DARK.set_stream(load("res://SFX/dark.mp3"))
@@ -316,8 +343,7 @@ func camera_flip():
 		await get_tree().create_timer(camera_open_frames / camera_open_speed).timeout
 		$ScreenCameraNode/CameraScreenDisplay/ScreenCamera.make_current() #camera view
 		power_display(1)
-		$AnimatronicAIController.foxy_angy = max($AnimatronicAIController.foxy_angy - 2, -10)
-		#Cut anger on flipping cam to account for the timer being slow
+		$AnimatronicAIController.foxy_angy = max($AnimatronicAIController.foxy_angy - 2, -10)#Cut anger on flipping cam to account for the timer being slow
 		#GoldFredbear westhall attack
 		if randi_range(1,2) == 1: #Begin attack
 			golden_freddy = true
@@ -340,8 +366,7 @@ func _on_foxy_kill_you_timer_timeout() -> void:
 		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.set_visible(false)
 		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.pause()
 		#Hit the door sfx
-		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/lockerhit1.mp3"))
-		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.play()
+		$GameScreen_Base/LeftDoor/FoxyDoorHit.play()
 		#Reset Foxy
 		$AnimatronicAIController.FoxyAttack = false
 		$AnimatronicAIController.FoxyStage = 0
@@ -403,13 +428,13 @@ func golden_action():
 		if randi_range(1,2) == 1:
 			$ScreenCameraNode/CameraScreenDisplay.room_textures["1B"] = "res://Textures/79/DiningRoom_Base_milkspilled.png"
 			#audio glass breaking
-			$"../FanAmbient/GoldAudio".set_stream(load("res://SFX/79/Glass_dig2.ogg"))
-			$"../FanAmbient/GoldAudio".play()
+			$FanAmbient/GoldAudio.set_stream(load("res://SFX/79/Glass_dig2.ogg"))
+			$FanAmbient/GoldAudio.play()
 		else:
 			$ScreenCameraNode/CameraScreenDisplay.room_textures["1B"] = "res://Textures/79/DiningRoom_Base_cakeeated.png"
 			#cake eat audio
-			$"../FanAmbient/GoldAudio".set_stream(load("res://SFX/79/Eat1.ogg"))
-			$"../FanAmbient/GoldAudio".play()
+			$FanAmbient/GoldAudio.set_stream(load("res://SFX/79/Eat1.ogg"))
+			$FanAmbient/GoldAudio.play()
 		dining_altered = true
 
 func _on_him_timer_timeout() -> void:
@@ -425,3 +450,25 @@ func _on_him_timer_timeout() -> void:
 	await get_tree().create_timer(3).timeout
 	get_tree().quit() #Game crashes
 	
+
+#Phone Call Handling:
+func _on_phone_incoming_timer_timeout() -> void:
+	$GameScreen_Base/Phone/PhoneRing.play()
+	$GameScreen_Base/Phone.play()
+	$GameScreen_Base/Phone/PhoneButton.set_disabled(false)
+
+func _on_phone_button_pressed() -> void:
+	if not phoneActive:
+		phoneActive = true
+		$GameScreen_Base/Phone/ActivePhone.set_visible(true)
+		$CameraNode/Camera2D/PhoneOverlay.set_visible(true)
+		$GameScreen_Base/Phone.set_animation("Ring")
+		$GameScreen_Base/Phone/PhoneCall.play()
+		$GameScreen_Base/Phone/PhoneRing.stop()
+	else:
+		phoneActive = false
+		$GameScreen_Base/Phone/ActivePhone.set_visible(false)
+		$CameraNode/Camera2D/PhoneOverlay.set_visible(false)
+		$GameScreen_Base/Phone/PhoneOff.play()
+		$GameScreen_Base/Phone/PhoneCall.stop()
+		$GameScreen_Base/Phone/PhoneButton.set_disabled(true)

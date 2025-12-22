@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmdhm3sb2u2rg"
-path="res://.godot/imported/OfficeWest.png-f1a9f1c851e182d03f4a598c68aeb230.ctex"
+uid="uid://cujs13gbe382b"
+path="res://.godot/imported/Power_VeryHigh.png-5786e51f21a42d64fb971e686bf895e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/OfficeWest.png"
-dest_files=["res://.godot/imported/OfficeWest.png-f1a9f1c851e182d03f4a598c68aeb230.ctex"]
+source_file="res://Textures/RoomFiles/Office/PowerMeter/Power_VeryHigh.png"
+dest_files=["res://.godot/imported/Power_VeryHigh.png-5786e51f21a42d64fb971e686bf895e8.ctex"]
 
 [params]
 

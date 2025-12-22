@@ -1,41 +1,43 @@
 Last Worked On:
-Freddy alt
-Chica Fall
-Adding character alts -> animatronic_ai_*
-Changed power_out -> night1
+	need to do fan and phone now
+	NEW OFFICE WOW -> night_1
+	Lights turn off on cam
+	Footstep audio -> night1
+	Fixed Door anims / swapped with AnimSprite2D
+	Golden Freddy ->night1
 
 
 TODO:
-8. Golden Freddy
-	HE appears
-	Hallucinations
-	Alternate screen images
-	Gold Plushie in office
 9. Visual overhaul <- Office
-10. Window resizing?
-x. Footsteps scale with proximity
-x. Redo door head sprites so they dont disappear
+	Gold Plushie in office
+	Phone to click on
+10. Window resizing? (No)
+x. Spook on seeing Bonnie/Chica at office
 x. Phone calls
 x. Kitchen camera fix
-x. Lights turn off when camera opens
-x. How much power is too much? (Max usage is 6?)
 x. Moans during attack if monitor stays up
+11. Final tweaking for 1.0
 	
 DONE:
-7. Camera breaks on move + anims
-6. Audio Pass 1
-5. Main menu  continue game doesn't work after dying?
-4. Change monitor button -> Use Scott solution (button disappears when clicked, reappears after leaving zone)
-Foxy
-Bonnie
-Chica
-Freddy
-Kitchen
-Camera Controls
-Room Textures and Layout
-Monitor Controls
-Power Out (bit rough)
-Night end
+	x. How much power is too much? (Max usage is 6?) <- Actual limit is 5
+	x. Lights turn off when camera opens
+	x. Footsteps scale with proximity
+	x. Redo door head sprites so they dont disappear
+	8. Golden Freddy
+	7. Camera breaks on move + anims
+	6. Audio Pass 1
+	5. Main menu  continue game doesn't work after dying?
+	4. Change monitor button -> Use Scott solution (button disappears when clicked, reappears after leaving zone)
+	Foxy
+	Bonnie
+	Chica
+	Freddy
+	Kitchen
+	Camera Controls
+	Room Textures and Layout
+	Monitor Controls
+	Power Out (bit rough)
+	Night end
 
 
 Old:
@@ -59,3 +61,7 @@ Old:
 18. Camera cutting effect
 19. Phone calls
 20. Kitchen cam panning
+
+Credit: 
+Clock Font - https://www.1001fonts.com/clock+digital-fonts.html
+Phone Slamming SFX - https://www.soundsnap.com/phone_hang_up_handset_3

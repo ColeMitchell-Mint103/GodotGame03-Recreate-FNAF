@@ -23,6 +23,10 @@ var ChicaKitchen = false
 
 var allHalt = false
 signal did_move(room)
+
+var footstep_audio_differential = {"1A": -20, "1B": -15,
+"5": -18, "7": -18, "2A": -5, "2B": 0, "4A": -5, "4B": 0, "6": -10	
+}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -108,9 +112,15 @@ func move_bonnie():
 			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
 		else:
 			#if door closed, leave
+			$"../FanAmbient/LEFT Footstep Audio".set_volume_db(0.0)
+			$"../FanAmbient/LEFT Footstep Audio".play()
 			BonniePos = '1B'
 			$"../LeftHallTexture/BonnieOffice".set_visible(false)
-	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggressive move
+			return
+	#Footstep audio
+	$"../FanAmbient/LEFT Footstep Audio".set_volume_db(footstep_audio_differential[BonniePos])
+	$"../FanAmbient/LEFT Footstep Audio".play() 
+	if randi_range(0, 1000) <= bonnie_angy: #Roll for aggressive move
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_AGGRESS[BonniePos]
 	else: #Wander move
@@ -123,7 +133,6 @@ func move_bonnie():
 	#Alternate room image handling
 	if bonnie_room_alts.has(BonniePos):
 		$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[BonniePos][0] = bonnie_room_alts[BonniePos].pick_random()
-	$"../FanAmbient/LEFT Footstep Audio".play() #Play audio sound
 	print("Bonnie: " + BonniePos)
 
 var chica_movement_WANDER = {"1A" : ["1B"],
@@ -156,13 +165,19 @@ func move_chica(room = ""):
 			print("Killed byChica")
 			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
 		else:
+			$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(0.0)
+			$"../FanAmbient/RIGHT Footstep Audio".play()
 			ChicaPos = '1B' #if door closed, leave
 			$"../RightHallTexture/ChicaOffice".set_visible(false)
+			return
+	#Footsteps audio
+	$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(footstep_audio_differential[ChicaPos])
+	$"../FanAmbient/RIGHT Footstep Audio".play()
 	
 	if room != "": #Cheat purposes
 		ChicaPos = room
-	elif BonniePos == "1A":
-		return #Cannot leave before Bonnie
+	#elif BonniePos == "1A":
+		#return #Cannot leave before Bonnie
 	elif randi_range(0, 1000) <= chica_angy: #Roll for aggression
 		did_move.emit(ChicaPos)
 		ChicaPos = chica_movement_AGGRESS[ChicaPos]
@@ -198,7 +213,6 @@ func move_chica(room = ""):
 		$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] = chica_room_alts[ChicaPos].pick_random()
 	if $"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] == "res://Textures/CharacterLayers/Bathrooms_Chica2.png":
 		$"../FanAmbient/RIGHT Footstep Audio/RIGHT ChicaFalling".play()
-	$"../FanAmbient/RIGHT Footstep Audio".play()#Play audio sound
 	print("Chica: " + ChicaPos)
 	
 	

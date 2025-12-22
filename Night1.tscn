@@ -1,4 +1,4 @@
-[gd_scene load_steps=155 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=166 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -8,7 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://cp45ffts3je5k" path="res://SFX/Kitchen/KitchenBaseLow.wav" id="4_dabi5"]
 [ext_resource type="AudioStream" uid="uid://bj2v67p3myec8" path="res://SFX/Kitchen/FreddyKitchen.wav" id="4_e6x5j"]
 [ext_resource type="Texture2D" uid="uid://bimy3abt2qqs3" path="res://Textures/FoxyEnterOffice/FoxyOffice1.png" id="4_wb11m"]
-[ext_resource type="Texture2D" uid="uid://b3cuhg0txemdr" path="res://Textures/Office_Base.png" id="5_0q6wr"]
 [ext_resource type="Texture2D" uid="uid://bmhec3bm753dr" path="res://Textures/RoomFiles/Showstage_Base.png" id="5_2vqj7"]
 [ext_resource type="AudioStream" uid="uid://bh6s4dsom6whb" path="res://SFX/freddyhonk.wav" id="5_fdwq8"]
 [ext_resource type="Texture2D" uid="uid://docifkahixf5y" path="res://Textures/FoxyEnterOffice/FoxyOffice2.png" id="5_uoksy"]
@@ -18,12 +17,12 @@
 [ext_resource type="StyleBox" uid="uid://b16wsk8eq3fc0" path="res://CamButtonStyle.tres" id="7_51kmr"]
 [ext_resource type="Script" path="res://camera_screen_display.gd" id="7_dw0s4"]
 [ext_resource type="Texture2D" uid="uid://vy4w7usyd55r" path="res://Textures/FoxyEnterOffice/FoxyJump.png" id="7_wtkcv"]
-[ext_resource type="Texture2D" uid="uid://cmdhm3sb2u2rg" path="res://Textures/RoomFiles/OfficeWest.png" id="8_580vg"]
+[ext_resource type="Texture2D" uid="uid://cmdhm3sb2u2rg" path="res://Textures/RoomFiles/Office/OfficeWest.png" id="8_580vg"]
 [ext_resource type="Texture2D" uid="uid://c2pbs8j452a58" path="res://Textures/JumpscareAnims/FreddyPowerOutJump/FreddyAttack1.png" id="8_x503x"]
 [ext_resource type="Texture2D" uid="uid://ddalku87kv8v1" path="res://Textures/CharacterLayers/Office_Bonnie.png" id="9_ejvqj"]
 [ext_resource type="Texture2D" uid="uid://ditrjiu55vllo" path="res://Textures/JumpscareAnims/FreddyPowerOutJump/FreddyAttack2.png" id="9_yrwxf"]
 [ext_resource type="Texture2D" uid="uid://dtbiup34k53y8" path="res://Textures/JumpscareAnims/FreddyPowerOutJump/FreddyAttack3.png" id="10_fihnd"]
-[ext_resource type="Texture2D" uid="uid://de25sjm7dj7qt" path="res://Textures/RoomFiles/OfficeEast.png" id="10_m28nn"]
+[ext_resource type="Texture2D" uid="uid://de25sjm7dj7qt" path="res://Textures/RoomFiles/Office/OfficeEast.png" id="10_m28nn"]
 [ext_resource type="Texture2D" uid="uid://bb15x0gcscrff" path="res://Textures/CharacterLayers/Office_Chica.png" id="11_a152u"]
 [ext_resource type="Texture2D" uid="uid://bv85ns6y8il0h" path="res://Textures/JumpscareAnims/FreddyPowerOutJump/FreddyAttack4.png" id="11_cyj3h"]
 [ext_resource type="Script" path="res://animatronic_ai_controller.gd" id="11_yabde"]
@@ -40,9 +39,8 @@
 [ext_resource type="Texture2D" uid="uid://bvitpjotk7srs" path="res://Textures/FreddyStare/FreddyOfficeStareglowred.png" id="18_c0ik3"]
 [ext_resource type="Texture2D" uid="uid://bevulmftq6rt5" path="res://Textures/FreddyStare/FreddyOfficeStareglowblue.png" id="19_5i3x4"]
 [ext_resource type="Texture2D" uid="uid://dcsfsv23v6shk" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0011.png" id="19_qntos"]
-[ext_resource type="AudioStream" uid="uid://3eolmdd44x3a" path="res://SFX/DoorClose.wav" id="20_6anms"]
+[ext_resource type="Texture2D" uid="uid://bdbvshupbenc8" path="res://Textures/RoomFiles/Office/Phone/Phone_Overlay.png" id="19_sojxj"]
 [ext_resource type="Texture2D" uid="uid://vfr4nqp2vlcw" path="res://Textures/FreddyStare/FreddyOfficeStareglowgreen.png" id="20_wrpx0"]
-[ext_resource type="AudioStream" uid="uid://8nwgu1au46ho" path="res://SFX/DoorOpen.wav" id="21_i5n53"]
 [ext_resource type="AudioStream" uid="uid://d0qus6cewr4un" path="res://SFX/boynextdoorsong.wav" id="21_r1t7t"]
 [ext_resource type="Texture2D" uid="uid://dofb7ekl7rl8a" path="res://Textures/RoomFiles/Leftdooranim/leftdoor0008.png" id="22_5caea"]
 [ext_resource type="Texture2D" uid="uid://3d00tmbhi72w" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0000.png" id="22_6mqtc"]
@@ -53,18 +51,32 @@
 [ext_resource type="Texture2D" uid="uid://d27v3u1q25gdd" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0009.png" id="27_12adq"]
 [ext_resource type="Texture2D" uid="uid://drhcmeswjaw1" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0011.png" id="28_nuo0d"]
 [ext_resource type="Script" path="res://screen_camera.gd" id="30_xkcso"]
+[ext_resource type="Texture2D" uid="uid://c172vwnpnpi3s" path="res://Textures/RoomFiles/Office/Office_Base_new.png" id="34_0vpqq"]
+[ext_resource type="Texture2D" uid="uid://dyb6patj7yisg" path="res://Textures/RoomFiles/Office/PowerMeter/Power_Low.png" id="35_haknu"]
 [ext_resource type="AudioStream" uid="uid://ii6j2ke1vbea" path="res://SFX/PowerOut.wav" id="36_bswqk"]
 [ext_resource type="Texture2D" uid="uid://ufnbbtgvfonr" path="res://Textures/FoxyAttack/foxyattack0000.png" id="36_fsbc2"]
+[ext_resource type="FontFile" uid="uid://d3omo4pkff1tr" path="res://Textures/RoomFiles/Office/digital-7.ttf" id="36_ofspq"]
 [ext_resource type="Texture2D" uid="uid://cv236hjfbevrk" path="res://Textures/FoxyAttack/foxyattack0001.png" id="37_vcfvj"]
 [ext_resource type="Texture2D" uid="uid://ipry8m7aqa75" path="res://Textures/FoxyAttack/foxyattack0002.png" id="38_drpqd"]
+[ext_resource type="Texture2D" uid="uid://dklf4qgehqiej" path="res://Textures/RoomFiles/Office/Fan/fan0000.png" id="38_gyy8w"]
+[ext_resource type="Texture2D" uid="uid://dq8upe1rgljj5" path="res://Textures/RoomFiles/Office/Fan/fan0001.png" id="39_dfhsd"]
 [ext_resource type="Texture2D" uid="uid://dimgakfjxa1re" path="res://Textures/FoxyAttack/foxyattack0003.png" id="39_irr1q"]
+[ext_resource type="Texture2D" uid="uid://bmorv0kh5nvln" path="res://Textures/RoomFiles/Office/Fan/fan0002.png" id="40_6vqm3"]
 [ext_resource type="Texture2D" uid="uid://o64lxuew5o72" path="res://Textures/FoxyAttack/foxyattack0004.png" id="40_78fuu"]
+[ext_resource type="Texture2D" uid="uid://iqqxjv1aqn3s" path="res://Textures/RoomFiles/Office/Fan/fan0003.png" id="41_2avky"]
 [ext_resource type="Texture2D" uid="uid://cbsyce5aoox1c" path="res://Textures/FoxyAttack/foxyattack0005.png" id="41_nkevj"]
+[ext_resource type="Texture2D" uid="uid://b84xwafg33j8j" path="res://Textures/RoomFiles/Office/Phone/Phone_off.png" id="42_2mmbk"]
 [ext_resource type="Texture2D" uid="uid://dfa7qpw7y8qpg" path="res://Textures/FoxyAttack/foxyattack0006.png" id="42_5nb1r"]
+[ext_resource type="Texture2D" uid="uid://cj0plc1nkohvc" path="res://Textures/RoomFiles/Office/Phone/Phone_call.png" id="43_8dro3"]
 [ext_resource type="Texture2D" uid="uid://ba3m1n366uehh" path="res://Textures/FoxyAttack/foxyattack0007.png" id="43_wp137"]
+[ext_resource type="Texture2D" uid="uid://tetd4a30tf3n" path="res://Textures/RoomFiles/Office/Phone/Phone_active.png" id="44_ry1pe"]
 [ext_resource type="Texture2D" uid="uid://cauvbpsj37bbp" path="res://Textures/FoxyAttack/foxyattack0008.png" id="44_uj5yj"]
+[ext_resource type="AudioStream" uid="uid://db2xu3pu4on3o" path="res://SFX/PhoneRing.mp3" id="45_568y7"]
 [ext_resource type="Texture2D" uid="uid://csixg6j1x6j5q" path="res://Textures/FoxyAttack/foxyattack0009.png" id="45_udawg"]
+[ext_resource type="AudioStream" uid="uid://3i72rhtyvi6o" path="res://SFX/lockerhit1.mp3" id="45_uycwk"]
 [ext_resource type="Texture2D" uid="uid://cug1i7qudsk44" path="res://Textures/FoxyAttack/foxyattack0010.png" id="46_2kff1"]
+[ext_resource type="AudioStream" uid="uid://bccbxfc3ypkx8" path="res://SFX/PhoneHangUp.mp3" id="46_ayxbi"]
+[ext_resource type="AudioStream" uid="uid://df4iocwq1ke5q" path="res://SFX/PhoneCall_Obama.mp3" id="47_4ap7x"]
 [ext_resource type="Texture2D" uid="uid://djtxt1b73lym" path="res://Textures/FoxyAttack/foxyattack0011.png" id="47_4wemr"]
 [ext_resource type="Texture2D" uid="uid://y0d3er8kbq7p" path="res://Textures/FoxyAttack/foxyattack0012.png" id="48_hl3xg"]
 [ext_resource type="Texture2D" uid="uid://ds7y00fg7yb7w" path="res://Textures/FoxyAttack/foxyattack0013.png" id="49_8esmk"]
@@ -347,159 +359,166 @@ _data = {
 "RESET": SubResource("Animation_a54m2")
 }
 
-[sub_resource type="Animation" id="Animation_w8hd3"]
-resource_name = "LeftDoorClose"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.133333, 0.3, 0.366667, 0.433333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("13_jrvrd"), ExtResource("14_p4jm6"), ExtResource("15_qcl8k"), ExtResource("16_3um8f"), ExtResource("17_62tkl"), ExtResource("18_83b7m"), ExtResource("19_qntos")]
-}
-tracks/1/type = "audio"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer2D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"clips": [{
-"end_offset": 0.119681,
-"start_offset": 0.2379,
-"stream": ExtResource("20_6anms")
+[sub_resource type="LabelSettings" id="LabelSettings_8ivlf"]
+font = ExtResource("36_ofspq")
+font_size = 60
+font_color = Color(0.86336, 0, 0.202699, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_37uby"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("38_gyy8w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_dfhsd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_6vqm3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_2avky")
 }],
-"times": PackedFloat32Array(0)
-}
-tracks/1/use_blend = true
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
 
-[sub_resource type="Animation" id="Animation_081s4"]
-resource_name = "LeftDoorOpen"
-length = 0.7
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AudioStreamPlayer2D")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.119681,
-"start_offset": 0.0,
-"stream": ExtResource("21_i5n53")
+[sub_resource type="SpriteFrames" id="SpriteFrames_e5mji"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("42_2mmbk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_8dro3")
 }],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:texture")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.2, 0.266667, 0.333333, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("19_qntos"), ExtResource("18_83b7m"), ExtResource("22_5caea"), ExtResource("16_3um8f"), ExtResource("15_qcl8k"), ExtResource("14_p4jm6"), ExtResource("13_jrvrd")]
-}
+"loop": true,
+"name": &"Ringing",
+"speed": 4.0
+}]
 
-[sub_resource type="Animation" id="Animation_fs58j"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("22_6mqtc")]
-}
-
-[sub_resource type="Animation" id="Animation_646lk"]
-resource_name = "RightDoorClose"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0001, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("22_6mqtc"), ExtResource("22_6mqtc"), ExtResource("23_l1dhh"), ExtResource("24_hsa0v"), ExtResource("25_y8v4e"), ExtResource("26_hkail"), ExtResource("27_12adq"), ExtResource("28_nuo0d")]
-}
-tracks/1/type = "audio"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer2D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"clips": [{
-"end_offset": 0.11,
-"start_offset": 0.24,
-"stream": ExtResource("20_6anms")
+[sub_resource type="SpriteFrames" id="SpriteFrames_tpijh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_jrvrd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_p4jm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_qcl8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_3um8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_62tkl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_5caea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_83b7m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_qntos")
 }],
-"times": PackedFloat32Array(0)
-}
-tracks/1/use_blend = true
-
-[sub_resource type="Animation" id="Animation_75sni"]
-resource_name = "RightDoorOpen"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.266667, 0.333333, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("28_nuo0d"), ExtResource("27_12adq"), ExtResource("26_hkail"), ExtResource("25_y8v4e"), ExtResource("24_hsa0v"), ExtResource("23_l1dhh"), ExtResource("22_6mqtc")]
-}
-tracks/1/type = "audio"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer2D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"clips": [{
-"end_offset": 0.11,
-"start_offset": 0.0,
-"stream": ExtResource("21_i5n53")
+"loop": false,
+"name": &"LeftDoorClose",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_qntos")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_83b7m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_62tkl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_5caea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_3um8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_qcl8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_p4jm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_jrvrd")
 }],
-"times": PackedFloat32Array(0)
-}
-tracks/1/use_blend = true
+"loop": false,
+"name": &"LeftDoorOpen",
+"speed": 20.0
+}]
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3qk7g"]
-_data = {
-"LeftDoorClose": SubResource("Animation_w8hd3"),
-"LeftDoorOpen": SubResource("Animation_081s4"),
-"RESET": SubResource("Animation_fs58j"),
-"RightDoorClose": SubResource("Animation_646lk"),
-"RightDoorOpen": SubResource("Animation_75sni")
-}
+[sub_resource type="SpriteFrames" id="SpriteFrames_2bb1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_6mqtc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_l1dhh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_hsa0v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_y8v4e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_hkail")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_12adq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_nuo0d")
+}],
+"loop": false,
+"name": &"RightDoorClose",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("28_nuo0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_12adq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_hkail")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_y8v4e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_hsa0v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_l1dhh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_6mqtc")
+}],
+"loop": false,
+"name": &"RightDoorOpen",
+"speed": 20.0
+}]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xjqxg"]
-size = Vector2(40, 40)
+size = Vector2(25, 25)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q7agr"]
-size = Vector2(40, 40)
+size = Vector2(25, 25)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8o7i2"]
 animations = [{
@@ -914,6 +933,13 @@ offset_right = 1152.0
 offset_bottom = 648.0
 scale = Vector2(0.785, 1.033)
 
+[node name="PhoneOverlay" type="TextureRect" parent="CameraNode/Camera2D"]
+visible = false
+offset_right = 1152.0
+offset_bottom = 648.0
+scale = Vector2(0.77, 1)
+texture = ExtResource("19_sojxj")
+
 [node name="KitchenFreddyStream" type="AudioStreamPlayer2D" parent="CameraNode/Camera2D"]
 stream = ExtResource("4_e6x5j")
 volume_db = -80.0
@@ -1012,58 +1038,108 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("5_0q6wr")
+texture = ExtResource("34_0vpqq")
 
-[node name="LeftDoor" type="TextureRect" parent="GameScreen_Base"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("22_6mqtc")
+[node name="PowerMeter" type="TextureRect" parent="GameScreen_Base"]
+layout_mode = 0
+offset_left = 641.0
+offset_top = 446.0
+offset_right = 696.0
+offset_bottom = 486.0
+scale = Vector2(0.922359, 0.360005)
+texture = ExtResource("35_haknu")
+expand_mode = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GameScreen_Base/LeftDoor"]
-libraries = {
-"": SubResource("AnimationLibrary_3qk7g")
-}
+[node name="ClockText" type="Label" parent="GameScreen_Base"]
+layout_mode = 0
+offset_left = 692.0
+offset_top = 150.0
+offset_right = 846.0
+offset_bottom = 233.0
+text = "00:00"
+label_settings = SubResource("LabelSettings_8ivlf")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftDoor"]
+[node name="Fan" type="AnimatedSprite2D" parent="GameScreen_Base"]
+position = Vector2(659, 365)
+sprite_frames = SubResource("SpriteFrames_37uby")
+autoplay = "default"
+frame_progress = 1.0
 
-[node name="RightDoor" type="TextureRect" parent="GameScreen_Base"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("22_6mqtc")
+[node name="Phone" type="AnimatedSprite2D" parent="GameScreen_Base"]
+position = Vector2(577, 323)
+sprite_frames = SubResource("SpriteFrames_e5mji")
+animation = &"Ringing"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GameScreen_Base/RightDoor"]
-libraries = {
-"": SubResource("AnimationLibrary_3qk7g")
-}
+[node name="ActivePhone" type="TextureRect" parent="GameScreen_Base/Phone"]
+visible = false
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+texture = ExtResource("44_ry1pe")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightDoor"]
+[node name="PhoneRing" type="AudioStreamPlayer" parent="GameScreen_Base/Phone"]
+stream = ExtResource("45_568y7")
+
+[node name="PhoneOff" type="AudioStreamPlayer" parent="GameScreen_Base/Phone"]
+stream = ExtResource("46_ayxbi")
+
+[node name="PhoneCall" type="AudioStreamPlayer" parent="GameScreen_Base/Phone"]
+stream = ExtResource("47_4ap7x")
+bus = &"RightPan"
+
+[node name="PhoneIncomingTimer" type="Timer" parent="GameScreen_Base/Phone"]
+wait_time = 8.0
+one_shot = true
+autostart = true
+
+[node name="PhoneButton" type="Button" parent="GameScreen_Base/Phone"]
+offset_left = 159.0
+offset_top = -59.0
+offset_right = 167.0
+offset_bottom = -51.0
+scale = Vector2(7.36827, 12.3167)
+focus_mode = 0
+disabled = true
+flat = true
+
+[node name="LeftDoor" type="AnimatedSprite2D" parent="GameScreen_Base"]
+sprite_frames = SubResource("SpriteFrames_tpijh")
+animation = &"LeftDoorClose"
+centered = false
+
+[node name="LeftDoorAudio" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftDoor"]
+
+[node name="FoxyDoorHit" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftDoor"]
+stream = ExtResource("45_uycwk")
+bus = &"LeftPan"
+
+[node name="RightDoor" type="AnimatedSprite2D" parent="GameScreen_Base"]
+sprite_frames = SubResource("SpriteFrames_2bb1o")
+animation = &"RightDoorClose"
+centered = false
+
+[node name="RightDoorAudio" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightDoor"]
 
 [node name="LeftControls" type="VBoxContainer" parent="GameScreen_Base"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 7.0
-offset_top = 32.0
-offset_right = 98.0
-offset_bottom = 132.0
+offset_left = 12.0
+offset_top = 22.0
+offset_right = 60.0
+offset_bottom = 133.0
 grow_vertical = 2
+theme_override_constants/separation = 30
 
 [node name="LeftDoor" type="Button" parent="GameScreen_Base/LeftControls"]
-custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
 mouse_default_cursor_shape = 7
 toggle_mode = true
 action_mode = 0
-text = "Door"
 icon = SubResource("PlaceholderTexture2D_xjqxg")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftControls/LeftDoor"]
@@ -1072,8 +1148,9 @@ pitch_scale = 0.71
 
 [node name="LeftLight" type="Button" parent="GameScreen_Base/LeftControls"]
 layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
 toggle_mode = true
-text = "Light"
 icon = SubResource("PlaceholderTexture2D_q7agr")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftControls/LeftLight"]
@@ -1086,17 +1163,19 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -152.0
-offset_top = 36.0
-offset_right = -104.0
-offset_bottom = 136.0
+offset_left = -151.0
+offset_top = -45.0
+offset_right = -103.0
+offset_bottom = 55.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_constants/separation = 25
 
 [node name="RightDoor" type="Button" parent="GameScreen_Base/RightControls"]
 layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
 toggle_mode = true
-text = "Door"
 icon = SubResource("PlaceholderTexture2D_xjqxg")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightControls/RightDoor"]
@@ -1105,8 +1184,9 @@ pitch_scale = 0.71
 
 [node name="RightLight" type="Button" parent="GameScreen_Base/RightControls"]
 layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
 toggle_mode = true
-text = "Light"
 icon = SubResource("PlaceholderTexture2D_q7agr")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightControls/RightLight"]
@@ -1114,10 +1194,11 @@ stream = ExtResource("3_fhdu7")
 
 [node name="FredNose" type="Button" parent="GameScreen_Base"]
 layout_mode = 0
-offset_left = 511.0
-offset_top = 229.0
-offset_right = 519.0
-offset_bottom = 237.0
+offset_left = 484.0
+offset_top = 189.0
+offset_right = 492.0
+offset_bottom = 197.0
+focus_mode = 0
 flat = true
 
 [node name="Honk" type="AudioStreamPlayer2D" parent="GameScreen_Base/FredNose"]
@@ -1125,6 +1206,15 @@ stream = ExtResource("5_fdwq8")
 
 [node name="PowerOutPlayer" type="AudioStreamPlayer2D" parent="GameScreen_Base"]
 stream = ExtResource("36_bswqk")
+
+[node name="BatteryIndicator" type="ColorRect" parent="GameScreen_Base"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 615.0
+offset_right = 540.0
+offset_bottom = 655.0
+scale = Vector2(1.32, -1.36)
+color = Color(0.940379, 0.828052, 0.167978, 1)
 
 [node name="Fredbear" type="TextureRect" parent="."]
 visible = false
@@ -1480,6 +1570,8 @@ stream = ExtResource("85_4nktl")
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="mouse_exited" from="CameraNode/Camera2D/HUD/ReferenceRect" to="." method="_on_reference_rect_mouse_exited"]
 [connection signal="mouse_entered" from="CameraNode/Camera2D/HUD/ReferenceRect/CamAccess" to="." method="_on_cam_access_mouse_entered"]
+[connection signal="timeout" from="GameScreen_Base/Phone/PhoneIncomingTimer" to="." method="_on_phone_incoming_timer_timeout"]
+[connection signal="pressed" from="GameScreen_Base/Phone/PhoneButton" to="." method="_on_phone_button_pressed"]
 [connection signal="toggled" from="GameScreen_Base/LeftControls/LeftDoor" to="." method="_on_left_door_toggled"]
 [connection signal="toggled" from="GameScreen_Base/LeftControls/LeftLight" to="." method="_on_left_light_toggled"]
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightDoor" to="." method="_on_right_door_toggled"]

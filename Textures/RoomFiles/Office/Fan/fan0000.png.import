@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de25sjm7dj7qt"
-path="res://.godot/imported/OfficeEast.png-076ffa9f286cdda917e8e5e331f3e2f2.ctex"
+uid="uid://dklf4qgehqiej"
+path="res://.godot/imported/fan0000.png-44c3992626ded93440d54830e7fbeaab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/RoomFiles/OfficeEast.png"
-dest_files=["res://.godot/imported/OfficeEast.png-076ffa9f286cdda917e8e5e331f3e2f2.ctex"]
+source_file="res://Textures/RoomFiles/Office/Fan/fan0000.png"
+dest_files=["res://.godot/imported/fan0000.png-44c3992626ded93440d54830e7fbeaab.ctex"]
 
 [params]
 
