@@ -1,25 +1,21 @@
 Last Worked On:
-	need to do fan and phone now
-	NEW OFFICE WOW -> night_1
-	Lights turn off on cam
-	Footstep audio -> night1
-	Fixed Door anims / swapped with AnimSprite2D
-	Golden Freddy ->night1
+	Changed scale of left door (didn't cover hole lmao)
+	Office work -> night1, general
 
 
 TODO:
-9. Visual overhaul <- Office
-	Gold Plushie in office
-	Phone to click on
-10. Window resizing? (No)
-x. Spook on seeing Bonnie/Chica at office
-x. Phone calls
-x. Kitchen camera fix
-x. Moans during attack if monitor stays up
-11. Final tweaking for 1.0
+11. Title Screen
+12. Final tweaking for 1.0
+	Foxy Run West Hall drawn Over Bonnie
 	
 DONE:
-	x. How much power is too much? (Max usage is 6?) <- Actual limit is 5
+	x. Moans during attack if monitor stays up
+	x. Kitchen camera fix
+	x. Spook on seeing Bonnie/Chica at office
+	10. Window resizing? (No)
+	9. Visual overhaul of Office
+	x. Phone call
+	x. How much power is too much? (Max usage is 6?) <- Actual limit is 4
 	x. Lights turn off when camera opens
 	x. Footsteps scale with proximity
 	x. Redo door head sprites so they dont disappear

@@ -12,7 +12,7 @@ var his_power_factor = 0.25 #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
 var dev_mode = true #turn off
-var animatronic_aggression = [3, 3, 3, 20] #Bonnie, Chica, Freddy, Foxy
+var animatronic_aggression = [20, 10, 5, 5] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 var phoneActive = false
@@ -134,14 +134,16 @@ func win_game():
 
 #End game logic
 func lose_game():
+	$GameScreen_Base/PlayerWarnDeath/PlayerWarnTimer.stop()
+	$GameScreen_Base/PlayerWarnDeath.stop()
 	$GameTick.stop()
 	$CameraNode/Camera2D.set_position(Vector2(0,0))
 	$CameraNode/Camera2D/HUD.set_visible(false)
 	$CameraNode/Camera2D/JumpscareLayer.set_visible(false)
 	#creep screen
 	match gotKilled:
-		"BONNIE": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/BonnieDeath.png"))
-		"CHICA": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/ChicaDeath.png"))
+		"BONNIE": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/BonnieDeath.png"))
+		"CHICA": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/ChicaDeath.png"))
 		"FREDDY": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/FreddyDeath.png"))
 		"FOXY": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/FoxyDeath.png"))
 		"NOPOWER": $CameraNode/Camera2D/GameOverScreen.set_texture(load("res://Textures/Outcomes/PowerOutDeath.png"))
@@ -171,12 +173,12 @@ func power_display(change):
 func bonnieKill():
 	leftControlsEnabled = false
 	gotKilled = "BONNIE"
-	#maybe use moan sound
+	$GameScreen_Base/PlayerWarnDeath/PlayerWarnTimer.start()
 
 func chicaKill():
 	rightControlsEnabled = false
 	gotKilled = "CHICA"
-	#maybe use moan sound
+	$GameScreen_Base/PlayerWarnDeath/PlayerWarnTimer.start()
 
 func freddyKill():
 	#play animation
@@ -202,6 +204,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_fred_nose_button_down() -> void:
 	$GameScreen_Base/FredNose/Honk.play()
 
+var texture_DoorOn = load("res://Textures/RoomFiles/Office/Button_Door_On.png")
+var texture_DoorOff = load("res://Textures/RoomFiles/Office/Button_Door_Off.png")
+var texture_LightOn = load("res://Textures/RoomFiles/Office/Button_Light_On.png")
+var texture_LightOff = load("res://Textures/RoomFiles/Office/Button_Light_Off.png")
 func _on_left_door_toggled(toggled_on: bool) -> void:
 	if not leftControlsEnabled:
 		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
@@ -212,11 +218,13 @@ func _on_left_door_toggled(toggled_on: bool) -> void:
 		$GameScreen_Base/LeftDoor.play("LeftDoorClose")
 		$GameScreen_Base/LeftDoor/LeftDoorAudio.set_stream(load("res://SFX/DoorClose.wav"))
 		$GameScreen_Base/LeftDoor/LeftDoorAudio.play()
+		$GameScreen_Base/LeftControls/LeftDoor.set_button_icon(texture_DoorOn)
 	else : 
 		power_display(-1)
 		$GameScreen_Base/LeftDoor.play("LeftDoorOpen")
 		$GameScreen_Base/LeftDoor/LeftDoorAudio.set_stream(load("res://SFX/DoorOpen.wav"))
 		$GameScreen_Base/LeftDoor/LeftDoorAudio.play()
+		$GameScreen_Base/LeftControls/LeftDoor.set_button_icon(texture_DoorOff)
 	leftDoorOpen = !toggled_on
 	$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.play()
 
@@ -227,10 +235,15 @@ func _on_left_light_toggled(toggled_on: bool) -> void:
 		pass
 	if toggled_on: 
 		power_display(1)
+		$GameScreen_Base/RightControls/RightLight.set_pressed(false)
 		$LeftHallTexture.set_modulate(Color(1, 1, 1))
+		$GameScreen_Base/LeftControls/LeftLight.set_button_icon(texture_LightOn)
+		if $LeftHallTexture/BonnieOffice.is_visible():
+			$LeftHallTexture/BonnieOffice/Spook.play()
 	else : 
 		power_display(-1)
 		$LeftHallTexture.set_modulate(Color(0.018, 0.018, 0.018))
+		$GameScreen_Base/LeftControls/LeftLight.set_button_icon(texture_LightOff)
 	$GameScreen_Base/LeftControls/LeftLight/AudioStreamPlayer2D.play()
 
 func _on_right_door_toggled(toggled_on: bool) -> void:
@@ -243,11 +256,13 @@ func _on_right_door_toggled(toggled_on: bool) -> void:
 		$GameScreen_Base/RightDoor.play("RightDoorClose")
 		$GameScreen_Base/RightDoor/RightDoorAudio.set_stream(load("res://SFX/DoorClose.wav"))
 		$GameScreen_Base/RightDoor/RightDoorAudio.play()
+		$GameScreen_Base/RightControls/RightDoor.set_button_icon(texture_DoorOn)
 	else : 
 		power_display(-1)
 		$GameScreen_Base/RightDoor.play("RightDoorOpen")
 		$GameScreen_Base/RightDoor/RightDoorAudio.set_stream(load("res://SFX/DoorOpen.wav"))
 		$GameScreen_Base/RightDoor/RightDoorAudio.play()
+		$GameScreen_Base/RightControls/RightDoor.set_button_icon(texture_DoorOff)
 	rightDoorOpen = !toggled_on
 	$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
 
@@ -257,16 +272,21 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
 		pass
 	if toggled_on: 
+		$GameScreen_Base/LeftControls/LeftLight.set_pressed(false)
 		power_display(1)
 		$RightHallTexture.set_modulate(Color(1, 1, 1))
-		#Spook noise
+		$GameScreen_Base/RightControls/RightLight.set_button_icon(texture_LightOn)
+		if $RightHallTexture/ChicaOffice.is_visible():
+			$RightHallTexture/ChicaOffice/Spook2.play()
 	else : 
 		power_display(-1)
 		$RightHallTexture.set_modulate(Color(0.018, 0.018, 0.018))
+		$GameScreen_Base/RightControls/RightLight.set_button_icon(texture_LightOff)
 	$GameScreen_Base/RightControls/RightLight/AudioStreamPlayer2D.play()
 
 #Open the camera system
 func _on_cam_access_mouse_entered() -> void:
+	if camDoNotOpen: return
 	$CameraNode/Camera2D/HUD/ReferenceRect/CamAccess.set_visible(false)
 	camera_flip()
 	#JUMPSCARE STUFF on cam down -> set function
@@ -298,8 +318,8 @@ func _input(event):
 	#if event is InputEventKey and event.keycode == KEY_L:
 		#print("Cheat: End game")
 		#lose_game()
-		#print("Cheat: Move Bonnie to office")
-		#$AnimatronicAIController.BonniePos = "Office"
+		print("Cheat: Move Bonnie to office")
+		$AnimatronicAIController.move_bonnie("Office")
 		#print("Cheat: Chica to Bathroom")
 		#$AnimatronicAIController.move_chica("7")
 		#print("Cheat: Freddy to 4B")
@@ -330,10 +350,8 @@ func camera_flip():
 			golden_freddy = false
 			$ScreenCameraNode/CameraScreenDisplay.room_textures["2B"] = "res://Textures/RoomFiles/WestHallCorner_Base.png"
 	else: #Opening the cam
-		if $GameScreen_Base/LeftControls/LeftLight.is_pressed():
-			$GameScreen_Base/LeftControls/LeftLight.set_pressed(false) #Light turns off if cam opened.
-		if $GameScreen_Base/RightControls/RightLight.is_pressed():
-			$GameScreen_Base/RightControls/RightLight.set_pressed(false)
+		$GameScreen_Base/LeftControls/LeftLight.set_pressed(false) #Light turns off if cam opened.
+		$GameScreen_Base/RightControls/RightLight.set_pressed(false)
 		camDoNotOpen = true
 		$ScreenCameraNode/ReferenceRect/Monitor.play("default")
 		$CameraNode/Camera2D/CameraSounds_DARK.set_stream(load("res://SFX/dark.mp3"))
@@ -462,7 +480,7 @@ func _on_phone_button_pressed() -> void:
 		phoneActive = true
 		$GameScreen_Base/Phone/ActivePhone.set_visible(true)
 		$CameraNode/Camera2D/PhoneOverlay.set_visible(true)
-		$GameScreen_Base/Phone.set_animation("Ring")
+		$GameScreen_Base/Phone.stop()
 		$GameScreen_Base/Phone/PhoneCall.play()
 		$GameScreen_Base/Phone/PhoneRing.stop()
 	else:
@@ -472,3 +490,8 @@ func _on_phone_button_pressed() -> void:
 		$GameScreen_Base/Phone/PhoneOff.play()
 		$GameScreen_Base/Phone/PhoneCall.stop()
 		$GameScreen_Base/Phone/PhoneButton.set_disabled(true)
+
+#Moans if the player is hiding in the camera
+func _on_player_warn_timer_timeout() -> void:
+	if camera_open and randi_range(1, 3) == 1:
+		$GameScreen_Base/PlayerWarnDeath.play()

@@ -68,6 +68,7 @@ func _process(delta: float) -> void:
 func update_cam(camName = current_camera):
 	current_camera = camName
 	#Kitchen handling
+	$ScreenCamera/KitchenLayer.set_visible(true if current_camera == "6" else false)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Kitchen"), 0 if camName == "6" else -10)
 	$ScreenCamera/MapUI/CameraDetail.set_text(room_names[current_camera])
 	$RoomView.set_texture(load(room_textures[current_camera]))

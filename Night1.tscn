@@ -1,4 +1,4 @@
-[gd_scene load_steps=166 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=170 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -49,6 +49,7 @@
 [ext_resource type="Texture2D" uid="uid://cbwmb3pt22iqc" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0005.png" id="25_y8v4e"]
 [ext_resource type="Texture2D" uid="uid://gavfru3ebp1p" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0007.png" id="26_hkail"]
 [ext_resource type="Texture2D" uid="uid://d27v3u1q25gdd" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0009.png" id="27_12adq"]
+[ext_resource type="AudioStream" uid="uid://hlxc71ku4dwl" path="res://SFX/VineBoom.mp3" id="27_cnvr6"]
 [ext_resource type="Texture2D" uid="uid://drhcmeswjaw1" path="res://Textures/RoomFiles/Rightdooranim/rightdoor0011.png" id="28_nuo0d"]
 [ext_resource type="Script" path="res://screen_camera.gd" id="30_xkcso"]
 [ext_resource type="Texture2D" uid="uid://c172vwnpnpi3s" path="res://Textures/RoomFiles/Office/Office_Base_new.png" id="34_0vpqq"]
@@ -79,6 +80,7 @@
 [ext_resource type="AudioStream" uid="uid://df4iocwq1ke5q" path="res://SFX/PhoneCall_Obama.mp3" id="47_4ap7x"]
 [ext_resource type="Texture2D" uid="uid://djtxt1b73lym" path="res://Textures/FoxyAttack/foxyattack0011.png" id="47_4wemr"]
 [ext_resource type="Texture2D" uid="uid://y0d3er8kbq7p" path="res://Textures/FoxyAttack/foxyattack0012.png" id="48_hl3xg"]
+[ext_resource type="Texture2D" uid="uid://2pjuyljgcpqq" path="res://Textures/RoomFiles/Office/GoldPlush.png" id="48_vhfoy"]
 [ext_resource type="Texture2D" uid="uid://ds7y00fg7yb7w" path="res://Textures/FoxyAttack/foxyattack0013.png" id="49_8esmk"]
 [ext_resource type="Texture2D" uid="uid://bm0qdh6ggqg2o" path="res://Textures/FoxyAttack/foxyattack0014.png" id="50_wbsth"]
 [ext_resource type="Texture2D" uid="uid://3kjni6stwxa0" path="res://Textures/FoxyAttack/foxyattack0015.png" id="51_1ymip"]
@@ -87,6 +89,9 @@
 [ext_resource type="Texture2D" uid="uid://cnfeck7cyhvx2" path="res://Textures/FoxyAttack/foxyattack0018.png" id="54_8daxo"]
 [ext_resource type="Texture2D" uid="uid://ch6rbvs6mv215" path="res://Textures/FoxyAttack/foxyattack0019.png" id="55_lufpj"]
 [ext_resource type="Texture2D" uid="uid://bahdklvuh2h8o" path="res://Textures/FoxyAttack/foxyattack0020.png" id="56_cepqo"]
+[ext_resource type="Texture2D" uid="uid://bir3ke524wvea" path="res://Textures/RoomFiles/Office/Button_Door_Off.png" id="64_2eutn"]
+[ext_resource type="Texture2D" uid="uid://b0thtqqe5536k" path="res://Textures/RoomFiles/Office/Button_Light_Off.png" id="66_777ge"]
+[ext_resource type="AudioStream" uid="uid://ypldlqh5biyo" path="res://SFX/HearSomeNoises.mp3" id="71_6od0o"]
 [ext_resource type="Texture2D" uid="uid://cklkve850n2kr" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap1.png" id="73_5mpif"]
 [ext_resource type="Texture2D" uid="uid://cb3sxoh51ahno" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrap2.png" id="74_cp1rw"]
 [ext_resource type="Texture2D" uid="uid://cwsxnrttqnj6g" path="res://Textures/MonitorAnim/MonitorCrapAnim/MonitorCrapb4.png" id="74_kk160"]
@@ -134,6 +139,7 @@
 [ext_resource type="AudioStream" uid="uid://3eg6ilfsyqxl" path="res://SFX/Foxy/troubles-breathin.mp3" id="87_tbrvx"]
 [ext_resource type="AudioStream" uid="uid://dbgrq8nrek2f" path="res://SFX/Foxy/wahoo.mp3" id="88_xnqbr"]
 [ext_resource type="AudioStream" uid="uid://dyqcfqf7gjvri" path="res://SFX/Foxy/why-dont-you-give-up.mp3" id="89_6g7jy"]
+[ext_resource type="Texture2D" uid="uid://dlflh00hktkei" path="res://Textures/RoomFiles/Kitchen.png" id="99_70q85"]
 [ext_resource type="Texture2D" uid="uid://q46kesyy7hpy" path="res://Textures/79/Hallucinations/HalluciF1.png" id="100_q222n"]
 [ext_resource type="Texture2D" uid="uid://b8mcrj03ykbqt" path="res://Textures/79/Hallucinations/HalluciB1.png" id="101_02e0j"]
 [ext_resource type="Texture2D" uid="uid://d1cwcl4pma2gb" path="res://Textures/79/Hallucinations/HalluciB2.png" id="102_xuyb8"]
@@ -513,12 +519,6 @@ animations = [{
 "name": &"RightDoorOpen",
 "speed": 20.0
 }]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xjqxg"]
-size = Vector2(25, 25)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q7agr"]
-size = Vector2(25, 25)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8o7i2"]
 animations = [{
@@ -990,6 +990,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("9_ejvqj")
 
+[node name="Spook" type="AudioStreamPlayer" parent="LeftHallTexture/BonnieOffice"]
+stream = ExtResource("27_cnvr6")
+
 [node name="RightHallTexture" type="TextureRect" parent="."]
 modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
 layout_mode = 1
@@ -1013,6 +1016,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("11_a152u")
+
+[node name="Spook2" type="AudioStreamPlayer" parent="RightHallTexture/ChicaOffice"]
+stream = ExtResource("27_cnvr6")
 
 [node name="FreddyStare" type="TextureRect" parent="."]
 visible = false
@@ -1103,7 +1109,13 @@ focus_mode = 0
 disabled = true
 flat = true
 
+[node name="GoldPlush" type="Sprite2D" parent="GameScreen_Base"]
+position = Vector2(504, 387)
+texture = ExtResource("48_vhfoy")
+
 [node name="LeftDoor" type="AnimatedSprite2D" parent="GameScreen_Base"]
+position = Vector2(-39, -4)
+scale = Vector2(1.28, 1.02)
 sprite_frames = SubResource("SpriteFrames_tpijh")
 animation = &"LeftDoorClose"
 centered = false
@@ -1140,7 +1152,7 @@ focus_mode = 0
 mouse_default_cursor_shape = 7
 toggle_mode = true
 action_mode = 0
-icon = SubResource("PlaceholderTexture2D_xjqxg")
+icon = ExtResource("64_2eutn")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftControls/LeftDoor"]
 stream = ExtResource("3_fhdu7")
@@ -1151,7 +1163,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 toggle_mode = true
-icon = SubResource("PlaceholderTexture2D_q7agr")
+icon = ExtResource("66_777ge")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftControls/LeftLight"]
 stream = ExtResource("3_fhdu7")
@@ -1176,7 +1188,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 toggle_mode = true
-icon = SubResource("PlaceholderTexture2D_xjqxg")
+icon = ExtResource("64_2eutn")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightControls/RightDoor"]
 stream = ExtResource("3_fhdu7")
@@ -1187,7 +1199,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 toggle_mode = true
-icon = SubResource("PlaceholderTexture2D_q7agr")
+icon = ExtResource("66_777ge")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameScreen_Base/RightControls/RightLight"]
 stream = ExtResource("3_fhdu7")
@@ -1206,6 +1218,13 @@ stream = ExtResource("5_fdwq8")
 
 [node name="PowerOutPlayer" type="AudioStreamPlayer2D" parent="GameScreen_Base"]
 stream = ExtResource("36_bswqk")
+
+[node name="PlayerWarnDeath" type="AudioStreamPlayer2D" parent="GameScreen_Base"]
+stream = ExtResource("71_6od0o")
+volume_db = 5.012
+
+[node name="PlayerWarnTimer" type="Timer" parent="GameScreen_Base/PlayerWarnDeath"]
+wait_time = 3.0
 
 [node name="BatteryIndicator" type="ColorRect" parent="GameScreen_Base"]
 layout_mode = 0
@@ -1325,6 +1344,20 @@ position = Vector2(168, 1)
 anchor_mode = 0
 zoom = Vector2(1.4, 1)
 script = ExtResource("30_xkcso")
+
+[node name="KitchenLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -7.0
+offset_right = 1148.0
+offset_bottom = 641.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.72, 1.02)
+texture = ExtResource("99_70q85")
 
 [node name="CamCrapLayer" type="AnimatedSprite2D" parent="ScreenCameraNode/CameraScreenDisplay/ScreenCamera"]
 modulate = Color(0.124, 0.143, 1.081, 0.746)
@@ -1577,6 +1610,7 @@ stream = ExtResource("85_4nktl")
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightDoor" to="." method="_on_right_door_toggled"]
 [connection signal="toggled" from="GameScreen_Base/RightControls/RightLight" to="." method="_on_right_light_toggled"]
 [connection signal="button_down" from="GameScreen_Base/FredNose" to="." method="_on_fred_nose_button_down"]
+[connection signal="timeout" from="GameScreen_Base/PlayerWarnDeath/PlayerWarnTimer" to="." method="_on_player_warn_timer_timeout"]
 [connection signal="timeout" from="Fredbear/HimTimer" to="." method="_on_him_timer_timeout"]
 [connection signal="timeout" from="GameTick" to="." method="_on_game_tick_timeout"]
 [connection signal="did_move" from="AnimatronicAIController" to="ScreenCameraNode/CameraScreenDisplay" method="_on_animatronic_ai_controller_did_move"]

@@ -104,7 +104,7 @@ var bonnie_room_alts = {
 }
 
 #Moves Bonnie animatromo to new room.
-func move_bonnie():
+func move_bonnie(room = ""):
 	if BonniePos == "Office":
 		if $"..".leftDoorOpen:
 			$"..".bonnieKill()
@@ -116,11 +116,13 @@ func move_bonnie():
 			$"../FanAmbient/LEFT Footstep Audio".play()
 			BonniePos = '1B'
 			$"../LeftHallTexture/BonnieOffice".set_visible(false)
-			return
+		return
 	#Footstep audio
 	$"../FanAmbient/LEFT Footstep Audio".set_volume_db(footstep_audio_differential[BonniePos])
 	$"../FanAmbient/LEFT Footstep Audio".play() 
-	if randi_range(0, 1000) <= bonnie_angy: #Roll for aggressive move
+	if room != "": #Cheat purposes
+		BonniePos = room
+	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggressive move
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_AGGRESS[BonniePos]
 	else: #Wander move
@@ -169,7 +171,7 @@ func move_chica(room = ""):
 			$"../FanAmbient/RIGHT Footstep Audio".play()
 			ChicaPos = '1B' #if door closed, leave
 			$"../RightHallTexture/ChicaOffice".set_visible(false)
-			return
+		return
 	#Footsteps audio
 	$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(footstep_audio_differential[ChicaPos])
 	$"../FanAmbient/RIGHT Footstep Audio".play()
