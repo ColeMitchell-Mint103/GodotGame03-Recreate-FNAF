@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://gucp17ayg2os"]
+[gd_scene load_steps=10 format=3 uid="uid://gucp17ayg2os"]
 
-[ext_resource type="Texture2D" uid="uid://bv2cw4p5kijyn" path="res://Textures/markimoo.png" id="1_yrjqd"]
+[ext_resource type="Texture2D" uid="uid://cot0gyll5c4pk" path="res://Textures/TitleScreen.png" id="1_0qug3"]
+[ext_resource type="Texture2D" uid="uid://dja37lcd635jc" path="res://Textures/icon.svg" id="2_kky3c"]
 [ext_resource type="Script" path="res://new_game.gd" id="2_q85oq"]
 [ext_resource type="Script" path="res://continue.gd" id="3_7s8ja"]
-[ext_resource type="Texture2D" uid="uid://c5djvkv1logtu" path="res://Textures/fred_ad.png" id="4_ks1rp"]
+[ext_resource type="Texture2D" uid="uid://b7u62vxfqlgxj" path="res://Textures/TitleTransition.png" id="5_pynra"]
 
 [sub_resource type="Theme" id="Theme_i8g6h"]
 
@@ -84,7 +85,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_yrjqd")
+texture = ExtResource("1_0qug3")
 
 [node name="Version" type="Label" parent="Background"]
 layout_mode = 1
@@ -96,7 +97,7 @@ offset_top = -55.0
 offset_right = 215.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
-text = "v 0.01"
+text = "v 1.0"
 vertical_alignment = 2
 
 [node name="Credit" type="Label" parent="Background"]
@@ -113,28 +114,32 @@ offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
-text = "[c 2025] Hugh Mungus"
+text = "[c 2025] Cole Mitchell"
 horizontal_alignment = 2
 vertical_alignment = 2
 
 [node name="Title" type="Label" parent="Background"]
 layout_mode = 1
-offset_left = 100.0
-offset_top = 39.0
-offset_right = 295.0
-offset_bottom = 268.0
+offset_left = 44.0
+offset_top = 31.0
+offset_right = 747.0
+offset_bottom = 260.0
 theme_override_font_sizes/font_size = 40
-text = "Freddy 
-Nightcaps
-Are
-Fazbulous"
+text = "Godot Development Project:
+Recreation of 
+Five Nights at Freddy's"
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(1097, 50)
+scale = Vector2(0.560001, 0.560001)
+texture = ExtResource("2_kky3c")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 100.0
-offset_top = 402.0
-offset_right = 291.0
-offset_bottom = 506.0
+offset_left = 275.0
+offset_top = 485.0
+offset_right = 466.0
+offset_bottom = 589.0
 
 [node name="New Game" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -190,7 +195,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_ks1rp")
+texture = ExtResource("5_pynra")
 expand_mode = 1
 
 [node name="NewspaperTransition" type="AnimationPlayer" parent="."]

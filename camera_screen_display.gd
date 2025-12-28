@@ -84,9 +84,9 @@ func update_cam(camName = current_camera):
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Foxy"), 0)
 		$"../../FanAmbient/Foxy Audio".set_stream(load("res://SFX/Foxy/FoxyRunAudio.mp3"))
 		$"../../FanAmbient/Foxy Audio".play()
-		$RoomView/FoxyCharge.set_frame(0)
-		$RoomView/FoxyCharge.set_visible(true)
-		$RoomView/FoxyCharge.play() #Foxy charges down the hall now. Should not be drawn over room but only camera.
+		$FoxyLayer/FoxyCharge.set_frame(0)
+		$FoxyLayer/FoxyCharge.set_visible(true)
+		$FoxyLayer/FoxyCharge.play() #Foxy charges down the hall now. Should not be drawn over room but only camera.
 	build_room()
 	if current_camera == "2B" and $"../..".golden_freddy and not $"../../Fredbear".is_visible():
 		$"../../Fredbear/FredbearAttackBegin".play()

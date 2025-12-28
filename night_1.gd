@@ -5,14 +5,14 @@ var current_time = 0
 var hour = 0.0 #stupid fucking AM
 var power = 100.0 #float for fun
 var power_usage = 1 #clamp between 1 and 4?
-var power_factor = 0.13 #power modifier
+var power_factor = 0.08 #power drain modifier
 var golden_freddy = false
 var power_dead = false
 var his_power_factor = 0.25 #not ready for freddy - soon golden freddy activity
 var night = 1
 var camera_open = false
-var dev_mode = true #turn off
-var animatronic_aggression = [20, 10, 5, 5] #Bonnie, Chica, Freddy, Foxy
+var dev_mode = false #turn off
+var animatronic_aggression = [10, 10, 10, 10] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 var phoneActive = false
@@ -82,6 +82,8 @@ func powerout():
 	$CameraNode/Camera2D/HUD/Time_PowerInfo.set_visible(false)
 	$AnimatronicAIController.allHalt = true #Stop AI
 	$FanAmbient.stop()
+	$GameScreen_Base/Fan.stop()
+	$GameScreen_Base/ClockText.set_visible(false)
 	#Make dark, disable controls, open doors, Freddy jingle, jumpscare
 	if camera_open: 
 		camera_flip()
@@ -106,7 +108,7 @@ func powerout():
 	#$FreddyStare/FreddyStare_SongTimer.start(randf_range(0.8, 1.5)) #Config song time for balance later
 	await get_tree().create_timer(randf_range(3, 12)).timeout #singing timer
 	$FreddyStare/FreddyStare_Anim.play("RESET")
-	
+	$FreddyStare.set_visible(false)
 	await get_tree().create_timer(randf_range(10, 20)).timeout #dark pause timer
 	$CameraNode/Camera2D/JumpscareLayer/FoxyEnterOffice.set_animation("FreddyPowerOutAttack")
 	$CameraNode/Camera2D/JumpscareLayer/FoxyEnterOffice.play()
@@ -120,6 +122,8 @@ func powerout():
 func win_game():
 	#unenthusiastic party horn, animation, load next night
 	$GameTick.stop()
+	$FanAmbient.stop()
+	AudioServer.set_bus_solo(AudioServer.get_bus_index("Master"), true)
 	$CameraNode/Camera2D.set_position(Vector2(0,0))
 	$CameraNode/Camera2D/HUD.set_visible(false)
 	$CameraNode/Camera2D/JumpscareLayer.set_visible(false)
@@ -242,7 +246,7 @@ func _on_left_light_toggled(toggled_on: bool) -> void:
 			$LeftHallTexture/BonnieOffice/Spook.play()
 	else : 
 		power_display(-1)
-		$LeftHallTexture.set_modulate(Color(0.018, 0.018, 0.018))
+		$LeftHallTexture.set_modulate(Color(0.005, 0.005, 0.005))
 		$GameScreen_Base/LeftControls/LeftLight.set_button_icon(texture_LightOff)
 	$GameScreen_Base/LeftControls/LeftLight/AudioStreamPlayer2D.play()
 
@@ -280,7 +284,7 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 			$RightHallTexture/ChicaOffice/Spook2.play()
 	else : 
 		power_display(-1)
-		$RightHallTexture.set_modulate(Color(0.018, 0.018, 0.018))
+		$RightHallTexture.set_modulate(Color(0.005, 0.005, 0.005))
 		$GameScreen_Base/RightControls/RightLight.set_button_icon(texture_LightOff)
 	$GameScreen_Base/RightControls/RightLight/AudioStreamPlayer2D.play()
 
@@ -363,7 +367,7 @@ func camera_flip():
 		power_display(1)
 		$AnimatronicAIController.foxy_angy = max($AnimatronicAIController.foxy_angy - 2, -10)#Cut anger on flipping cam to account for the timer being slow
 		#GoldFredbear westhall attack
-		if randi_range(1,2) == 1: #Begin attack
+		if randi_range(1,100) == 1: #Begin attack
 			golden_freddy = true
 			$ScreenCameraNode/CameraScreenDisplay.room_textures["2B"] = "res://Textures/79/WestHall_Golden.png"
 		if $Fredbear.is_visible(): #Survive attack
@@ -381,8 +385,8 @@ func _on_foxy_kill_you_timer_timeout() -> void:
 	if not leftDoorOpen: #Attack prevented
 		#print("Attack Fail Door Closed")
 		#Stop the anim overlay
-		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.set_visible(false)
-		$ScreenCameraNode/CameraScreenDisplay/RoomView/FoxyCharge.pause()
+		$ScreenCameraNode/CameraScreenDisplay/FoxyLayer/FoxyCharge.set_visible(false)
+		$ScreenCameraNode/CameraScreenDisplay/FoxyLayer/FoxyCharge.pause()
 		#Hit the door sfx
 		$GameScreen_Base/LeftDoor/FoxyDoorHit.play()
 		#Reset Foxy

@@ -1,14 +1,21 @@
 Last Worked On:
+	Reworked cam access to be less touchy
+	Redid title screen ->Titlescreen.tscn
 	Changed scale of left door (didn't cover hole lmao)
 	Office work -> night1, general
 
 
 TODO:
-11. Title Screen
 12. Final tweaking for 1.0
+	More sfx for title
 	Foxy Run West Hall drawn Over Bonnie
+	Bug Hunting
+	Set final aggression parameters
+	Optimize power draw
+	Singy song playing ambient
 	
 DONE:
+	11. Title Screen
 	x. Moans during attack if monitor stays up
 	x. Kitchen camera fix
 	x. Spook on seeing Bonnie/Chica at office

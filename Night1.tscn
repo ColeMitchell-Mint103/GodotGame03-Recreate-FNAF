@@ -869,23 +869,21 @@ layout_mode = 2
 color = Color(0.422006, 0.0910332, 0.203647, 1)
 
 [node name="ReferenceRect" type="ReferenceRect" parent="CameraNode/Camera2D/HUD"]
-z_index = 1
-offset_left = 166.0
-offset_top = 579.0
-offset_right = 206.0
-offset_bottom = 619.0
-scale = Vector2(13.1569, 1.50661)
+offset_left = 6.0
+offset_top = 559.0
+offset_right = 46.0
+offset_bottom = 599.0
+scale = Vector2(16.3569, 2.26661)
+mouse_filter = 1
 
 [node name="CamAccess" type="TextureRect" parent="CameraNode/Camera2D/HUD/ReferenceRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 2.65497
-offset_bottom = 2.65497
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.993437, 1.13053)
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 0
+offset_left = 12.3495
+offset_top = 13.2356
+offset_right = 45.8145
+offset_bottom = 46.7006
+scale = Vector2(0.730673, 0.703708)
 texture = SubResource("CompressedTexture2D_1rg4c")
 expand_mode = 2
 
@@ -967,7 +965,7 @@ stream = ExtResource("17_3g1im")
 bus = &"Camera"
 
 [node name="LeftHallTexture" type="TextureRect" parent="."]
-modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
+modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -994,7 +992,7 @@ texture = ExtResource("9_ejvqj")
 stream = ExtResource("27_cnvr6")
 
 [node name="RightHallTexture" type="TextureRect" parent="."]
-modulate = Color(0.0177324, 0.0177324, 0.0177324, 1)
+modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1037,6 +1035,7 @@ libraries = {
 }
 
 [node name="GameScreen_Base" type="TextureRect" parent="."]
+modulate = Color(0.651303, 0.746521, 0.796688, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1273,6 +1272,9 @@ autostart = true
 wait_time = 10.0
 one_shot = true
 
+[node name="GraceTimer" type="Timer" parent="AnimatronicAIController"]
+wait_time = 5.0
+
 [node name="ScreenCameraNode" type="Node2D" parent="."]
 
 [node name="CameraScreenDisplay" type="TextureRect" parent="ScreenCameraNode"]
@@ -1290,13 +1292,13 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("5_2vqj7")
 
-[node name="FoxyCharge" type="AnimatedSprite2D" parent="ScreenCameraNode/CameraScreenDisplay/RoomView"]
-visible = false
-sprite_frames = SubResource("SpriteFrames_8o7i2")
-animation = &"FoxyCharge"
-frame = 2
-frame_progress = 0.16662
-centered = false
+[node name="FreddyLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="BonnieLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
 layout_mode = 1
@@ -1314,14 +1316,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="FreddyLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="FoxyLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
 layout_mode = 1
 anchors_preset = 15
@@ -1329,6 +1323,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="FoxyCharge" type="AnimatedSprite2D" parent="ScreenCameraNode/CameraScreenDisplay/FoxyLayer"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_8o7i2")
+animation = &"FoxyCharge"
+frame = 2
+frame_progress = 0.16662
+centered = false
 
 [node name="GoldenLayer" type="TextureRect" parent="ScreenCameraNode/CameraScreenDisplay"]
 visible = false
@@ -1597,6 +1599,9 @@ volume_db = -15.871
 
 [node name="FunSongAmbient" type="AudioStreamPlayer" parent="FanAmbient"]
 stream = ExtResource("85_4nktl")
+volume_db = -5.43
+
+[node name="FunTimer" type="Timer" parent="FanAmbient/FunSongAmbient"]
 
 [node name="GoldAudio" type="AudioStreamPlayer" parent="FanAmbient"]
 
@@ -1615,6 +1620,7 @@ stream = ExtResource("85_4nktl")
 [connection signal="timeout" from="GameTick" to="." method="_on_game_tick_timeout"]
 [connection signal="did_move" from="AnimatronicAIController" to="ScreenCameraNode/CameraScreenDisplay" method="_on_animatronic_ai_controller_did_move"]
 [connection signal="timeout" from="AnimatronicAIController/FoxyKillYouTimer" to="." method="_on_foxy_kill_you_timer_timeout"]
+[connection signal="timeout" from="AnimatronicAIController/GraceTimer" to="AnimatronicAIController" method="_on_grace_timer_timeout"]
 [connection signal="visibility_changed" from="ScreenCameraNode/CameraScreenDisplay" to="ScreenCameraNode/CameraScreenDisplay" method="_on_visibility_changed"]
 [connection signal="timeout" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MonitorStatic/CamOutTimer" to="ScreenCameraNode/CameraScreenDisplay" method="_on_cam_out_timer_timeout"]
 [connection signal="timeout" from="ScreenCameraNode/CameraScreenDisplay/ScreenCamera/MonitorStatic/CamOutTimer" to="ScreenCameraNode/CameraScreenDisplay/ScreenCamera" method="_on_cam_out_timer_timeout"]
@@ -1634,3 +1640,4 @@ stream = ExtResource("85_4nktl")
 [connection signal="finished" from="FanAmbient/Foxy Audio/FoxyAmbient" to="." method="_on_foxy_ambient_finished"]
 [connection signal="finished" from="FanAmbient/RandomAmbient" to="FanAmbient" method="_on_random_ambient_finished"]
 [connection signal="timeout" from="FanAmbient/RandomAmbient/RandomTimer" to="FanAmbient" method="_on_random_timer_timeout"]
+[connection signal="timeout" from="FanAmbient/FunSongAmbient/FunTimer" to="FanAmbient" method="_on_fun_timer_timeout"]

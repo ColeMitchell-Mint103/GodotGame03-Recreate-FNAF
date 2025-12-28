@@ -21,12 +21,12 @@ var FoxyAttack = false
 var FreddyKitchen = false
 var ChicaKitchen = false
 
-var allHalt = false
+var allHalt = true
 signal did_move(room)
 
-var footstep_audio_differential = {"1A": -20, "1B": -15,
-"5": -18, "7": -18, "2A": -5, "2B": 0, "4A": -5, "4B": 0, "6": -10	
-}
+var footstep_audio_differential = {"1A": -20, "1B": -15, "3": -8,
+"5": -18, "7": -18, "2A": -5, "2B": 0, "4A": -5, "4B": 0, "6": -10,
+"Office": 0}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -42,22 +42,23 @@ func initialize(AIValues):
 	ChicaAI = AIValues[1]
 	FreddyAI = AIValues[2]
 	FoxyAI = AIValues[3]
-	$BonnieTimer.start(30 / BonnieAI + 5)
-	$ChicaTimer.start(30 / ChicaAI + 5)
+	$BonnieTimer.start(randf_range(150.0, 400.0) / BonnieAI)
+	$ChicaTimer.start(randf_range(200.0, 500.0) / ChicaAI)
+	$GraceTimer.start()
 
 #Core loop
 #Pauses / Timers are cooldowns to prevent rapid lucky movement.
 func tick():
 	if allHalt:
-		pass
-	if $BonnieTimer.is_stopped(): #First pause is 30s currently, set via node
+		return
+	if $BonnieTimer.is_stopped(): #First pause is 6s currently, set via node
 		if randi_range(0, 20) <= BonnieAI:
 			move_bonnie()
-			$BonnieTimer.start(randf_range(150, 400) / BonnieAI) #Cooldown shortens with AI level
+			$BonnieTimer.start(randf_range(150.0, 400.0) / BonnieAI) #Cooldown shortens with AI level
 	if $ChicaTimer.is_stopped():
 		if randi_range(0, 20) <= ChicaAI:
 			move_chica()
-			$ChicaTimer.start(randf_range(150, 600) / ChicaAI) #Chica slower than bon bon
+			$ChicaTimer.start(randf_range(200.0, 500.0) / ChicaAI) #Chica slower
 	bonnie_angy += 1
 	chica_angy += 1
 	# Freddy gains angy when not looked at, lowers when viewed. If angy too high, he move.
@@ -67,7 +68,7 @@ func tick():
 		freddy_angy += 1
 		if FreddyPos == "1A":
 			freddy_alt()
-	if freddy_angy >= 2000 / FreddyAI:
+	if freddy_angy >= 8 and randi_range(0, 25) <= FreddyAI:
 		move_freddy()
 		print("Freddy: " + FreddyPos)
 		freddy_angy = 0
@@ -75,7 +76,7 @@ func tick():
 	if not FoxyAttack:
 		foxy_angy += -1 if $"..".camera_open else 1
 		foxy_angy = max(foxy_angy,-10) #Limit how low his anger can go
-		if foxy_angy >= 500 / FoxyAI and randi_range(0,25) <= FoxyAI: #Add a little RNG
+		if foxy_angy >= 4 and randi_range(0,25) <= FoxyAI: #Add a little RNG
 			move_foxy()
 			foxy_angy = 0
 			print("Foxy Stage: " + str(FoxyStage))
@@ -87,14 +88,18 @@ func give_Locations():
 var bonnie_movement_WANDER = {"1A" : ["1B"],
 "1B" : ["5", "2A"],
 "5" : ["1B"],
-"2A" : ["1B", "Office", "2B"],
-"2B" : ["Office"]
+"2A" : ["1B","3", "2B"],
+"2B" : ["2A","3", "Office"],
+"3": ["2A", "2B"],
+"Office": ["1B"]
 }
 var bonnie_movement_AGGRESS = {"1A" : "1B",
 "1B" : "2A",
 "5" : "1B",
+"3": "Office",
 "2A" : "2B",
-"2B" : "Office"
+"2B" : "Office",
+"Office" : "2A"
 }
 var bonnie_room_alts = {
 "1B" : ["res://Textures/CharacterLayers/Dining_Bonnie.png",
@@ -109,17 +114,14 @@ func move_bonnie(room = ""):
 		if $"..".leftDoorOpen:
 			$"..".bonnieKill()
 			print("Killed byBonnie")
-			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
+			return
 		else:
 			#if door closed, leave
-			$"../FanAmbient/LEFT Footstep Audio".set_volume_db(0.0)
-			$"../FanAmbient/LEFT Footstep Audio".play()
-			BonniePos = '1B'
+			#$"../FanAmbient/LEFT Footstep Audio".set_volume_db(0.0)
+			#$"../FanAmbient/LEFT Footstep Audio".play()
+			#BonniePos = '1B'
 			$"../LeftHallTexture/BonnieOffice".set_visible(false)
-		return
-	#Footstep audio
-	$"../FanAmbient/LEFT Footstep Audio".set_volume_db(footstep_audio_differential[BonniePos])
-	$"../FanAmbient/LEFT Footstep Audio".play() 
+	var BonniePos_prev = BonniePos
 	if room != "": #Cheat purposes
 		BonniePos = room
 	elif randi_range(0, 1000) <= bonnie_angy: #Roll for aggressive move
@@ -128,7 +130,10 @@ func move_bonnie(room = ""):
 	else: #Wander move
 		did_move.emit(BonniePos)
 		BonniePos = bonnie_movement_WANDER[BonniePos].pick_random()
-	
+	#Footstep audio
+	$"../FanAmbient/LEFT Footstep Audio".set_volume_db(max(footstep_audio_differential[BonniePos_prev],
+	footstep_audio_differential[BonniePos]))
+	$"../FanAmbient/LEFT Footstep Audio".play() 
 	if BonniePos == "Office": #Satisfied by reaching Office
 		bonnie_angy = 0
 		$"../LeftHallTexture/BonnieOffice".set_visible(true)
@@ -141,15 +146,17 @@ var chica_movement_WANDER = {"1A" : ["1B"],
 "1B" : ["7", "4A", "6"],
 "7" : ["1B"],
 "6" : ["1B"], #Kitchen
-"4A" : ["1B", "4B", "Office"],
-"4B" : ["Office"]
+"4A" : ["1B", "4B"],
+"4B" : ["Office"],
+"Office": ["1B"]
 }
 var chica_movement_AGGRESS = {"1A" : "1B",
 "1B" : "4A",
 "7" : "1B",
 "6" : "1B", #Kitchen
-"4A" : "Office",
-"4B" : "Office"
+"4A" : "4B",
+"4B" : "Office",
+"Office": "4A"
 }
 var chica_room_alts = {"1B" : ["res://Textures/CharacterLayers/Dining_Chica.png", 
 "res://Textures/CharacterLayers/Dining_Chica2.png"],
@@ -165,17 +172,13 @@ func move_chica(room = ""):
 		if $"..".rightDoorOpen:
 			$"..".chicaKill()
 			print("Killed byChica")
-			#Kill mode 1. wait for camera drop 2. force jumpscare if cam down?
+			return
 		else:
-			$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(0.0)
-			$"../FanAmbient/RIGHT Footstep Audio".play()
-			ChicaPos = '1B' #if door closed, leave
+			#$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(0.0)
+			#$"../FanAmbient/RIGHT Footstep Audio".play()
+			#ChicaPos = '1B' #if door closed, leave
 			$"../RightHallTexture/ChicaOffice".set_visible(false)
-		return
-	#Footsteps audio
-	$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(footstep_audio_differential[ChicaPos])
-	$"../FanAmbient/RIGHT Footstep Audio".play()
-	
+	var ChicaPos_prev = ChicaPos
 	if room != "": #Cheat purposes
 		ChicaPos = room
 	#elif BonniePos == "1A":
@@ -187,6 +190,10 @@ func move_chica(room = ""):
 		did_move.emit(ChicaPos)
 		ChicaPos = chica_movement_WANDER[ChicaPos].pick_random()
 	
+	#Footsteps audio
+	$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(max(footstep_audio_differential[ChicaPos_prev],
+	footstep_audio_differential[ChicaPos]))
+	$"../FanAmbient/RIGHT Footstep Audio".play()
 	if ChicaPos == "Office": #Satisfied by reaching Office
 		chica_angy = 0
 		$"../RightHallTexture/ChicaOffice".set_visible(true)
@@ -213,8 +220,8 @@ func move_chica(room = ""):
 	#Alternate room image handling
 	if chica_room_alts.has(ChicaPos):
 		$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] = chica_room_alts[ChicaPos].pick_random()
-	if $"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] == "res://Textures/CharacterLayers/Bathrooms_Chica2.png":
-		$"../FanAmbient/RIGHT Footstep Audio/RIGHT ChicaFalling".play()
+		if $"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] == "res://Textures/CharacterLayers/Bathrooms_Chica2.png":
+			$"../FanAmbient/RIGHT Footstep Audio/RIGHT ChicaFalling".play()
 	print("Chica: " + ChicaPos)
 	
 	
@@ -232,7 +239,7 @@ var FreddyLaughs =["res://SFX/Freddy/FreddyLaugh-01.wav","res://SFX/Freddy/Fredd
 func move_freddy(room = ""):
 	if room != "": #Cheat purposes
 		FreddyPos = room
-	elif FreddyPos == "4B" and $"..".rightDoorOpen:
+	elif FreddyPos == "4B" and $"..".camera_open and $"../ScreenCameraNode/CameraScreenDisplay".current_camera != "4B":
 		if $"..".rightDoorOpen:
 			$"..".freddyKill()
 			print("Killed by Freddy")
@@ -282,6 +289,6 @@ func move_foxy():
 	$"../ScreenCameraNode/CameraScreenDisplay".updateFoxy(FoxyStage)
 	did_move.emit("1C") #1C = Pirate's Cove
 
-var rng = RandomNumberGenerator.new()
-var outcomesArray = [1,2,3,4]
-var outcomeWeights = PackedFloat32Array([5.0,5.0,1.0,0.0])
+#Give a moment of peace and quiet to let the player settle in on their first night.
+func _on_grace_timer_timeout() -> void:
+	allHalt = false
