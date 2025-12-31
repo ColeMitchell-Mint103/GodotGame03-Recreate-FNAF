@@ -12,7 +12,7 @@ This is the first game project I have completed.
 
 I learned many skills during development including the production of this repository using GitHub Desktop. I will be glad to use them to better produce games in the future.
 
-Skills include basic art skecthing using Krita, audio editing using Audactity, and learning many features in the Godot engine writing algorithmic logic with GD Script.
+Skills include basic art sketching using Krita, audio editing using Audacity, and learning many features in the Godot engine writing algorithmic logic with GD Script.
 Godot Nodes including Controls, AnimatedSprite2D, AudioStreamPlayer, TextureRect, Timer and global concepts such as Signals, Audio Buses, and Node Properties.
 
 **The project also includes Gachimuchi content (somewhat NSFW), open project at own discretion.**
