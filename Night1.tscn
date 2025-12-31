@@ -1,4 +1,4 @@
-[gd_scene load_steps=170 format=3 uid="uid://c21a7vjre5bi7"]
+[gd_scene load_steps=179 format=3 uid="uid://c21a7vjre5bi7"]
 
 [ext_resource type="Script" path="res://night_1.gd" id="1_p28f0"]
 [ext_resource type="Texture2D" uid="uid://uhp538j4fvmt" path="res://Textures/CameraBorder.png" id="3_5i1vo"]
@@ -148,6 +148,15 @@
 [ext_resource type="Texture2D" uid="uid://bkaab2plwysh7" path="res://Textures/79/Hallucinations/HalluciF2.png" id="105_53ev6"]
 [ext_resource type="Texture2D" uid="uid://bdswir86sygt3" path="res://Textures/79/Hallucinations/Halluci5.png" id="106_yku0i"]
 [ext_resource type="AudioStream" uid="uid://cev62wmc3c05g" path="res://SFX/ChicaSlips.mp3" id="114_rkux1"]
+[ext_resource type="AudioStream" uid="uid://cegixgnregorp" path="res://SFX/AmbientLayer/Whisper_OhShitImSorry.wav" id="145_hkmg1"]
+[ext_resource type="AudioStream" uid="uid://dxev0ndnjplhl" path="res://SFX/AmbientLayer/Whisper_Spank.wav" id="146_svuy2"]
+[ext_resource type="AudioStream" uid="uid://b3mchrm35qn12" path="res://SFX/AmbientLayer/Whisper_YoureAScrappyDog.wav" id="147_x38u7"]
+[ext_resource type="AudioStream" uid="uid://b0wdyapob53rf" path="res://SFX/AmbientLayer/its-a-loan.mp3" id="148_xrgtv"]
+[ext_resource type="AudioStream" uid="uid://cy0xh0o1io7jr" path="res://SFX/AmbientLayer/fantasies.mp3" id="149_do6mh"]
+[ext_resource type="AudioStream" uid="uid://bcey3ylflc3nv" path="res://SFX/AmbientLayer/Whisper_Balls.wav" id="153_vuwqp"]
+[ext_resource type="AudioStream" uid="uid://ci6vg07ogdi23" path="res://SFX/AmbientLayer/Whisper_DoYouLikeWatchingMe.wav" id="154_j8s4e"]
+[ext_resource type="AudioStream" uid="uid://dppl8lg7epv72" path="res://SFX/AmbientLayer/Whisper_DoYouLikeWhatYouSee.wav" id="155_inwk7"]
+[ext_resource type="AudioStream" uid="uid://bgakqarrny2l6" path="res://SFX/AmbientLayer/Whisper_ImTakingThatAss.wav" id="156_xbfg4"]
 
 [sub_resource type="Animation" id="Animation_jmj1j"]
 resource_name = "Fadeout"
@@ -745,12 +754,23 @@ stream_6/stream = ExtResource("88_xnqbr")
 stream_7/stream = ExtResource("89_6g7jy")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_veypf"]
-streams_count = 5
+streams_count = 15
 stream_0/stream = ExtResource("80_c3un1")
 stream_1/stream = ExtResource("81_tn8cs")
 stream_2/stream = ExtResource("82_cmx4j")
 stream_3/stream = ExtResource("83_sojh3")
 stream_4/stream = ExtResource("84_07gxk")
+stream_5/stream = ExtResource("149_do6mh")
+stream_6/stream = ExtResource("153_vuwqp")
+stream_7/stream = ExtResource("154_j8s4e")
+stream_8/stream = ExtResource("155_inwk7")
+stream_9/stream = ExtResource("156_xbfg4")
+stream_10/stream = ExtResource("145_hkmg1")
+stream_11/stream = ExtResource("146_svuy2")
+stream_12/stream = ExtResource("147_x38u7")
+stream_13/stream = ExtResource("148_xrgtv")
+stream_14/stream = ExtResource("149_do6mh")
+stream_14/weight = 3.051
 
 [node name="ColorRect" type="ColorRect"]
 anchors_preset = 15
@@ -1123,6 +1143,7 @@ centered = false
 
 [node name="FoxyDoorHit" type="AudioStreamPlayer2D" parent="GameScreen_Base/LeftDoor"]
 stream = ExtResource("45_uycwk")
+volume_db = 12.112
 bus = &"LeftPan"
 
 [node name="RightDoor" type="AnimatedSprite2D" parent="GameScreen_Base"]
@@ -1269,7 +1290,7 @@ autostart = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AnimatronicAIController/FreddyTimer"]
 
 [node name="FoxyKillYouTimer" type="Timer" parent="AnimatronicAIController"]
-wait_time = 10.0
+wait_time = 20.0
 one_shot = true
 
 [node name="GraceTimer" type="Timer" parent="AnimatronicAIController"]
@@ -1342,6 +1363,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScreenCamera" type="Camera2D" parent="ScreenCameraNode/CameraScreenDisplay"]
+z_index = 1
 position = Vector2(168, 1)
 anchor_mode = 0
 zoom = Vector2(1.4, 1)

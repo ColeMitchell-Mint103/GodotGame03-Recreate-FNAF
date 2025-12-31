@@ -38,48 +38,58 @@ func _process(delta: float) -> void:
 
 #Pass initial parameters in NightX script
 func initialize(AIValues):
+	updateAI(AIValues)
+	$BonnieTimer.start(randf_range(2.0, 4.0))
+	$ChicaTimer.start(randf_range(3.0, 6.0))
+	$GraceTimer.start(20)
+
+func updateAI(AIValues):
 	BonnieAI = AIValues[0]
 	ChicaAI = AIValues[1]
 	FreddyAI = AIValues[2]
 	FoxyAI = AIValues[3]
-	$BonnieTimer.start(randf_range(150.0, 400.0) / BonnieAI)
-	$ChicaTimer.start(randf_range(200.0, 500.0) / ChicaAI)
-	$GraceTimer.start()
 
 #Core loop
 #Pauses / Timers are cooldowns to prevent rapid lucky movement.
 func tick():
 	if allHalt:
 		return
-	if $BonnieTimer.is_stopped(): #First pause is 6s currently, set via node
+	if $BonnieTimer.is_stopped(): 
 		if randi_range(0, 20) <= BonnieAI:
 			move_bonnie()
-			$BonnieTimer.start(randf_range(150.0, 400.0) / BonnieAI) #Cooldown shortens with AI level
+			$BonnieTimer.start(randf_range(2.0, 8.0) * (20.0 / BonnieAI)) #Cooldown shortens with AI level
 	if $ChicaTimer.is_stopped():
 		if randi_range(0, 20) <= ChicaAI:
 			move_chica()
-			$ChicaTimer.start(randf_range(200.0, 500.0) / ChicaAI) #Chica slower
+			$ChicaTimer.start(randf_range(4.0, 10.0) * (20.0 / ChicaAI)) #Chica slower
 	bonnie_angy += 1
 	chica_angy += 1
-	# Freddy gains angy when not looked at, lowers when viewed. If angy too high, he move.
+	
+	# Freddy gains angy when not looked at, zeroes when viewed. If angy too high, he move.
 	if $"../ScreenCameraNode/CameraScreenDisplay".isFreddyOnCam():
-		freddy_angy -= 1
+		freddy_angy = 0
 	else:
 		freddy_angy += 1
 		if FreddyPos == "1A":
 			freddy_alt()
-	if freddy_angy >= 8 and randi_range(0, 25) <= FreddyAI:
+	if freddy_angy >= (50 - FreddyAI) and randi_range(0, 25) <= FreddyAI:
 		move_freddy()
-		print("Freddy: " + FreddyPos)
+		#print("Freddy: " + FreddyPos)
 		freddy_angy = 0
-	# Foxy gains angy when the cameras are OFF. He attacks if the monitor is down.
+	
+	# Foxy gains angy faster when the cameras are OFF.
 	if not FoxyAttack:
-		foxy_angy += -1 if $"..".camera_open else 1
+		if $"..".camera_open:
+			foxy_angy += 1
+			if randi_range(1,6) == 1: #Chance for angy to go down
+				foxy_angy -= 3
+		else:
+			foxy_angy += 3 + ceili(FoxyAI / 5.0)
 		foxy_angy = max(foxy_angy,-10) #Limit how low his anger can go
-		if foxy_angy >= 4 and randi_range(0,25) <= FoxyAI: #Add a little RNG
+		if foxy_angy >= 150 and randi_range(0,25) <= FoxyAI: #Add a little RNG
 			move_foxy()
 			foxy_angy = 0
-			print("Foxy Stage: " + str(FoxyStage))
+			#print("Foxy Stage: " + str(FoxyStage))
 	
 
 func give_Locations():
@@ -113,7 +123,7 @@ func move_bonnie(room = ""):
 	if BonniePos == "Office":
 		if $"..".leftDoorOpen:
 			$"..".bonnieKill()
-			print("Killed byBonnie")
+			#print("Killed byBonnie")
 			return
 		else:
 			#if door closed, leave
@@ -140,7 +150,7 @@ func move_bonnie(room = ""):
 	#Alternate room image handling
 	if bonnie_room_alts.has(BonniePos):
 		$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[BonniePos][0] = bonnie_room_alts[BonniePos].pick_random()
-	print("Bonnie: " + BonniePos)
+	#print("Bonnie: " + BonniePos)
 
 var chica_movement_WANDER = {"1A" : ["1B"],
 "1B" : ["7", "4A", "6"],
@@ -171,7 +181,7 @@ func move_chica(room = ""):
 	if ChicaPos == "Office":
 		if $"..".rightDoorOpen:
 			$"..".chicaKill()
-			print("Killed byChica")
+			#print("Killed byChica")
 			return
 		else:
 			#$"../FanAmbient/RIGHT Footstep Audio".set_volume_db(0.0)
@@ -222,7 +232,7 @@ func move_chica(room = ""):
 		$"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] = chica_room_alts[ChicaPos].pick_random()
 		if $"../ScreenCameraNode/CameraScreenDisplay".room_Characters[ChicaPos][1] == "res://Textures/CharacterLayers/Bathrooms_Chica2.png":
 			$"../FanAmbient/RIGHT Footstep Audio/RIGHT ChicaFalling".play()
-	print("Chica: " + ChicaPos)
+	#print("Chica: " + ChicaPos)
 	
 	
 	
@@ -231,6 +241,7 @@ var freddy_movement = {"1A":"1B",
 	"7":"6",
 	"6":"4A",
 	"4A":"4B",
+	"4B": "4B"
 	}
 var FreddyLaughs =["res://SFX/Freddy/FreddyLaugh-01.wav","res://SFX/Freddy/FreddyLaugh-02.wav",
 "res://SFX/Freddy/FreddyLaugh-03.wav", "res://SFX/Freddy/FreddyLaugh-04-2.wav"]
@@ -242,9 +253,14 @@ func move_freddy(room = ""):
 	elif FreddyPos == "4B" and $"..".camera_open and $"../ScreenCameraNode/CameraScreenDisplay".current_camera != "4B":
 		if $"..".rightDoorOpen:
 			$"..".freddyKill()
-			print("Killed by Freddy")
+			#print("Killed by Freddy")
+			#Basically Freddyboy kills you if he moves into the room.
+			#You have the camera open and the door not closed.
+			#Not accurate to the real game but a bit easier.
 		else:
-			print("Freddy Blocked by Door")
+			freddy_angy = 0
+			#print("Freddy Blocked by Door")
+		return
 	else:
 		FreddyPos = freddy_movement[FreddyPos]
 	did_move.emit(FreddyPos)
@@ -268,6 +284,9 @@ func move_freddy(room = ""):
 			$"../CameraNode/Camera2D/KitchenBaseStream".play()
 		else:
 			$"../CameraNode/Camera2D/KitchenBaseStream".set_volume_db(-100)
+			
+	if FreddyPos == "4B":
+		$"../ScreenCameraNode/CameraScreenDisplay/FreddyLayer".set_z_index(1) #Half Solution for layering in east hall corner
 
 var freddy_alts = {"1A" : ["res://Textures/CharacterLayers/Showstage_Freddy.png",
 "res://Textures/CharacterLayers/Showstage_Freddy_alt.png"]
@@ -284,10 +303,11 @@ func move_foxy():
 	FoxyStage = min(4, FoxyStage + 1) #Capped
 	if FoxyStage == 4:
 		FoxyAttack = true
-		print("Foxy attak")
-		$FoxyKillYouTimer.start()
+		#print("Foxy attak")
+		$FoxyKillYouTimer.start(20)
 	$"../ScreenCameraNode/CameraScreenDisplay".updateFoxy(FoxyStage)
 	did_move.emit("1C") #1C = Pirate's Cove
+	#print("FoxyStage" + str(FoxyStage))
 
 #Give a moment of peace and quiet to let the player settle in on their first night.
 func _on_grace_timer_timeout() -> void:

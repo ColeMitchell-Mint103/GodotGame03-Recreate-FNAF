@@ -15,3 +15,7 @@ func _process(delta: float) -> void:
 func _on_mouse_entered() -> void:
 	$"../New Game/Indic".set_visible(false)
 	$Indic.set_visible(true)
+
+
+func _on_pressed() -> void:
+	$"../New Game"._on_pressed()

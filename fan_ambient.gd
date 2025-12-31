@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 func begin(golden_freddy):
 	golden_factor = golden_freddy #Ranges from 0.0-1.0
 	$".".play()
-	$RandomAmbient/RandomTimer.start(randi_range(0, 50 * golden_factor) + 10)
+	$RandomAmbient/RandomTimer.start(randf_range(3.0,7.0))
 
 #Playing random sounds for ambience.
 func _on_random_timer_timeout() -> void:
@@ -26,7 +26,7 @@ func _on_random_timer_timeout() -> void:
 #Start a pause between sounds based on GoldeFreddy power
 func _on_random_ambient_finished() -> void:
 	$RandomAmbient.stop()
-	$RandomAmbient/RandomTimer.start(randi_range(0, 50 * golden_factor) + 6) #delay between sounds
+	$RandomAmbient/RandomTimer.start(randf_range(3.0,7.0)) #delay between sounds
 
 #Stop the fun music at random time
 func _on_fun_timer_timeout() -> void:

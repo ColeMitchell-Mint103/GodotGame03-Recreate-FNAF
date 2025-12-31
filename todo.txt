@@ -1,20 +1,21 @@
 Last Worked On:
+	Bug fixing
+	Reworked jumpscare methods
+	Reworking animatronicAI
 	Reworked cam access to be less touchy
 	Redid title screen ->Titlescreen.tscn
-	Changed scale of left door (didn't cover hole lmao)
-	Office work -> night1, general
 
 
 TODO:
-12. Final tweaking for 1.0
-	More sfx for title
-	Foxy Run West Hall drawn Over Bonnie
-	Bug Hunting
-	Set final aggression parameters
-	Optimize power draw
-	Singy song playing ambient
+	13. Post 1.0:
+		Golden Freddy on any cam
+		More character variants for every room
+		Golden Freddy factor influences hallucinations
+		Customization settings on title
+		More audio balancing
 	
 DONE:
+	12. Final tweaking for 1.0
 	11. Title Screen
 	x. Moans during attack if monitor stays up
 	x. Kitchen camera fix
@@ -66,5 +67,7 @@ Old:
 20. Kitchen cam panning
 
 Credit: 
-Clock Font - https://www.1001fonts.com/clock+digital-fonts.html
-Phone Slamming SFX - https://www.soundsnap.com/phone_hang_up_handset_3
+Clock Font by Style-7 https://www.1001fonts.com/clock+digital-fonts.html
+Phone Slamming SFX by Justine Angus - https://www.soundsnap.com/phone_hang_up_handset_3
+Horror Background by DELOSound https://pixabay.com/music/horror-scene-horror-background-442824/
+Oblivious Font by PizzaDude https://fontmeme.com/fonts/oblivious-font-font/

@@ -8,11 +8,11 @@ var power_usage = 1 #clamp between 1 and 4?
 var power_factor = 0.08 #power drain modifier
 var golden_freddy = false
 var power_dead = false
-var his_power_factor = 0.25 #not ready for freddy - soon golden freddy activity
+var his_power_factor = 0.25 #not ready for freddy 
 var night = 1
 var camera_open = false
 var dev_mode = false #turn off
-var animatronic_aggression = [10, 10, 10, 10] #Bonnie, Chica, Freddy, Foxy
+var animatronic_aggression = [5, 5, 5, 5] #Bonnie, Chica, Freddy, Foxy
 var leftDoorOpen = true
 var rightDoorOpen = true
 var phoneActive = false
@@ -34,6 +34,7 @@ func _ready() -> void:
 		$GameScreen_Base.set_visible(false)
 		$CameraNode/Camera2D/HUD.set_visible(false)
 		$AnimationPlayer.play("Fadeout")
+		$LeftHallTexture/BonnieOffice/Spook.play() #Reuse boom sound
 	else: game_start()
 
 
@@ -41,6 +42,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+var AI_ramp = 0 #Holder for increasing AI aggression as night progresses
 #core game loop
 func tick():
 	current_time += 1.0
@@ -66,6 +68,17 @@ func tick():
 	#Tick the AI control
 	$AnimatronicAIController.tick()
 	golden_action()
+	
+	#AI ramping for single night
+	if AI_ramp == 0 and hour >= 1:
+		$AnimatronicAIController.updateAI([10,10,10,10])
+		AI_ramp = 1
+	elif AI_ramp == 1 and hour >= 3:
+		$AnimatronicAIController.updateAI([15,15,15,15])
+		AI_ramp = 2
+	elif AI_ramp == 2 and hour >= 5:
+		$AnimatronicAIController.updateAI([20,20,20,20])
+		AI_ramp = 3
 
 func game_start():
 	$GameTick.start()
@@ -84,6 +97,9 @@ func powerout():
 	$FanAmbient.stop()
 	$GameScreen_Base/Fan.stop()
 	$GameScreen_Base/ClockText.set_visible(false)
+	$AnimatronicAIController.allHalt = true
+	leftControlsEnabled = false
+	rightControlsEnabled = false
 	#Make dark, disable controls, open doors, Freddy jingle, jumpscare
 	if camera_open: 
 		camera_flip()
@@ -120,7 +136,7 @@ func powerout():
 
 # Stop AI, roll clock, play fanfare, load next night
 func win_game():
-	#unenthusiastic party horn, animation, load next night
+	#Stop all the controls, lock the cam and play the overlay
 	$GameTick.stop()
 	$FanAmbient.stop()
 	AudioServer.set_bus_solo(AudioServer.get_bus_index("Master"), true)
@@ -131,6 +147,10 @@ func win_game():
 	$CameraNode/Camera2D.set_zoom(Vector2(1,1))
 	$CameraNode.camDoNotMove = true
 	$VictoryOverlay/VictorySFX.play()
+	#Stop freddy sing song if you win
+	if $FreddyStare.is_visible():
+		$FreddyStare.set_visible(false)
+		$FreddyStare/FreddyStare_Anim.stop()
 	#delay
 	await get_tree().create_timer(10).timeout
 	#load next night
@@ -175,11 +195,15 @@ func power_display(change):
 	
 #Bonnie has 'killed' the player but jumpscare has not fired yet
 func bonnieKill():
+	if $GameScreen_Base/LeftControls/LeftLight.is_pressed():
+		$GameScreen_Base/LeftControls/LeftLight.set_pressed(false)
 	leftControlsEnabled = false
 	gotKilled = "BONNIE"
 	$GameScreen_Base/PlayerWarnDeath/PlayerWarnTimer.start()
 
 func chicaKill():
+	if $GameScreen_Base/RightControls/RightLight.is_pressed():
+		$GameScreen_Base/RightControls/RightLight.set_pressed(false)
 	rightControlsEnabled = false
 	gotKilled = "CHICA"
 	$GameScreen_Base/PlayerWarnDeath/PlayerWarnTimer.start()
@@ -214,9 +238,9 @@ var texture_LightOn = load("res://Textures/RoomFiles/Office/Button_Light_On.png"
 var texture_LightOff = load("res://Textures/RoomFiles/Office/Button_Light_Off.png")
 func _on_left_door_toggled(toggled_on: bool) -> void:
 	if not leftControlsEnabled:
-		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
-		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.play()
-		pass
+		$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
+		$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.play()
+		return
 	if toggled_on: 
 		power_display(1)
 		$GameScreen_Base/LeftDoor.play("LeftDoorClose")
@@ -234,9 +258,9 @@ func _on_left_door_toggled(toggled_on: bool) -> void:
 
 func _on_left_light_toggled(toggled_on: bool) -> void:
 	if not leftControlsEnabled:
-		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
-		$GameScreen_Base/RightControls/LeftDoor/AudioStreamPlayer2D.play()
-		pass
+		$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
+		$GameScreen_Base/LeftControls/LeftDoor/AudioStreamPlayer2D.play()
+		return
 	if toggled_on: 
 		power_display(1)
 		$GameScreen_Base/RightControls/RightLight.set_pressed(false)
@@ -254,7 +278,7 @@ func _on_right_door_toggled(toggled_on: bool) -> void:
 	if not rightControlsEnabled:
 		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
 		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
-		pass
+		return
 	if toggled_on: 
 		power_display(1)
 		$GameScreen_Base/RightDoor.play("RightDoorClose")
@@ -274,7 +298,7 @@ func _on_right_light_toggled(toggled_on: bool) -> void:
 	if not rightControlsEnabled:
 		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.set_stream(load("res://SFX/no.wav"))
 		$GameScreen_Base/RightControls/RightDoor/AudioStreamPlayer2D.play()
-		pass
+		return
 	if toggled_on: 
 		$GameScreen_Base/LeftControls/LeftLight.set_pressed(false)
 		power_display(1)
@@ -293,27 +317,6 @@ func _on_cam_access_mouse_entered() -> void:
 	if camDoNotOpen: return
 	$CameraNode/Camera2D/HUD/ReferenceRect/CamAccess.set_visible(false)
 	camera_flip()
-	#JUMPSCARE STUFF on cam down -> set function
-	if not camera_open:
-		match gotKilled:
-			"BONNIE":
-				#play animation
-				camDoNotOpen = true #Stop controls
-				$CameraNode.camDoNotMove = true
-				$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/bonniejump/bonniejump0002.png"))
-				$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
-				await get_tree().create_timer(3).timeout
-				lose_game() #wait for finish
-			"CHICA":
-				#play animation
-				camDoNotOpen = true #Stop controls
-				$CameraNode.camDoNotMove = true
-				$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/ChicaJump.png"))
-				$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
-				await get_tree().create_timer(3).timeout
-				lose_game() #wait for finish
-			_:
-				pass
 
 #Development function
 func _input(event):
@@ -322,10 +325,10 @@ func _input(event):
 	#if event is InputEventKey and event.keycode == KEY_L:
 		#print("Cheat: End game")
 		#lose_game()
-		print("Cheat: Move Bonnie to office")
-		$AnimatronicAIController.move_bonnie("Office")
-		#print("Cheat: Chica to Bathroom")
-		#$AnimatronicAIController.move_chica("7")
+		#print("Cheat: Move Bonnie to office")
+		#$AnimatronicAIController.move_bonnie("Office")
+		#print("Cheat: Moved Chica")
+		#$AnimatronicAIController.move_chica("Office")
 		#print("Cheat: Freddy to 4B")
 		#$AnimatronicAIController.move_freddy("4B")
 		#$AnimatronicAIController.foxy_angy = 4000
@@ -337,11 +340,31 @@ func _input(event):
 		#print('Force gold')
 		#$AnimatronicAIController/HimTimer.start(0.2)
 
+func camera_jumpscare(Character):
+	match Character:
+		"NO":
+			return
+		"BONNIE":
+			#play animation
+			camDoNotOpen = true #Stop controls
+			$CameraNode.camDoNotMove = true
+			$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/bonniejump/bonniejump0002.png"))
+			$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
+			await get_tree().create_timer(3).timeout
+			lose_game() #wait for finish
+		"CHICA":
+			#play animation
+			camDoNotOpen = true #Stop controls
+			$CameraNode.camDoNotMove = true
+			$CameraNode/Camera2D/JumpscareLayer.set_texture(load("res://Textures/JumpscareAnims/ChicaJump.png"))
+			$CameraNode/Camera2D/JumpscareLayer/AudioStreamPlayer2D.play()
+			await get_tree().create_timer(3).timeout
+			lose_game() #wait for finish
+
 func camera_flip():
 	#prevent cam during death
 	if camDoNotOpen:
 		return
-	#play animation, open camera panel
 	if camera_open: #Closing the cam
 		$ScreenCameraNode/ReferenceRect/Monitor.play("Reverse")
 		$CameraNode/Camera2D/CameraSounds_DARK.set_stream(load("res://SFX/dark2.mp3"))
@@ -353,6 +376,8 @@ func camera_flip():
 				$Fredbear/HimTimer.start(3)
 			golden_freddy = false
 			$ScreenCameraNode/CameraScreenDisplay.room_textures["2B"] = "res://Textures/RoomFiles/WestHallCorner_Base.png"
+		camera_jumpscare(gotKilled)
+	
 	else: #Opening the cam
 		$GameScreen_Base/LeftControls/LeftLight.set_pressed(false) #Light turns off if cam opened.
 		$GameScreen_Base/RightControls/RightLight.set_pressed(false)
@@ -374,6 +399,7 @@ func camera_flip():
 			$Fredbear/HimTimer.stop()
 			$Fredbear.set_visible(false)
 	
+	#Constant action
 	camera_open = !camera_open
 	$ScreenCameraNode/CameraScreenDisplay.set_visible(camera_open)
 	$ScreenCameraNode/CameraScreenDisplay.update_cam()
@@ -393,7 +419,7 @@ func _on_foxy_kill_you_timer_timeout() -> void:
 		$AnimatronicAIController.FoxyAttack = false
 		$AnimatronicAIController.FoxyStage = 0
 		$ScreenCameraNode/CameraScreenDisplay.updateFoxy(0)
-		camera_flip()
+		if camera_open: camera_flip()
 		power -= 3.0 #he drains power with Foxy magic
 		$"FanAmbient/Foxy Audio/FoxyAmbientTimer".start()
 	else: #You die
@@ -435,7 +461,7 @@ var halu_frames = ["res://Textures/79/Hallucinations/Halluci1.png","res://Textur
 var dining_altered = false
 #Spooky, rare activities per 1 second game tick
 func golden_action():
-	if randi_range(1, 200) == 1: #Hallucinate only works in Office
+	if randi_range(1, 200) == 1 and not camera_open: #Hallucinate only works in Office
 		var anim_flash = $CameraNode/Camera2D/HallucinationLayer.get_sprite_frames()
 		anim_flash.clear("Flash")
 		for frame in range(randi_range(3,6)):
@@ -461,6 +487,7 @@ func golden_action():
 
 func _on_him_timer_timeout() -> void:
 	camDoNotOpen = true
+	$ScreenCameraNode/CameraScreenDisplay.set_visible(false)
 	$CameraNode.camDoNotMove = true
 	gotKilled = "GOLDY"
 	$GameTick.stop()
