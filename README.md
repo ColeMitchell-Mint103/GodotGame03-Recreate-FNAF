@@ -3,6 +3,7 @@
 
 *I reserve no rights to FNAF or Godot.*
 
+![Screenshot of the Game's Title Screen](RecreateFNAF1.png)
 
 I selected this project thinking FNAF is a "relatively simple" game (turned out to be more complex then expected.) 
 This project features one fully functional night with several endings (deaths). It launches in 1152x6487 window, no-resizing. (Maybe in a more advanced project lol)
@@ -17,3 +18,7 @@ Godot Nodes including Controls, AnimatedSprite2D, AudioStreamPlayer, TextureRect
 **The project also includes Gachimuchi content (somewhat NSFW), open project at own discretion.**
 
 The majority of assets are my own concept with some free-to-use assets included and credited at the Title Screen.
+
+![Screenshot of the Office](RecreateFNAF2.png)
+![Screenshot of Bonnie in the West Hallway](RecreateFNAF3.png)
+![Screenshot of Pirate's Cove](RecreateFNAF4.png)
